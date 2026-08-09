@@ -419,31 +419,31 @@ const PILLAR_EDU = {
     about: bi("Sexual health reflects desire, erectile function and confidence — all shaped by blood flow, hormone levels, nerve function and psychological factors working together.", "性健康反映性欲、勃起功能与性自信——这些都受血流、荷尔蒙水平、神经功能与心理因素共同影响。"),
     why: bi("Erectile difficulty is often the first visible sign of an underlying vascular problem. The same blood vessels affected in erectile dysfunction are frequently the same ones affected in the heart, sometimes years before a cardiac event — which is why doctors take it seriously as a general health signal, not just a sexual one.", "勃起困难往往是潜在血管问题最早出现的可见信号。在ED中受影响的血管，往往也是心脏血管，有时会比心脏病发作早数年出现——这就是为什么医生将ED视为整体健康的信号，而不仅仅是性功能问题。"),
     helps: [bi("Regular cardiovascular exercise to support healthy blood flow", "规律的心血管运动，有助于维持健康的血流"), bi("Reducing alcohol and quitting smoking, both measurably improve erectile function over time", "减少饮酒并戒烟，两者都能在长期内显著改善勃起功能"), bi("Managing stress and getting adequate sleep, which support healthy testosterone levels", "管理压力并获得充足睡眠，有助维持健康的睾酮水平"), bi("Discussing underlying vascular or hormonal causes with your doctor", "与医生讨论潜在的血管或荷尔蒙成因")],
-    foods: [bi("Leafy greens and beetroot — natural nitrates support blood flow", "绿叶蔬菜与甜菜根——天然硝酸盐有助血流"), bi("Fatty fish — omega-3s support vascular health", "多脂鱼类——omega-3有助血管健康"), bi("Nuts and seeds — zinc supports hormone production", "坚果与种子——锌有助荷尔蒙生成"), bi("Berries — flavonoids linked to better erectile function in studies", "浆果类——类黄酮在研究中与更好的勃起功能有关")],
+    foods: [bi("Leafy greens and beetroot — natural nitrates support blood flow", "绿叶蔬菜与甜菜根——天然硝酸盐有助血流"), bi("Fatty fish — omega-3s support vascular health", "多脂鱼类——omega-3有助血管健康"), bi("Nuts and seeds — zinc supports hormone production", "坚果与种子——锌有助荷尔蒙生成"), bi("Berries — flavonoids linked to better erectile function in studies", "浆果类——类黄酮在研究中与更好的勃起功能有关"), bi("Black sesame and walnuts — rich in healthy fats and minerals, and a food traditionally favoured in Chinese wellness practices for men's vitality", "黑芝麻与核桃——富含健康脂肪与矿物质，也是中式养生传统中常用于男性活力的食材")],
   },
   energy: {
     about: bi("Energy reflects how well your body converts food, oxygen and hormones into usable fuel for daily life — shaped by sleep quality, thyroid function and hormonal balance.", "精力反映你的身体将食物、氧气与荷尔蒙转化为日常生活可用能量的能力——受睡眠质量、甲状腺功能与荷尔蒙平衡所影响。"),
     why: bi("Persistent low energy is rarely 'just tiredness' — it's often an early signal of hormonal decline, poor sleep quality, or an undiagnosed metabolic issue.", "持续的低精力很少只是'累'而已——它往往是荷尔蒙下降、睡眠质量不佳，或未被诊断的代谢问题的早期信号。"),
     helps: [bi("A consistent sleep schedule, 7-8 hours a night", "保持规律作息，每晚睡7-8小时"), bi("Regular exercise, even brisk walking", "规律运动，快步走也有帮助"), bi("Balanced protein intake throughout the day", "全天均衡摄取蛋白质"), bi("Addressing underlying hormonal or thyroid issues with your doctor", "与医生一起处理潜在的荷尔蒙或甲状腺问题")],
-    foods: [bi("Whole grains — steady blood sugar supports steady energy", "全谷物——稳定血糖有助维持稳定精力"), bi("Lean protein at every meal", "每餐搭配瘦蛋白质"), bi("Iron-rich foods (spinach, red meat) if you're fatigue-prone", "若容易疲劳，可多摄取富含铁质的食物（菠菜、红肉）"), bi("Water — even mild dehydration measurably reduces energy", "水分——即使轻微脱水也会明显降低精力")],
+    foods: [bi("Whole grains — steady blood sugar supports steady energy", "全谷物——稳定血糖有助维持稳定精力"), bi("Lean protein at every meal", "每餐搭配瘦蛋白质"), bi("Iron-rich foods (spinach, red meat) if you're fatigue-prone", "若容易疲劳，可多摄取富含铁质的食物（菠菜、红肉）"), bi("Water — even mild dehydration measurably reduces energy", "水分——即使轻微脱水也会明显降低精力"), bi("Red dates and goji berries — commonly used in Chinese double-boiled soups, a good source of iron and antioxidants", "红枣与枸杞——常用于中式炖汤，富含铁质与抗氧化物")],
   },
   urinary: {
     about: bi("Urinary health covers bladder control, comfort when urinating, and how much urinary symptoms affect daily life — often linked to prostate health as men age.", "泌尿健康涵盖膀胱控制、排尿舒适度，以及泌尿症状对日常生活的影响程度——随着年龄增长，常与前列腺健康相关。"),
     why: bi("Urinary symptoms are common and very treatable, but they can also be an early marker of prostate changes worth monitoring, especially with increasing age.", "泌尿症状很常见且非常可治疗，但也可能是前列腺变化的早期指标，值得留意，尤其是随着年龄增长。"),
     helps: [bi("Limiting caffeine and alcohol in the evening", "晚间减少咖啡因与酒精摄入"), bi("Staying well hydrated during the day, tapering fluids before bed", "白天保持充足水分，睡前减少饮水"), bi("Pelvic floor exercises to improve bladder control", "骨盆底运动有助改善膀胱控制"), bi("Discussing persistent symptoms with your doctor rather than assuming it's normal ageing", "持续症状应与医生讨论，而非视为正常老化")],
-    foods: [bi("Pumpkin seeds — traditionally linked to prostate health", "南瓜籽——传统上与前列腺健康有关"), bi("Tomatoes — a source of lycopene", "番茄——番茄红素的来源"), bi("Green tea", "绿茶"), bi("Reducing spicy and acidic foods if they irritate your bladder", "若辛辣与酸性食物会刺激膀胱，可适量减少")],
+    foods: [bi("Pumpkin seeds — traditionally linked to prostate health", "南瓜籽——传统上与前列腺健康有关"), bi("Tomatoes — a source of lycopene", "番茄——番茄红素的来源"), bi("Green tea", "绿茶"), bi("Reducing spicy and acidic foods if they irritate your bladder — worth noting for a chilli- and sambal-heavy Malaysian diet", "若辛辣与酸性食物会刺激膀胱，可适量减少——对常吃辣椒与参巴的马来西亚饮食习惯尤其值得留意"), bi("Winter melon and barley water — commonly used locally as gentle, cooling diuretics", "冬瓜与薏米水——本地常用作温和的利尿食材")],
   },
   physical: {
     about: bi("Physical fitness covers your strength, stamina and how your body has changed over the past year — closely tied to muscle mass, cardiovascular fitness and hormonal health.", "体能状况涵盖你的力量、耐力，以及过去一年身体的变化——与肌肉量、心肺功能和荷尔蒙健康密切相关。"),
     why: bi("Declining physical performance can be an early marker of cardiovascular or hormonal issues, since the same blood flow and hormone levels that affect your muscles also affect your heart.", "体能下降可能是心血管或荷尔蒙问题的早期指标，因为影响肌肉的血流与荷尔蒙水平，同样也会影响心脏。"),
     helps: [bi("Combining resistance training with cardio exercise", "结合阻力训练与有氧运动"), bi("Adequate protein intake to support muscle repair", "充足蛋白质摄取以支持肌肉修复"), bi("Managing weight within a healthy range", "将体重控制在健康范围内"), bi("Controlling blood pressure, cholesterol and blood sugar", "控制血压、胆固醇与血糖")],
-    foods: [bi("Lean protein (chicken, fish, legumes)", "瘦蛋白质（鸡肉、鱼类、豆类）"), bi("Complex carbohydrates for sustained energy", "复合碳水化合物提供持续能量"), bi("Colorful vegetables for antioxidants and recovery", "多彩蔬菜提供抗氧化物助于恢复"), bi("Healthy fats (olive oil, avocado, nuts)", "健康脂肪（橄榄油、牛油果、坚果）")],
+    foods: [bi("Lean protein (chicken, fish, legumes)", "瘦蛋白质（鸡肉、鱼类、豆类）"), bi("Complex carbohydrates for sustained energy", "复合碳水化合物提供持续能量"), bi("Colorful vegetables for antioxidants and recovery", "多彩蔬菜提供抗氧化物助于恢复"), bi("Healthy fats (olive oil, avocado, nuts)", "健康脂肪（橄榄油、牛油果、坚果）"), bi("Tofu, tempeh and soy milk — widely available locally and a solid plant-based protein option", "豆腐、天贝与豆浆——本地容易取得，是优质的植物性蛋白来源")],
   },
   mental: {
     about: bi("Mental wellbeing covers your ability to manage stress, your motivation, and your overall mood — closely interacting with physical health.", "心理健康涵盖你应对压力的能力、动力，以及整体情绪——与身体健康密切互动。"),
     why: bi("Chronic stress and low mood are linked to hormonal changes (including lower testosterone), poorer sleep, and reduced motivation to maintain healthy habits — a cycle that can worsen physical health over time.", "长期压力与情绪低落与荷尔蒙变化（包括睾酮下降）、睡眠变差，以及维持健康习惯的动力下降有关——形成一个可能逐渐恶化身体健康的循环。"),
     helps: [bi("Practising stress management techniques (breathing, mindfulness, exercise)", "练习压力管理技巧（呼吸法、正念、运动）"), bi("Prioritising adequate sleep", "优先保证充足睡眠"), bi("Staying socially connected", "保持社交联系"), bi("Seeking professional support when needed — a sign of strength, not weakness", "在需要时寻求专业协助——这是坚强的表现，而非软弱")],
-    foods: [bi("Omega-3 rich foods, linked to mood regulation", "富含omega-3的食物，与情绪调节有关"), bi("Complex carbohydrates, which support serotonin production", "复合碳水化合物，有助血清素生成"), bi("Limiting caffeine and alcohol, which can worsen anxiety", "减少咖啡因与酒精，两者可能加重焦虑"), bi("Staying hydrated — even mild dehydration affects mood and concentration", "保持水分——即使轻微脱水也会影响情绪与专注力")],
+    foods: [bi("Omega-3 rich foods, linked to mood regulation", "富含omega-3的食物，与情绪调节有关"), bi("Complex carbohydrates, which support serotonin production", "复合碳水化合物，有助血清素生成"), bi("Limiting caffeine and alcohol, which can worsen anxiety", "减少咖啡因与酒精，两者可能加重焦虑"), bi("Staying hydrated — even mild dehydration affects mood and concentration", "保持水分——即使轻微脱水也会影响情绪与专注力"), bi("Chrysanthemum or chamomile tea in place of a late coffee — a calming, widely available local swap", "以菊花茶或洋甘菊茶取代晚间咖啡——本地容易取得的舒缓选择")],
   },
   lifestyle: {
     about: bi("Lifestyle confidence reflects how sustainable you feel your current habits are — not just what you're doing, but whether you believe you can keep doing it.", "生活方式信心反映你认为目前习惯的可持续程度——不仅是你在做什么，还有你是否相信自己能持续下去。"),
@@ -1643,10 +1643,6 @@ function PatientReport({ results, demo, lang, onOpenFullReport }) {
   const [savingImg, setSavingImg] = useState(false);
   return (
     <div id="patient-report-capture">
-      <button onClick={() => downloadElementAsImage("patient-report-capture", `${(demo.name || "vitality-report").replace(/\s+/g, "-")}.png`, setSavingImg)} disabled={savingImg}
-        style={{ width: "100%", marginBottom: 14, padding: "12px", borderRadius: 10, background: "#fff", border: `1.5px solid ${C.border}`, color: C.blueDeep, fontWeight: 700, fontSize: 13, cursor: savingImg ? "not-allowed" : "pointer" }}>
-        {savingImg ? tr(lang, "Preparing image…", "正在准备图片…") : `💾 ${tr(lang, "Save as Image", "保存为图片")}`}
-      </button>
       <Card style={{ textAlign: "center", marginBottom: 18, border: "none", padding: "34px 20px 28px", background: "linear-gradient(155deg, #0C1B2E 0%, #14293F 100%)", boxShadow: "0 20px 44px -14px rgba(11,27,46,0.55)" }}>
         <div style={{ fontSize: 12, color: "#9DB3C9", fontWeight: 800, letterSpacing: "0.08em", marginBottom: 16 }}>{tr(lang, "YOUR MEN'S VITALITY SCORE", "你的男性活力指数")}</div>
         <div style={{ position: "relative", display: "inline-block", filter: `drop-shadow(0 0 22px ${cat.color}99)` }}>
@@ -1729,6 +1725,14 @@ function PatientReport({ results, demo, lang, onOpenFullReport }) {
         <Row lang={lang} l1="Sleep" l2="睡眠" v={risk.sleep || "—"} last />
       </Card>
 
+      <button onClick={() => shareOrDownloadElement("patient-report-capture", `${(demo.name || "vitality-report").replace(/\s+/g, "-")}.png`, setSavingImg)} disabled={savingImg}
+        style={{ width: "100%", marginBottom: 18, padding: "16px", borderRadius: 14, background: `linear-gradient(135deg, ${C.blueDeep}, ${C.blue} 55%, ${C.blueLight})`,
+          border: "none", color: "#fff", fontWeight: 800, fontSize: 14.5, cursor: savingImg ? "not-allowed" : "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 9, boxShadow: `0 12px 26px -10px ${C.blueDeep}99`, opacity: savingImg ? 0.75 : 1 }}>
+        <span style={{ fontSize: 19 }}>{savingImg ? "⏳" : "📤"}</span>
+        {savingImg ? tr(lang, "Preparing…", "准备中…") : tr(lang, "Save or Share My Results", "保存或分享我的结果")}
+      </button>
+
       <Card onClick={onOpenFullReport} style={{ background: `linear-gradient(155deg, #0C1B2E 0%, #14293F 100%)`, border: "none", cursor: "pointer", marginBottom: 14 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div>
@@ -1763,6 +1767,43 @@ function Row({ lang, l1, l2, v, last }) {
   );
 }
 
+function RadarChart({ domains, lang, size = 280 }) {
+  const cx = size / 2, cy = size / 2, maxR = size * 0.32;
+  const n = domains.length;
+  const angleFor = (i) => -Math.PI / 2 + (i * 2 * Math.PI) / n;
+  const pointAt = (i, frac) => {
+    const a = angleFor(i);
+    return [cx + maxR * frac * Math.cos(a), cy + maxR * frac * Math.sin(a)];
+  };
+  const ringLevels = [0.25, 0.5, 0.75, 1];
+  const dataPoints = domains.map((d, i) => pointAt(i, Math.max(0, Math.min(100, d.score ?? 0)) / 100));
+  const dataPath = dataPoints.map((p) => p.join(",")).join(" ");
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      {ringLevels.map((lvl, ri) => {
+        const pts = domains.map((_, i) => pointAt(i, lvl).join(",")).join(" ");
+        return <polygon key={ri} points={pts} fill="none" stroke={C.border} strokeWidth={ri === ringLevels.length - 1 ? 1.3 : 0.8} />;
+      })}
+      {domains.map((_, i) => {
+        const [x, y] = pointAt(i, 1);
+        return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke={C.border} strokeWidth={0.8} />;
+      })}
+      <polygon points={dataPath} fill={`${C.blueDeep}33`} stroke={C.blueDeep} strokeWidth={2.2} strokeLinejoin="round" />
+      {domains.map((d, i) => {
+        const [x, y] = pointAt(i, Math.max(0, Math.min(100, d.score ?? 0)) / 100);
+        return <circle key={i} cx={x} cy={y} r={4} fill={d.color} stroke="#fff" strokeWidth={1.5} />;
+      })}
+      {domains.map((d, i) => {
+        const [lx, ly] = pointAt(i, 1.26);
+        return (
+          <text key={i} x={lx} y={ly} textAnchor="middle" dominantBaseline="middle" fontSize={10.5} fontWeight={700} fill={C.ink}>
+            {d.icon}
+          </text>
+        );
+      })}
+    </svg>
+  );
+}
 function ChapterBanner({ color, icon, label, lang }) {
   return (
     <div style={{ background: `linear-gradient(155deg, ${color}, ${color}CC)`, borderRadius: 20, padding: "34px 24px", textAlign: "center", color: "#fff", marginBottom: 18, marginTop: 26, boxShadow: `0 14px 30px -10px ${color}88` }}>
@@ -1995,11 +2036,50 @@ function FullReportPage({ results, demo, lang, setLang, onBack }) {
 
       <SectionLabel lang={lang} en="Table of Contents" zh="目录" />
       <Card style={{ marginBottom: 20 }}>
-        {[bi("Key Overview", "重点概览"), ...DOMAINS.map((d) => d.label), bi("Risk & Safety Findings", "风险与安全发现"), bi("Your 90-Day Self-Check", "你的90天自我检查")].map((x, i) => (
-          <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "7px 0", fontSize: 13, borderBottom: i < 8 ? `1px solid ${C.border}` : "none" }}>
+        {[bi("Executive Summary", "摘要总览"), bi("Key Overview", "重点概览"), bi("The Science Behind Your Score", "你的分数背后的科学依据"), ...DOMAINS.map((d) => d.label), bi("Risk & Safety Findings", "风险与安全发现"), bi("Your 90-Day Self-Check", "你的90天自我检查")].map((x, i) => (
+          <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "7px 0", fontSize: 13, borderBottom: i < 9 ? `1px solid ${C.border}` : "none" }}>
             <span>{t(x, lang)}</span><span style={{ color: C.dim }}>{i + 1}</span>
           </div>
         ))}
+      </Card>
+
+      <ChapterBanner color={C.blueDeep} icon="📋" label={bi("Executive Summary", "摘要总览")} lang={lang} />
+      <Card style={{ marginBottom: 10, textAlign: "center" }}>
+        <div style={{ fontSize: 11, color: C.mid, fontWeight: 700, marginBottom: 10 }}>{tr(lang, "YOUR 6-AREA SNAPSHOT", "你的六大领域概览")}</div>
+        <RadarChart domains={domainResults.domains} lang={lang} />
+      </Card>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 16 }}>
+        <Card style={{ padding: "12px 8px", textAlign: "center" }}>
+          <div className="disp" style={{ fontSize: 24, fontWeight: 900, color: cat.color }}>{domainResults.overall}</div>
+          <div style={{ fontSize: 9.5, color: C.mid, marginTop: 2 }}>{tr(lang, "Overall Score", "总分")}</div>
+        </Card>
+        <Card style={{ padding: "12px 8px", textAlign: "center" }}>
+          <div className="disp" style={{ fontSize: 24, fontWeight: 900, color: C.blueDeep }}>{priorities.length}</div>
+          <div style={{ fontSize: 9.5, color: C.mid, marginTop: 2 }}>{tr(lang, "Priority Areas", "优先关注领域")}</div>
+        </Card>
+        <Card style={{ padding: "12px 8px", textAlign: "center" }}>
+          <div className="disp" style={{ fontSize: 24, fontWeight: 900, color: C.green }}>{domainResults.domains.filter((d) => (d.score ?? 0) >= 75).length}</div>
+          <div style={{ fontSize: 9.5, color: C.mid, marginTop: 2 }}>{tr(lang, "Strong Areas", "表现良好领域")}</div>
+        </Card>
+      </div>
+      {priorities.length > 0 && (
+        <Card style={{ marginBottom: 20 }}>
+          <div style={{ fontSize: 12, fontWeight: 800, color: C.ink, marginBottom: 8 }}>{tr(lang, "Where to focus first:", "首要关注方向：")}</div>
+          {priorities.map((p, i) => (
+            <div key={p.key} style={{ display: "flex", alignItems: "center", gap: 8, padding: "5px 0" }}>
+              <span style={{ width: 20, height: 20, borderRadius: "50%", background: p.color, color: "#fff", fontSize: 10.5, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{i + 1}</span>
+              <span style={{ fontSize: 12.5, fontWeight: 600 }}>{p.icon} {t(p.label, lang)}</span>
+              <span style={{ marginLeft: "auto", fontSize: 12, fontWeight: 800, color: p.color }}>{p.score}</span>
+            </div>
+          ))}
+        </Card>
+      )}
+
+      <ChapterBanner color={C.blue} icon="🔬" label={bi("The Science Behind Your Score", "你的分数背后的科学依据")} lang={lang} />
+      <Card style={{ marginBottom: 20 }}>
+        <Body lang={lang} small
+          en="Your Vitality Score isn't a guess — it's built from the same validated screening tools used in real clinical practice worldwide. Wherever your answers pointed to something worth a closer look, this report drew on internationally recognised instruments including IIEF-5 (erectile function), IPSS (urinary symptoms), DASS-21 (mood, anxiety and stress), ADAM (hormonal screening), and DASI (functional capacity) — the same tools a doctor would use in an in-person assessment."
+          zh="你的活力指数并非凭空猜测——它建立在全球临床实践中实际使用的验证筛查工具之上。凡是你的回答显示值得进一步关注之处，本报告都采用了国际认可的评估工具，包括IIEF-5（勃起功能）、IPSS（泌尿症状）、DASS-21（情绪、焦虑与压力）、ADAM（荷尔蒙筛查）以及DASI（功能能力）——这些正是医生在面对面评估时会使用的工具。" />
       </Card>
 
       <ChapterBanner color={C.blueDeep} icon="🎯" label={bi("Key Overview", "重点概览")} lang={lang} />
@@ -2238,6 +2318,36 @@ function DoctorDashboard({ results, demo, lang }) {
 const th = { textAlign: "left", padding: "9px 12px", fontSize: 11.5, color: C.mid, fontWeight: 800 };
 const td = { padding: "9px 12px" };
 
+async function shareOrDownloadElement(elementId, filename, setBusy) {
+  if (setBusy) setBusy(true);
+  try {
+    if (!window.html2canvas) {
+      await Promise.race([
+        loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"),
+        new Promise((_, reject) => setTimeout(() => reject(new Error("timed out")), 6000)),
+      ]);
+    }
+    const el = document.getElementById(elementId);
+    if (!el || !window.html2canvas) throw new Error("capture unavailable");
+    const canvas = await window.html2canvas(el, { backgroundColor: "#ffffff", scale: 2 });
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+    if (!blob) throw new Error("no blob");
+    const file = new File([blob], filename, { type: "image/png" });
+    // Prefer the phone's native share sheet — one tap straight to WhatsApp,
+    // email, etc. — and only fall back to a plain download if that's not
+    // available (most desktop browsers).
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file], title: filename });
+    } else {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  } catch { /* if unavailable, or the user cancels the share sheet, fail quietly */ }
+  if (setBusy) setBusy(false);
+}
 async function downloadElementAsImage(elementId, filename, setBusy) {
   if (setBusy) setBusy(true);
   try {

@@ -807,9 +807,9 @@ const RISK_LABEL = {
 function summaryVariant(i, lang, overall, topLabel, strongLabel) {
   const v = [
     tr3(lang,
-      `With an overall score of ${overall}, your vitality profile is strong in several areas. ${strongLabel} stands out as a particular strength, and ${topLabel} is the one most worth your attention right now.`,
-      `你的整体活力指数为${overall}，多个方面表现良好。${strongLabel}尤其突出，而${topLabel}是目前最值得关注的方面。`,
-      `Dengan skor keseluruhan ${overall}, profil vitaliti anda kukuh di beberapa bidang. ${strongLabel} menonjol sebagai satu kekuatan, manakala ${topLabel} ialah bidang yang paling perlu diberi perhatian sekarang.`),
+      `With an overall score of ${overall}, ${strongLabel} stands out as your clearest strength, and ${topLabel} is the one most worth your attention right now.`,
+      `你的整体活力指数为${overall}。${strongLabel}是你目前最突出的方面，而${topLabel}是最值得关注的方面。`,
+      `Dengan skor keseluruhan ${overall}, ${strongLabel} menonjol sebagai kekuatan paling jelas anda, manakala ${topLabel} ialah bidang yang paling perlu diberi perhatian sekarang.`),
     tr3(lang,
       `Your responses suggest a vitality profile scoring ${overall} overall. ${strongLabel} is clearly working well for you, while ${topLabel} still has real room to grow.`,
       `你的回答显示整体活力指数为${overall}。${strongLabel}对你来说表现得很好，而${topLabel}仍有提升的空间。`,
@@ -1885,6 +1885,11 @@ const REFERRAL_CODE = "DOCTOR";
 const REGULAR_PRICE = 9.90;
 const REFERRAL_PRICE = 6.90;
 const ORIGINAL_PRICE = 19.90;
+// Payment is not live yet (the Stripe account is still paused). While this is
+// false the checkout screen renders as a clearly-labelled preview: no card
+// details are requested, nothing is charged, and the Full Report opens for
+// free. Flip to true once a real Stripe Payment Link is set above.
+const PAYMENT_ENABLED = false;
 // A REAL end date for the launch discount, not a fake per-visit countdown —
 // change this to whenever the promotion should genuinely end. Being honest
 // about urgency matters: a countdown that resets every time someone visits
@@ -1930,7 +1935,7 @@ function useCountdown(endDate) {
   const secs = Math.floor((remaining % 60000) / 1000);
   return { days, hours, mins, secs, expired: remaining <= 0 };
 }
-function CheckoutPage({ results, demo, lang, setLang, onBack }) {
+function CheckoutPage({ results, demo, lang, setLang, onBack, onUnlock }) {
   const cat = vitalityCategory(results.domainResults.overall);
   const [code, setCode] = useState("");
   const [codeApplied, setCodeApplied] = useState(false);
@@ -1951,6 +1956,7 @@ function CheckoutPage({ results, demo, lang, setLang, onBack }) {
     window.location.href = activeLink;
   }
   const linkNotConfigured = activeLink.includes("REPLACE_WITH_YOUR");
+  const previewMode = !PAYMENT_ENABLED || linkNotConfigured;
   const benefits = [
     bi("A full chapter for every one of the 6 areas — what it means, why it matters, and what actually helps", "6大领域的完整章节——各自的意义、重要性，以及真正有效的做法"),
     bi("Your personal food & lifestyle plan, built around your own weakest areas, not a generic list", "根据你自身较弱的方面量身打造的个人饮食与生活方式方案，而非一份通用清单"),
@@ -1981,8 +1987,13 @@ function CheckoutPage({ results, demo, lang, setLang, onBack }) {
           <span style={{ fontSize: 30, fontWeight: 900, color: "#6EEBFF" }}>${price.toFixed(2)}</span>
           <span style={{ fontSize: 11, color: "#9DB3C9" }}>USD {tr(lang, "one-time", "一次性")}</span>
         </div>
+        {previewMode && (
+          <div style={{ marginTop: 10, display: "inline-block", background: "rgba(124,245,160,0.14)", border: "1px solid #7CF5A0", borderRadius: 8, padding: "5px 10px", fontSize: 11, fontWeight: 800, color: "#7CF5A0" }}>
+            {tr(lang, "FREE while we finish setting up payment", "付款功能设置期间免费")}
+          </div>
+        )}
         {codeApplied && <div style={{ fontSize: 11, color: "#7CF5A0", marginTop: 4 }}>✓ {tr(lang, "Referral code applied", "已套用推荐码")}</div>}
-        {!countdown.expired && (
+        {!previewMode && !countdown.expired && (
           <div style={{ marginTop: 12, background: "rgba(255,255,255,0.08)", borderRadius: 10, padding: "8px 12px", fontSize: 11, color: "#EAF3FD" }}>
             ⏱ {tr(lang, "Launch price ends in", "早鸟价倒计时")} <b>{countdown.days}{tr(lang,"d","天")} {String(countdown.hours).padStart(2,"0")}:{String(countdown.mins).padStart(2,"0")}:{String(countdown.secs).padStart(2,"0")}</b>
           </div>
@@ -1998,17 +2009,22 @@ function CheckoutPage({ results, demo, lang, setLang, onBack }) {
           </button>
         </div>
       </Card>
-      {linkNotConfigured && (
-        <div style={{ background: "#FDECEC", border: `1px solid ${C.red}`, borderRadius: 10, padding: "10px 14px", marginBottom: 14, fontSize: 11.5, color: C.red, lineHeight: 1.5 }}>
-          ⚠ No Stripe Payment Link has been set yet — replace {codeApplied ? "STRIPE_PAYMENT_LINK_REFERRAL" : "STRIPE_PAYMENT_LINK"} near the top of the file with your real one from the Stripe Dashboard before this can take real payment.
+      {previewMode && (
+        <div style={{ background: "#EAF6EF", border: `1px solid #2E9E5B`, borderRadius: 10, padding: "12px 14px", marginBottom: 14, fontSize: 12, color: "#1D6B3D", lineHeight: 1.55 }}>
+          <b>{tr(lang, "Payment isn't active yet.", "付款功能尚未启用。")}</b>{" "}
+          {tr(lang, "Your Full Report is complimentary for now — you won't be asked for card details and nothing will be charged.", "你的完整报告目前免费——不会要求提供银行卡信息，也不会产生任何费用。")}
         </div>
       )}
-      <button onClick={goToStripe}
+      <button onClick={previewMode ? onUnlock : goToStripe}
         style={{ width: "100%", padding: "18px", borderRadius: 14, background: `linear-gradient(135deg, ${C.blueDeep}, ${C.blue})`, border: "none", color: "#fff", fontWeight: 800, fontSize: 16, cursor: "pointer" }}>
-        {tr(lang, `Pay with Card — $${price.toFixed(2)}`, `以信用卡付款 — $${price.toFixed(2)}`)}
+        {previewMode
+          ? tr(lang, "Continue to My Full Report →", "继续查看完整报告 →")
+          : tr(lang, `Pay with Card — $${price.toFixed(2)}`, `以信用卡付款 — $${price.toFixed(2)}`)}
       </button>
       <div style={{ fontSize: 10.5, color: C.dim, marginTop: 10, textAlign: "center", lineHeight: 1.5 }}>
-        {tr(lang, "You'll be taken to Stripe's secure payment page, then brought straight back here with your report unlocked.", "你将被转到Stripe的安全付款页面，付款完成后会直接返回并解锁你的报告。")}
+        {previewMode
+          ? tr(lang, "No payment required — your full report opens straight away.", "无需付款——你的完整报告将立即打开。")
+          : tr(lang, "You'll be taken to Stripe's secure payment page, then brought straight back here with your report unlocked.", "你将被转到Stripe的安全付款页面，付款完成后会直接返回并解锁你的报告。")}
       </div>
     </div>
   );
@@ -3113,7 +3129,8 @@ export default function App() {
             onOpenFullReport={() => setStage(fullReportUnlocked ? "fullreport" : "checkout")} />
         )}
         {stage === "checkout" && finalResults && (
-          <CheckoutPage results={finalResults} demo={demo} lang={lang} setLang={setLang} onBack={() => setStage("results")} />
+          <CheckoutPage results={finalResults} demo={demo} lang={lang} setLang={setLang} onBack={() => setStage("results")}
+            onUnlock={() => { setFullReportUnlocked(true); setStage("fullreport"); }} />
         )}
         {stage === "fullreport" && finalResults && (
           <FullReportPage results={finalResults} demo={demo} lang={lang} setLang={setLang} onBack={() => setStage("results")} />

@@ -89,6 +89,33 @@ const LANGUAGES = [
 // (id), Tamil (ta), Arabic (ar), Hindi (hi), Spanish (es).
 
 const MS = {
+  // --- DASS-21 plain-language hints (added 27 Aug after user feedback)
+  "Hard to get started or motivated to do things.": "Sukar untuk bermula atau mendapatkan dorongan untuk melakukan sesuatu.",
+  "Feeling low, sad or flat.": "Berasa murung, sedih atau hambar.",
+  "Hard to relax or switch off after the day.": "Sukar untuk bertenang atau berehat selepas seharian.",
+  "Feeling restless or keyed-up, unable to settle.": "Berasa gelisah atau tegang, tidak dapat bertenang.",
+  "Feeling worked up, restless or unsettled.": "Berasa resah, gelisah atau tidak tenteram.",
+  "Easily irritated or upset by small things.": "Mudah terganggu atau tersinggung dengan perkara kecil.",
+
+  // --- DASI (Functional Capacity) — added 27 Aug after Dr. Yap's feedback.
+  // These items previously had NO Malay at all and fell back to English.
+  // AI-drafted Malay: readable and usable, but NOT a validated translation.
+  // Needs native clinical review before being relied on for research scoring.
+  "Able": "Boleh",
+  "Not able": "Tidak boleh",
+  "Are you able to take care of yourself (eating, dressing, bathing, using the toilet)?": "Adakah anda boleh menjaga diri sendiri (makan, berpakaian, mandi, menggunakan tandas)?",
+  "Are you able to walk indoors, such as around your house?": "Adakah anda boleh berjalan di dalam rumah, seperti di sekitar rumah anda?",
+  "Are you able to walk 1-2 blocks on level ground?": "Adakah anda boleh berjalan 1-2 blok di atas tanah rata?",
+  "Are you able to climb a flight of stairs or walk up a hill?": "Adakah anda boleh menaiki satu tingkat tangga atau mendaki bukit?",
+  "Are you able to run a short distance?": "Adakah anda boleh berlari jarak dekat?",
+  "Are you able to do light work around the house (dusting, washing dishes)?": "Adakah anda boleh melakukan kerja rumah yang ringan (membersihkan habuk, mencuci pinggan)?",
+  "Are you able to do moderate work around the house (vacuuming, sweeping, carrying groceries)?": "Adakah anda boleh melakukan kerja rumah sederhana (menyedut habuk, menyapu, mengangkat barang runcit)?",
+  "Are you able to do heavy work around the house (scrubbing floors, lifting heavy furniture)?": "Adakah anda boleh melakukan kerja rumah berat (menggosok lantai, mengangkat perabot berat)?",
+  "Are you able to do yard work (raking leaves, weeding, pushing a mower)?": "Adakah anda boleh melakukan kerja di halaman (mengumpul daun, mencabut rumpai, menolak mesin rumput)?",
+  "Are you able to engage in sexual relations?": "Adakah anda boleh melakukan hubungan seksual?",
+  "Are you able to participate in moderate recreational activities (golf, doubles tennis, dancing)?": "Adakah anda boleh menyertai aktiviti rekreasi sederhana (golf, tenis beregu, menari)?",
+  "Are you able to participate in strenuous sports (swimming, singles tennis, football, basketball)?": "Adakah anda boleh menyertai sukan lasak (berenang, tenis perseorangan, bola sepak, bola keranjang)?",
+
   // Core UI chrome
   "Men's Vitality Index": "Indeks Vitaliti Lelaki", "Begin Assessment": "Mula Penilaian", "Before we start": "Sebelum kita mula",
   "A few quick details.": "Beberapa maklumat ringkas.", "Full Name": "Nama Penuh", "Age": "Umur", "Phone Number": "Nombor Telefon",
@@ -547,6 +574,16 @@ function ipssSeverity(score) {
   return { label: bi("Severe LUTS", "重度下泌尿道症状"), color: C.red };
 }
 const DASS_OPTS = freqScale([bi("Did not apply to me at all", "完全不适用"), bi("Applied to me some of the time", "有时适用"), bi("Applied to me a good part of the time", "大部分时间适用"), bi("Applied to me most of the time", "几乎总是适用")]);
+// Plain-language hints for the DASS-21 idioms. The item text is the official
+// validated wording and is NOT changed — only explained.
+const DASS_HINTS = {
+  "I found it difficult to work up the initiative to do things": bi("Hard to get started or motivated to do things.", "很难提起动力去开始做事。"),
+  "I felt down-hearted and blue": bi("Feeling low, sad or flat.", "情绪低落、难过或提不起劲。"),
+  "I found it hard to wind down": bi("Hard to relax or switch off after the day.", "很难放松下来或从一天的忙碌中抽离。"),
+  "I felt that I was using a lot of nervous energy": bi("Feeling restless or keyed-up, unable to settle.", "感到坐立不安、精神紧绷，静不下来。"),
+  "I found myself getting agitated": bi("Feeling worked up, restless or unsettled.", "感到烦躁、坐立不安。"),
+  "I felt that I was rather touchy": bi("Easily irritated or upset by small things.", "容易因小事而生气或不快。"),
+};
 const DASS_DEP_ITEMS = [
   ["I couldn't seem to experience any positive feeling at all", "我完全无法感受到任何正面的情绪"],
   ["I found it difficult to work up the initiative to do things", "我难以提起劲去做事情"],
@@ -555,7 +592,7 @@ const DASS_DEP_ITEMS = [
   ["I was unable to become enthusiastic about anything", "我对任何事都无法感到热情"],
   ["I felt I wasn't worth much as a person", "我觉得自己作为一个人没有什么价值"],
   ["I felt that life was meaningless", "我觉得生活毫无意义"],
-].map(([en, zh], i) => ({ id: `dass_d${i}`, text: bi(en, zh), options: DASS_OPTS }));
+].map(([en, zh], i) => ({ id: `dass_d${i}`, text: bi(en, zh), hint: DASS_HINTS[en], options: DASS_OPTS }));
 const DASS_ANX_ITEMS = [
   ["I was aware of dryness of my mouth", "我感觉到口干"],
   ["I experienced breathing difficulty (e.g. excessively rapid breathing, breathlessness without physical exertion)", "我感到呼吸困难（例如呼吸过快、无运动却感到喘不过气）"],
@@ -564,7 +601,7 @@ const DASS_ANX_ITEMS = [
   ["I felt I was close to panic", "我感觉自己快要恐慌了"],
   ["I was aware of the action of my heart without physical exertion (e.g. sense of heart rate increase or a missed beat)", "我在没有运动的情况下感觉到心跳（例如心率加快或漏跳一拍）"],
   ["I felt scared without any good reason", "我毫无缘由地感到害怕"],
-].map(([en, zh], i) => ({ id: `dass_a${i}`, text: bi(en, zh), options: DASS_OPTS }));
+].map(([en, zh], i) => ({ id: `dass_a${i}`, text: bi(en, zh), hint: DASS_HINTS[en], options: DASS_OPTS }));
 const DASS_STRESS_ITEMS = [
   ["I found it hard to wind down", "我很难放松下来"],
   ["I tended to over-react to situations", "我对事情容易反应过度"],
@@ -573,7 +610,7 @@ const DASS_STRESS_ITEMS = [
   ["I found it difficult to relax", "我难以放松"],
   ["I was intolerant of anything that kept me from getting on with what I was doing", "任何阻碍我做事的事都让我难以忍受"],
   ["I felt that I was rather touchy", "我感觉自己相当容易被触怒"],
-].map(([en, zh], i) => ({ id: `dass_s${i}`, text: bi(en, zh), options: DASS_OPTS }));
+].map(([en, zh], i) => ({ id: `dass_s${i}`, text: bi(en, zh), hint: DASS_HINTS[en], options: DASS_OPTS }));
 function dassSeverity(score, type) {
   // Real DASS-21 boundaries doubled to DASS-42 scale, per the standard conversion.
   const bandsByType = { dep: [10, 14, 21, 28], anx: [8, 10, 15, 20], stress: [15, 19, 26, 34] };
@@ -602,21 +639,34 @@ function adamPositive(answers) {
   [1, 2, 3, 4, 5, 7, 8, 9].forEach((i) => { if (yes(i)) count++; });
   return count >= 3;
 }
+// DASI measures what a person is ABLE to do, not what they happen to do.
+// The original wording dropped that stem, leaving a bare activity with Yes/No —
+// which Dr. Yap correctly flagged as ambiguous ("the yes/no answers what, can
+// or cannot?"). Every item now carries "Are you able to...", and the answers
+// read Able / Not able, per Prof. Stanley.
 const DASI_ITEMS = [
-  { en: "Take care of yourself (eating, dressing, bathing, using the toilet)?", zh: "照顾自己（如进食、穿衣、洗澡、如厕）？", w: 2.75 },
-  { en: "Walk indoors, such as around your house?", zh: "在室内走动，例如在家里走动？", w: 1.75 },
-  { en: "Walk 1-2 blocks on level ground?", zh: "在平地上走1-2个街区？", w: 2.75 },
-  { en: "Climb a flight of stairs or walk up a hill?", zh: "爬一段楼梯或走上坡路？", w: 5.50 },
-  { en: "Run a short distance?", zh: "跑一小段距离？", w: 8.00 },
-  { en: "Do light work around the house (dusting, washing dishes)?", zh: "做轻家务（如掸灰、洗碗）？", w: 2.70 },
-  { en: "Do moderate work around the house (vacuuming, sweeping, carrying groceries)?", zh: "做中等家务（如吸尘、扫地、提杂货）？", w: 3.50 },
-  { en: "Do heavy work around the house (scrubbing floors, lifting heavy furniture)?", zh: "做繁重家务（如刷洗地板、搬动重家具）？", w: 8.00 },
-  { en: "Do yard work (raking leaves, weeding, pushing a mower)?", zh: "做院子工作（如耙树叶、除草、推割草机）？", w: 4.50 },
-  { en: "Engage in sexual relations?", zh: "进行性生活？", w: 5.25 },
-  { en: "Participate in moderate recreational activities (golf, doubles tennis, dancing)?", zh: "参与中等强度的休闲活动（如高尔夫、双打网球、跳舞）？", w: 6.00 },
-  { en: "Participate in strenuous sports (swimming, singles tennis, football, basketball)?", zh: "参与剧烈运动（如游泳、单打网球、足球、篮球）？", w: 7.50 },
-].map((it, i) => ({ id: `dasi_${i}`, text: bi(it.en, it.zh), weight: it.w, options: [bi("Yes", "是"), bi("No", "否")] }));
-function dasiScore(answers) { return DASI_ITEMS.reduce((sum, it) => sum + (answers[it.id] === "Yes" ? it.weight : 0), 0); }
+  { en: "Are you able to take care of yourself (eating, dressing, bathing, using the toilet)?", zh: "您能否照顾自己（如进食、穿衣、洗澡、如厕）？", w: 2.75 },
+  { en: "Are you able to walk indoors, such as around your house?", zh: "您能否在室内走动，例如在家里走动？", w: 1.75 },
+  { en: "Are you able to walk 1-2 blocks on level ground?", zh: "您能否在平地上走1-2个街区？", w: 2.75 },
+  { en: "Are you able to climb a flight of stairs or walk up a hill?", zh: "您能否爬一段楼梯或走上坡路？", w: 5.50 },
+  { en: "Are you able to run a short distance?", zh: "您能否跑一小段距离？", w: 8.00 },
+  { en: "Are you able to do light work around the house (dusting, washing dishes)?", zh: "您能否做轻家务（如掸灰、洗碗）？", w: 2.70 },
+  { en: "Are you able to do moderate work around the house (vacuuming, sweeping, carrying groceries)?", zh: "您能否做中等家务（如吸尘、扫地、提杂货）？", w: 3.50 },
+  { en: "Are you able to do heavy work around the house (scrubbing floors, lifting heavy furniture)?", zh: "您能否做繁重家务（如刷洗地板、搬动重家具）？", w: 8.00 },
+  { en: "Are you able to do yard work (raking leaves, weeding, pushing a mower)?", zh: "您能否做院子工作（如耙树叶、除草、推割草机）？", w: 4.50 },
+  { en: "Are you able to engage in sexual relations?", zh: "您能否进行性生活？", w: 5.25 },
+  { en: "Are you able to participate in moderate recreational activities (golf, doubles tennis, dancing)?", zh: "您能否参与中等强度的休闲活动（如高尔夫、双打网球、跳舞）？", w: 6.00 },
+  { en: "Are you able to participate in strenuous sports (swimming, singles tennis, football, basketball)?", zh: "您能否参与剧烈运动（如游泳、单打网球、足球、篮球）？", w: 7.50 },
+].map((it, i) => ({ id: `dasi_${i}`, text: bi(it.en, it.zh), weight: it.w, options: [bi("Able", "能"), bi("Not able", "不能")] }));
+// Answers are stored by their English label, so this MUST stay in step with the
+// option labels above. "Yes" is still accepted so any assessment recorded before
+// the wording change still scores correctly instead of silently becoming zero.
+function dasiScore(answers) {
+  return DASI_ITEMS.reduce((sum, it) => {
+    const v = answers[it.id];
+    return sum + (v === "Able" || v === "Yes" ? it.weight : 0);
+  }, 0);
+}
 function dasiSeverity(score) {
   if (score >= 34) return { label: bi("Good functional capacity", "良好的功能能力"), color: C.green };
   return { label: bi("Reduced functional capacity", "功能能力下降"), color: C.orange };
@@ -662,6 +712,14 @@ const TRIGGER_RULES = [
   { id: "T007", when: (d) => d.physical <= 50, instrument: "dasi", label: bi("Functional capacity check", "功能能力评估") },
 ];
 
+// Roughly how long each follow-up takes, so we can tell the patient honestly
+// before they agree to it rather than after.
+const INSTRUMENT_MINUTES = { iief5: 1, ipss: 2, adam: 2, dass: 4, dasi: 2 };
+function stepsForInstruments(keys) {
+  const steps = [];
+  keys.forEach((key) => INSTRUMENTS[key].items.forEach((it) => steps.push({ kind: "branch", instrumentKey: key, ...it })));
+  return steps;
+}
 function buildBranchSteps(domainScores, rawAnswers) {
   const steps = [];
   const fired = new Set();
@@ -1226,11 +1284,11 @@ function HomePage({ lang, setLang, onStart, onAdminClick, onLegalClick }) {
           {tr(lang, "A private, doctor-designed check-up across six key areas of men's health, using the same validated screening tools clinics use, done in a few minutes on your own phone.", "一份私密、由医生设计的健康自测，涵盖男性健康六大关键领域，采用诊所临床所用的验证工具，只需在自己的手机上花几分钟完成。")}
         </div>
       </div>
-      <div style={{ display: "flex", gap: 8, marginBottom: 18 }}>
+      <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
         {[
           { num: "6", label: tr(lang, "Areas covered", "涵盖领域") },
-          { num: "17", label: tr(lang, "Questions", "问题") },
-          { num: "5-8", label: tr(lang, "Minutes", "分钟") },
+          { num: "17", label: tr(lang, "Core questions", "核心问题") },
+          { num: "5-12", label: tr(lang, "Minutes", "分钟") },
         ].map((s, i) => (
           <div key={i} style={{ flex: 1, background: C.panel, border: `1px solid ${C.border}`, borderRadius: 14, padding: "12px 8px", textAlign: "center" }}>
             <div className="disp" style={{ fontSize: 20, fontWeight: 900, color: C.blueDeep }}>{s.num}</div>
@@ -1369,6 +1427,20 @@ function categoryInfoForStep(steps, step) {
   return { label: bi("Health Foundation (Optional)", "健康基础资料（可选）"), icon: "🩺", desc: bi("If you have recent numbers handy, great — otherwise skip and fill in anytime.", "如果你手边有最近的数据，很好——否则可以跳过，之后随时补充。") };
 }
 
+// Where the patient is, counted in SECTIONS rather than raw question number.
+// Showing "63" to someone who was told the check-up is 17 questions is what made
+// testers feel it dragged; "Section 4 of 6" is honest and finite.
+function sectionPositionForStep(steps, step) {
+  let count = 0, current = 1, prev = null;
+  for (let i = 0; i < steps.length; i++) {
+    const info = categoryInfoForStep(steps, i);
+    const key = info ? t(info.label, "en") : "";
+    if (key !== prev) { count++; prev = key; }
+    if (i === step) current = count;
+  }
+  return { current, total: count };
+}
+
 /* ============================================================
    TRANSITIONS / CELEBRATION
    ============================================================ */
@@ -1388,9 +1460,14 @@ function CategoryTransition({ info, lang, onContinue }) {
   );
 }
 function VitalitySummaryScreen({ data, lang, onContinue }) {
+  const [chosen, setChosen] = useState([]);
   if (!data) return null;
-  const { overall, priorities, triggeredNames } = data;
+  const { overall, priorities, autoKeys = [], optionalKeys = [] } = data;
   const cat = vitalityCategory(overall);
+  const autoInstr = autoKeys[0] ? INSTRUMENTS[autoKeys[0]] : null;
+  const autoMins = autoKeys[0] ? INSTRUMENT_MINUTES[autoKeys[0]] : 0;
+  const toggle = (k) => setChosen((c) => c.includes(k) ? c.filter((x) => x !== k) : [...c, k]);
+  const extraMins = chosen.reduce((a, k) => a + (INSTRUMENT_MINUTES[k] || 2), 0);
   return (
     <div style={{ position: "fixed", inset: 0, background: `linear-gradient(155deg, ${C.blueDeep}, ${C.blue})`, zIndex: 55, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#fff", padding: "0 24px", overflowY: "auto" }}>
       <div style={{ textAlign: "center", marginBottom: 10 }}><Logo size={40} variant="white" /></div>
@@ -1407,16 +1484,51 @@ function VitalitySummaryScreen({ data, lang, onContinue }) {
           {tr3(lang, `Your top area to focus on is ${t(priorities[0].label, lang)}.`, `你最需要关注的方面是${t(priorities[0].label, lang)}。`, `Bidang utama untuk fokus ialah ${t(priorities[0].label, lang)}.`)}
         </div>
       )}
-      {triggeredNames.length > 0 ? (
-        <div style={{ fontSize: 14.5, opacity: 0.9, textAlign: "center", marginBottom: 22, maxWidth: 380, lineHeight: 1.5 }}>
-          {tr3(lang, "To understand this better, we'll now go through a few short, validated screening questionnaires.", "为了更深入了解，我们接下来将进行几份简短且经过验证的筛查问卷。", "Untuk memahami dengan lebih baik, kami akan menjalankan beberapa soal selidik saringan yang ringkas dan disahkan.")}
+      {autoInstr ? (
+        <div style={{ fontSize: 14, opacity: 0.92, textAlign: "center", marginBottom: 14, maxWidth: 400, lineHeight: 1.5 }}>
+          {tr3(lang,
+            `We'll ask ${INSTRUMENTS[autoKeys[0]].items.length} short follow-up questions about this area — about ${autoMins} minute${autoMins > 1 ? "s" : ""}.`,
+            `我们将就这一方面提出 ${INSTRUMENTS[autoKeys[0]].items.length} 个简短的后续问题——大约 ${autoMins} 分钟。`,
+            `Kami akan bertanya ${INSTRUMENTS[autoKeys[0]].items.length} soalan susulan ringkas tentang bidang ini — kira-kira ${autoMins} minit.`)}
         </div>
       ) : (
         <div style={{ fontSize: 15, opacity: 0.92, textAlign: "center", marginBottom: 22, maxWidth: 340 }}>
           {tr3(lang, "You're doing well across every area — just a few lifestyle questions to go.", "你在各方面的表现都不错——只剩下几个生活方式问题了。", "Anda menunjukkan prestasi baik di semua bidang — tinggal beberapa soalan gaya hidup lagi.")}
         </div>
       )}
-      <button onClick={onContinue} className="blink-btn" style={{ padding: "16px 40px", borderRadius: 30, background: "#fff", border: "none", color: C.blueDeep, fontWeight: 900, fontSize: 16, cursor: "pointer", boxShadow: "0 10px 26px rgba(0,0,0,0.25)" }}>
+
+      {optionalKeys.length > 0 && (
+        <div style={{ width: "100%", maxWidth: 420, marginBottom: 18 }}>
+          <div style={{ fontSize: 12.5, opacity: 0.85, textAlign: "center", marginBottom: 10, lineHeight: 1.5 }}>
+            {tr3(lang,
+              "Optional — you can also look more closely at these. Skip any you'd rather not do.",
+              "可选——你也可以更深入了解以下方面。不想做的可以跳过。",
+              "Pilihan — anda juga boleh melihat bidang ini dengan lebih dekat. Langkau mana-mana yang anda tidak mahu.")}
+          </div>
+          {optionalKeys.map((k) => {
+            const on = chosen.includes(k);
+            const mins = INSTRUMENT_MINUTES[k] || 2;
+            return (
+              <button key={k} onClick={() => toggle(k)} style={{ width: "100%", textAlign: "left", display: "flex", alignItems: "center", gap: 10, padding: "11px 13px", marginBottom: 7, borderRadius: 12, cursor: "pointer", background: on ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.08)", border: `1.5px solid ${on ? "#fff" : "rgba(255,255,255,0.35)"}`, color: "#fff" }}>
+                <span style={{ width: 19, height: 19, borderRadius: 5, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 900, background: on ? "#fff" : "transparent", color: C.blueDeep, border: on ? "none" : "1.5px solid rgba(255,255,255,0.6)" }}>{on ? "✓" : ""}</span>
+                <span style={{ flex: 1, minWidth: 0 }}>
+                  <span style={{ display: "block", fontSize: 13, fontWeight: 800 }}>{t(INSTRUMENTS[k].name, lang)}</span>
+                  <span style={{ display: "block", fontSize: 11, opacity: 0.8 }}>
+                    {tr3(lang, `${INSTRUMENTS[k].items.length} questions · ~${mins} min`, `${INSTRUMENTS[k].items.length} 题 · 约 ${mins} 分钟`, `${INSTRUMENTS[k].items.length} soalan · ~${mins} min`)}
+                  </span>
+                </span>
+              </button>
+            );
+          })}
+          {extraMins > 0 && (
+            <div style={{ fontSize: 11.5, opacity: 0.8, textAlign: "center", marginTop: 2 }}>
+              {tr3(lang, `Adds about ${extraMins} minutes.`, `将增加约 ${extraMins} 分钟。`, `Menambah kira-kira ${extraMins} minit.`)}
+            </div>
+          )}
+        </div>
+      )}
+
+      <button onClick={() => onContinue(chosen)} className="blink-btn" style={{ padding: "16px 40px", borderRadius: 30, background: "#fff", border: "none", color: C.blueDeep, fontWeight: 900, fontSize: 16, cursor: "pointer", boxShadow: "0 10px 26px rgba(0,0,0,0.25)" }}>
         {tr3(lang, "Continue →", "继续 →", "Teruskan →")}
       </button>
     </div>
@@ -1453,12 +1565,15 @@ function CelebrationScreen({ lang, name, onViewReport }) {
 function StickyHeader({ steps, step, lang }) {
   const info = categoryInfoForStep(steps, step);
   const color = info.color || C.blueDeep;
+  const pos = sectionPositionForStep(steps, step);
   return (
     <div style={{ paddingBottom: 4 }}>
       <div className="glow-pulse" style={{ display: "flex", alignItems: "center", gap: 8, background: `${color}12`, border: `2px solid ${color}`, borderRadius: 10, padding: "6px 10px" }}>
-        <div style={{ width: 22, height: 22, borderRadius: 6, background: color, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 11, flexShrink: 0 }}>{step + 1}</div>
         <span style={{ fontSize: 16 }}>{info.icon}</span>
-        <span style={{ fontSize: 11.5, fontWeight: 800, color }}>{t(info.label, lang).toUpperCase()}</span>
+        <span style={{ fontSize: 11.5, fontWeight: 800, color, flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{t(info.label, lang).toUpperCase()}</span>
+        <span style={{ fontSize: 10.5, fontWeight: 800, color, opacity: 0.85, flexShrink: 0 }}>
+          {tr3(lang, `Section ${pos.current} of ${pos.total}`, `第 ${pos.current} / ${pos.total} 部分`, `Bahagian ${pos.current} drpd ${pos.total}`)}
+        </span>
       </div>
     </div>
   );
@@ -1483,6 +1598,19 @@ function LivelyProgress({ step, total, lang }) {
    INTAKE QUESTION RENDERING
    ============================================================ */
 function QText({ text, lang }) { return <div style={{ fontSize: 17, fontWeight: 800, color: C.ink, lineHeight: 1.3, marginBottom: 6 }}>{t(text, lang)}</div>; }
+// Plain-language gloss shown UNDER a question. Used where a validated
+// instrument's official wording contains English idiom that Malaysian patients
+// told us they did not understand ("touchy", "nervous energy"). The scored item
+// itself is never reworded — doing that would invalidate the instrument's
+// published severity cut-offs — so the hint sits alongside it instead.
+function QHint({ hint, lang }) {
+  if (!hint) return null;
+  return (
+    <div style={{ fontSize: 12.5, color: C.mid, lineHeight: 1.45, marginBottom: 8, fontStyle: "italic" }}>
+      {t(hint, lang)}
+    </div>
+  );
+}
 function QPeriod({ period, lang, color }) {
   if (!period) return null;
   return <div style={{ fontSize: 15, fontWeight: 700, color: color || C.blueDeep, marginBottom: 6 }}>{t(period, lang)}</div>;
@@ -1562,6 +1690,7 @@ function IntakeFlow({ steps, step, lang, answers, branchAnswers, risk, foundatio
     return (
       <div>
         <QText text={s.text} lang={lang} />
+        <QHint hint={s.hint} lang={lang} />
         {isScored
           ? <OptionList options={s.options} lang={lang} scoreMode selectedScore={instrAns[s.id]} color={color} onPick={(i) => pickBranch(s.instrumentKey, s.id, s.options[i].score)} />
           : <OptionList options={s.options} lang={lang} selectedLabel={instrAns[s.id]} color={color} onPick={(i) => pickBranch(s.instrumentKey, s.id, s.options[i].en)} />}
@@ -1659,6 +1788,8 @@ function PatientReport({ results, demo, lang, onOpenFullReport }) {
 
       {ai && <Card style={{ marginBottom: 18 }}><Body lang={lang} en={ai.summary} zh={ai.summary} /></Card>}
 
+      <ScoreMeaning overall={domainResults.overall} lang={lang} />
+
       <SectionLabel lang={lang} en="Your Vitality Snapshot" zh="你的活力概览" />
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 18 }}>
         {domainResults.domains.map((d) => {
@@ -1743,6 +1874,8 @@ function PatientReport({ results, demo, lang, onOpenFullReport }) {
         </div>
       </Card>
 
+      <NextStepCTA lang={lang} compact />
+
       <Card style={{ background: C.panel2 }}>
         <div style={{ fontSize: 11.5, color: C.mid, lineHeight: 1.5 }}>
           {tr(lang, "The Men's Vitality Index is an assessment tool designed to support health awareness and discussion. It is not a diagnostic tool and does not replace medical consultation.", "男性活力指数是一项旨在支持健康意识与讨论的评估工具。它并非诊断工具，也不能取代专业医疗咨询。")}
@@ -1804,11 +1937,107 @@ function RadarChart({ domains, lang, size = 280 }) {
     </svg>
   );
 }
+// R Clinic's WhatsApp. Prof. Stanley: the first call to action should be to
+// consult us, and only then their own doctor.
+const CLINIC_WHATSAPP = "https://wa.me/601110860488";
+const chapterId = (label) => "mvi-ch-" + t(label, "en").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
+function NextStepCTA({ lang, compact }) {
+  return (
+    <Card style={{ marginBottom: 16, background: `linear-gradient(155deg, ${C.blueDeep}, ${C.blue})`, border: "none", padding: compact ? 18 : 24, textAlign: "center" }}>
+      <div className="disp" style={{ fontSize: compact ? 16 : 19, fontWeight: 900, color: "#fff", marginBottom: 6 }}>
+        {tr3(lang, "What to do next", "接下来该怎么做", "Apa langkah seterusnya")}
+      </div>
+      <div style={{ fontSize: 12.5, color: "#dceafb", lineHeight: 1.55, marginBottom: 14 }}>
+        {tr3(lang,
+          "These results are a starting point for a conversation, not a diagnosis. The most useful next step is to talk them through with a doctor.",
+          "这些结果是展开对话的起点，而非诊断。最有帮助的下一步，是与医生一起讨论这些结果。",
+          "Keputusan ini ialah titik permulaan untuk perbincangan, bukan diagnosis. Langkah paling berguna ialah membincangkannya dengan doktor.")}
+      </div>
+      <a href={CLINIC_WHATSAPP} target="_blank" rel="noopener noreferrer"
+        style={{ display: "block", padding: "15px 18px", borderRadius: 14, background: "#25D366", color: "#fff", fontWeight: 900, fontSize: 15, textDecoration: "none", marginBottom: 10 }}>
+        {tr3(lang, "Talk to us on WhatsApp", "透过 WhatsApp 联系我们", "Hubungi kami di WhatsApp")}
+      </a>
+      <div style={{ fontSize: 11.5, color: "#9DB3C9", lineHeight: 1.5 }}>
+        {tr3(lang,
+          "You can also bring this report to your own doctor at your next visit.",
+          "你也可以在下次就诊时，将这份报告带给你自己的医生。",
+          "Anda juga boleh membawa laporan ini kepada doktor anda sendiri pada lawatan seterusnya.")}
+      </div>
+    </Card>
+  );
+}
+
+// Testers asked "is 50 good or bad for someone my age?". We have no population
+// norms for MVI, and inventing a benchmark in a clinical tool is not an option,
+// so we explain the bands honestly instead of comparing against a made-up average.
+function ScoreMeaning({ overall, lang }) {
+  const rows = [
+    { min: 90, label: bi("Excellent", "优秀"), note: bi("Very few areas need attention.", "几乎没有需要关注的方面。") },
+    { min: 75, label: bi("Good", "良好"), note: bi("Generally well, with room to fine-tune.", "整体良好，仍有微调空间。") },
+    { min: 60, label: bi("Fair", "一般"), note: bi("Some areas worth looking at.", "有些方面值得留意。") },
+    { min: 40, label: bi("Needs Attention", "需要关注"), note: bi("Several areas are pulling your score down.", "有多个方面拉低了你的分数。") },
+    { min: 0,  label: bi("Priority", "优先处理"), note: bi("Worth discussing with a doctor soon.", "建议尽快与医生讨论。") },
+  ];
+  const mine = rows.find((r) => overall >= r.min) || rows[rows.length - 1];
+  return (
+    <Card style={{ marginBottom: 18 }}>
+      <div style={{ fontSize: 12, fontWeight: 800, color: C.ink, marginBottom: 8 }}>
+        {tr3(lang, "What this score means", "这个分数代表什么", "Apa maksud skor ini")}
+      </div>
+      {rows.map((r, i) => {
+        const isMine = r.label.en === mine.label.en;
+        return (
+          <div key={i} style={{ display: "flex", gap: 10, alignItems: "baseline", padding: "6px 8px", borderRadius: 8, background: isMine ? `${C.blueDeep}12` : "transparent", border: isMine ? `1px solid ${C.blueDeep}55` : "1px solid transparent", marginBottom: 3 }}>
+            <span style={{ fontSize: 11, fontWeight: 800, color: C.mid, width: 52, flexShrink: 0 }}>{r.min === 0 ? "0-39" : `${r.min}+`}</span>
+            <span style={{ fontSize: 12.5, fontWeight: isMine ? 900 : 700, color: C.ink, width: 108, flexShrink: 0 }}>{t(r.label, lang)}</span>
+            <span style={{ fontSize: 11.5, color: C.mid, lineHeight: 1.4 }}>{t(r.note, lang)}</span>
+          </div>
+        );
+      })}
+      <div style={{ fontSize: 10.5, color: C.dim, marginTop: 8, lineHeight: 1.5 }}>
+        {tr3(lang,
+          "These bands describe your own answers. They are not a comparison against an average for your age — no such reference exists for this tool yet.",
+          "这些分级描述的是你自己的回答，并非与同龄人的平均值比较——本工具目前尚无此类参考数据。",
+          "Pita ini menerangkan jawapan anda sendiri. Ia bukan perbandingan dengan purata untuk umur anda — rujukan sedemikian belum wujud untuk alat ini.")}
+      </div>
+    </Card>
+  );
+}
+
 function ChapterBanner({ color, icon, label, lang }) {
   return (
-    <div style={{ background: `linear-gradient(155deg, ${color}, ${color}CC)`, borderRadius: 20, padding: "34px 24px", textAlign: "center", color: "#fff", marginBottom: 18, marginTop: 26, boxShadow: `0 14px 30px -10px ${color}88` }}>
+    <div id={chapterId(label)} style={{ background: `linear-gradient(155deg, ${color}, ${color}CC)`, borderRadius: 20, padding: "34px 24px", textAlign: "center", color: "#fff", marginBottom: 18, marginTop: 26, boxShadow: `0 14px 30px -10px ${color}88`, scrollMarginTop: 12 }}>
       <div style={{ fontSize: 40, marginBottom: 8 }}>{icon}</div>
       <div className="disp" style={{ fontSize: 24, fontWeight: 900 }}>{t(label, lang)}</div>
+    </div>
+  );
+}
+// Two visually distinct blocks per chapter — findings on a neutral ground,
+// actions on the domain's own colour. Testers said the report read as one long
+// undifferentiated wall and they could not tell a finding from a suggestion.
+function GroupHeader({ label, sub, color, lang }) {
+  return (
+    <div style={{ marginTop: 18, marginBottom: 8 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <span style={{ width: 4, height: 18, borderRadius: 2, background: color, flexShrink: 0 }} />
+        <span style={{ fontSize: 12.5, fontWeight: 900, letterSpacing: "0.05em", color }}>{t(label, lang).toUpperCase()}</span>
+      </div>
+      {sub && <div style={{ fontSize: 11, color: C.dim, marginTop: 3, marginLeft: 12 }}>{t(sub, lang)}</div>}
+    </div>
+  );
+}
+// Background reading is worth having but does not need to be in the reader's
+// face — it is collapsed so the chapter opens on the score and the actions.
+function ReadMore({ label, lang, children }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mvi-readmore" style={{ marginBottom: 14 }}>
+      <button onClick={() => setOpen(!open)} className="no-print" style={{ width: "100%", textAlign: "left", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, padding: "11px 14px", borderRadius: 12, background: C.panel, border: `1px solid ${C.border}`, color: C.blueDeep, fontWeight: 700, fontSize: 12.5, cursor: "pointer" }}>
+        <span>{t(label, lang)}</span>
+        <span style={{ fontSize: 11, opacity: 0.7 }}>{open ? "▲" : "▼"}</span>
+      </button>
+      <div className={open ? "" : "mvi-collapsed"} style={{ display: open ? "block" : "none", marginTop: 10 }}>{children}</div>
     </div>
   );
 }
@@ -1823,19 +2052,7 @@ function DomainChapter({ d, lang }) {
         <div style={{ fontSize: 32, fontWeight: 900, color: d.color }}>{d.score ?? "—"}</div>
         {dcat && <div style={{ fontSize: 12, fontWeight: 700, color: dcat.color, marginTop: 3 }}>{t(dcat.label, lang)}</div>}
       </Card>
-      <SectionLabel lang={lang} en="About This Area" zh="关于此方面" color={d.color} />
-      <Card style={{ marginBottom: 14 }}><Body lang={lang} en={edu.about.en} zh={edu.about.zh} /></Card>
-      <SectionLabel lang={lang} en="Why It Matters" zh="为什么重要" color={d.color} />
-      <Card style={{ marginBottom: 14 }}><Body lang={lang} en={edu.why.en} zh={edu.why.zh} /></Card>
-      <SectionLabel lang={lang} en="What Helps" zh="有帮助的做法" color={d.color} />
-      <Card style={{ marginBottom: 14 }}>
-        {edu.helps.map((x, i) => <div key={i} style={{ display: "flex", gap: 8, padding: "5px 0", fontSize: 13 }}><span style={{ color: d.color }}>✓</span>{t(x, lang)}</div>)}
-      </Card>
-      <SectionLabel lang={lang} en="Food Sources to Explore" zh="可尝试的食物来源" color={d.color} />
-      <Card style={{ marginBottom: 14 }}>
-        {edu.foods.map((x, i) => <div key={i} style={{ display: "flex", gap: 8, padding: "5px 0", fontSize: 13 }}><span style={{ color: d.color }}>●</span>{t(x, lang)}</div>)}
-      </Card>
-      <SectionLabel lang={lang} en="Your Answers, Explained" zh="你的答案详解" color={d.color} />
+      <GroupHeader label={bi("What we found", "我们的发现")} sub={bi("Your answers in this area", "你在此方面的回答")} color={C.mid} lang={lang} />
       {d.drivers.map((q) => {
         const score = d.scores ? d.scores[q.id] : undefined;
         return (
@@ -1845,6 +2062,22 @@ function DomainChapter({ d, lang }) {
           </Card>
         );
       })}
+
+      <GroupHeader label={bi("What you can do", "你可以怎么做")} sub={bi("Practical steps for this area", "针对此方面的具体做法")} color={d.color} lang={lang} />
+      <Card style={{ marginBottom: 10, background: `${d.color}0D`, borderColor: d.color }}>
+        {edu.helps.map((x, i) => <div key={i} style={{ display: "flex", gap: 8, padding: "5px 0", fontSize: 13 }}><span style={{ color: d.color, fontWeight: 900 }}>✓</span>{t(x, lang)}</div>)}
+      </Card>
+      <Card style={{ marginBottom: 14, background: `${d.color}0D`, borderColor: d.color }}>
+        <div style={{ fontSize: 11.5, fontWeight: 800, color: d.color, marginBottom: 6 }}>{tr(lang, "FOOD SOURCES TO EXPLORE", "可尝试的食物来源")}</div>
+        {edu.foods.map((x, i) => <div key={i} style={{ display: "flex", gap: 8, padding: "4px 0", fontSize: 13 }}><span style={{ color: d.color }}>●</span>{t(x, lang)}</div>)}
+      </Card>
+
+      <ReadMore label={bi("Read more about this area", "了解更多关于此方面")} lang={lang}>
+        <SectionLabel lang={lang} en="About This Area" zh="关于此方面" color={d.color} />
+        <Card style={{ marginBottom: 12 }}><Body lang={lang} en={edu.about.en} zh={edu.about.zh} /></Card>
+        <SectionLabel lang={lang} en="Why It Matters" zh="为什么重要" color={d.color} />
+        <Card><Body lang={lang} en={edu.why.en} zh={edu.why.zh} /></Card>
+      </ReadMore>
     </div>
   );
 }
@@ -1882,9 +2115,14 @@ const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/REPLACE_WITH_YOUR_LINK";
 // same way, just priced at $6.90, with the same after-payment redirect.
 const STRIPE_PAYMENT_LINK_REFERRAL = "https://buy.stripe.com/REPLACE_WITH_YOUR_REFERRAL_LINK";
 const REFERRAL_CODE = "DOCTOR";
-const REGULAR_PRICE = 9.90;
-const REFERRAL_PRICE = 6.90;
-const ORIGINAL_PRICE = 19.90;
+// toyyibPay settles in Malaysian Ringgit only — it cannot charge USD — so the
+// report is priced in MYR. Converted from the intended USD 9.90 / 6.90 / 19.90
+// at 1 USD = 4.026 MYR (26 Aug 2026) and rounded to natural price points.
+const CURRENCY = "RM";
+const CURRENCY_CODE = "MYR";
+const REGULAR_PRICE = 39.90;
+const REFERRAL_PRICE = 27.90;
+const ORIGINAL_PRICE = 79.90;
 // Payment is not live yet (the Stripe account is still paused). While this is
 // false the checkout screen renders as a clearly-labelled preview: no card
 // details are requested, nothing is charged, and the Full Report opens for
@@ -1983,9 +2221,9 @@ function CheckoutPage({ results, demo, lang, setLang, onBack, onUnlock }) {
           <div key={i} style={{ display: "flex", gap: 8, padding: "5px 0", fontSize: 12, color: "#dceafb" }}><span style={{ color: "#6EEBFF" }}>✓</span>{t(b, lang)}</div>
         ))}
         <div style={{ marginTop: 14, display: "flex", alignItems: "baseline", gap: 10 }}>
-          <span style={{ fontSize: 16, color: "#9DB3C9", textDecoration: "line-through" }}>${ORIGINAL_PRICE.toFixed(2)}</span>
-          <span style={{ fontSize: 30, fontWeight: 900, color: "#6EEBFF" }}>${price.toFixed(2)}</span>
-          <span style={{ fontSize: 11, color: "#9DB3C9" }}>USD {tr(lang, "one-time", "一次性")}</span>
+          <span style={{ fontSize: 16, color: "#9DB3C9", textDecoration: "line-through" }}>{CURRENCY}{ORIGINAL_PRICE.toFixed(2)}</span>
+          <span style={{ fontSize: 30, fontWeight: 900, color: "#6EEBFF" }}>{CURRENCY}{price.toFixed(2)}</span>
+          <span style={{ fontSize: 11, color: "#9DB3C9" }}>{CURRENCY_CODE} {tr(lang, "one-time", "一次性")}</span>
         </div>
         {previewMode && (
           <div style={{ marginTop: 10, display: "inline-block", background: "rgba(124,245,160,0.14)", border: "1px solid #7CF5A0", borderRadius: 8, padding: "5px 10px", fontSize: 11, fontWeight: 800, color: "#7CF5A0" }}>
@@ -2019,7 +2257,7 @@ function CheckoutPage({ results, demo, lang, setLang, onBack, onUnlock }) {
         style={{ width: "100%", padding: "18px", borderRadius: 14, background: `linear-gradient(135deg, ${C.blueDeep}, ${C.blue})`, border: "none", color: "#fff", fontWeight: 800, fontSize: 16, cursor: "pointer" }}>
         {previewMode
           ? tr(lang, "Continue to My Full Report →", "继续查看完整报告 →")
-          : tr(lang, `Pay with Card — $${price.toFixed(2)}`, `以信用卡付款 — $${price.toFixed(2)}`)}
+          : tr(lang, `Pay ${CURRENCY}${price.toFixed(2)}`, `付款 ${CURRENCY}${price.toFixed(2)}`)}
       </button>
       <div style={{ fontSize: 10.5, color: C.dim, marginTop: 10, textAlign: "center", lineHeight: 1.5 }}>
         {previewMode
@@ -2029,6 +2267,36 @@ function CheckoutPage({ results, demo, lang, setLang, onBack, onUnlock }) {
     </div>
   );
 }
+/* ============================================================
+   PRINT / PDF EXPORT
+   The Full Report is 11 chapters long, so it is exported through the
+   browser's own print-to-PDF rather than a canvas library. That gives
+   real multi-page output with automatic page breaks and selectable,
+   searchable text, at a fraction of the file size — and it works on
+   iPhone (Share -> Print -> Save to Files) and Android.
+   ============================================================ */
+const MVI_PRINT_CSS = `
+@media print {
+  @page { size: A4; margin: 14mm 12mm; }
+  html, body { background: #fff !important; }
+  /* Isolate the report: hide everything, then reveal only the report. */
+  body * { visibility: hidden !important; }
+  #full-report-print, #full-report-print * { visibility: visible !important; }
+  #full-report-print {
+    position: absolute !important; left: 0 !important; top: 0 !important;
+    width: 100% !important; max-width: none !important;
+    margin: 0 !important; padding: 0 !important;
+  }
+  .no-print, .no-print * { display: none !important; visibility: hidden !important; }
+  /* A section the reader collapsed on screen must still be in the PDF —
+     the printed report has to be complete. */
+  .mvi-collapsed { display: block !important; }
+  /* Keep the brand colours instead of printing everything white. */
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  /* Don't strand a heading at the bottom of a page. */
+  h1, h2, h3, .disp { break-after: avoid-page; page-break-after: avoid; }
+}
+`;
 function FullReportPage({ results, demo, lang, setLang, onBack }) {
   const { domainResults, priorities, ai, branchResults, bmi, foundation } = results;
   const cat = vitalityCategory(domainResults.overall);
@@ -2038,11 +2306,24 @@ function FullReportPage({ results, demo, lang, setLang, onBack }) {
     return r.severity && !/No ED|Negative|Normal|Good functional/i.test(t(r.severity.label, "en"));
   });
   return (
-    <div>
-      <TopBar lang={lang} setLang={setLang} showLogo={false} />
-      <button onClick={onBack} style={{ marginBottom: 16, padding: "10px 16px", borderRadius: 10, background: C.panel2, border: `1px solid ${C.border}`, color: C.blueDeep, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
-        ← {tr(lang, "Back to Summary", "返回摘要")}
-      </button>
+    <div id="full-report-print">
+      <style>{MVI_PRINT_CSS}</style>
+      <div className="no-print">
+        <TopBar lang={lang} setLang={setLang} showLogo={false} />
+        <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
+          <button onClick={onBack} style={{ padding: "10px 16px", borderRadius: 10, background: C.panel2, border: `1px solid ${C.border}`, color: C.blueDeep, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
+            ← {tr(lang, "Back to Summary", "返回摘要")}
+          </button>
+          <button onClick={() => window.print()} style={{ padding: "10px 16px", borderRadius: 10, background: `linear-gradient(135deg, ${C.blueDeep}, ${C.blue})`, border: "none", color: "#fff", fontWeight: 800, fontSize: 13, cursor: "pointer" }}>
+            ⤓ {tr(lang, "Save as PDF", "保存为 PDF")}
+          </button>
+        </div>
+        <div style={{ fontSize: 11, color: C.dim, marginBottom: 14, lineHeight: 1.5 }}>
+          {tr(lang,
+            "On a phone: tap Save as PDF, then choose \u201cSave as PDF\u201d or \u201cSave to Files\u201d in the print screen.",
+            "手机操作：点击「保存为 PDF」，然后在打印页面选择「储存为 PDF」或「储存到文件」。")}
+        </div>
+      </div>
       <div style={{ textAlign: "center", marginBottom: 8 }}><Logo size={70} /></div>
       <Card style={{ textAlign: "center", background: `linear-gradient(155deg, ${C.blueDeep}, ${C.blue})`, border: "none", marginBottom: 20, padding: 28 }}>
         <div style={{ fontSize: 10.5, color: "#cfe4fb", fontWeight: 700, letterSpacing: "0.1em", marginBottom: 8 }}>{tr(lang, "PERSONAL & CONFIDENTIAL", "个人保密文件")}</div>
@@ -2053,9 +2334,10 @@ function FullReportPage({ results, demo, lang, setLang, onBack }) {
       <SectionLabel lang={lang} en="Table of Contents" zh="目录" />
       <Card style={{ marginBottom: 20 }}>
         {[bi("Executive Summary", "摘要总览"), bi("Key Overview", "重点概览"), bi("The Science Behind Your Score", "你的分数背后的科学依据"), ...DOMAINS.map((d) => d.label), bi("Risk & Safety Findings", "风险与安全发现"), bi("Your 90-Day Self-Check", "你的90天自我检查")].map((x, i) => (
-          <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "7px 0", fontSize: 13, borderBottom: i < 9 ? `1px solid ${C.border}` : "none" }}>
-            <span>{t(x, lang)}</span><span style={{ color: C.dim }}>{i + 1}</span>
-          </div>
+          <button key={i} onClick={() => { const el = document.getElementById(chapterId(x)); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+            style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, padding: "10px 6px", fontSize: 13, background: "transparent", border: "none", borderBottom: i < 9 ? `1px solid ${C.border}` : "none", color: C.blueDeep, fontWeight: 600, textAlign: "left", cursor: "pointer" }}>
+            <span>{t(x, lang)}</span><span style={{ color: C.dim, fontSize: 11 }}>›</span>
+          </button>
         ))}
       </Card>
 
@@ -2140,6 +2422,8 @@ function FullReportPage({ results, demo, lang, setLang, onBack }) {
 
       <ChapterBanner color={C.amber} icon="📅" label={bi("Your 90-Day Self-Check", "你的90天自我检查")} lang={lang} />
       <SelfCheckTracker lang={lang} />
+
+      <NextStepCTA lang={lang} />
 
       <Card style={{ background: C.panel2 }}>
         <Body lang={lang} small en="This report is not a diagnosis. It summarises your self-reported answers and is intended to support a conversation with your doctor." zh="本报告并非诊断。它总结了你的自我评估答案，旨在支持你与医生的进一步讨论。" />
@@ -2410,7 +2694,7 @@ function exportResearchData(submissions) {
 async function exportLeads(setBusy) {
   setBusy(true);
   try {
-    const res = await db.get("mvi-leads");
+    const list = await store.list(COLL.leads);
     const leads = res ? JSON.parse(res.value) : [];
     const header = ["date", "name", "phone", "email", "overall_score", "mode", "purchased_full_report"];
     const rows = leads.map((l) => [new Date(l.ts).toISOString().slice(0, 10), l.name, l.phone, l.email, l.overall, l.mode, l.purchased ? "yes" : "no"]);
@@ -2554,23 +2838,37 @@ function detectAdminMode() {
 // A named login per staff member rather than one shared code. Still not
 // real security (visible to anyone who reads the page's source) — a
 // deterrent for now, genuine access control needs server-side auth.
-const ADMIN_USERS = [
-  { username: "dharsh", passcode: "dharsh2026", name: "Dr. Dharsyanth" },
-  { username: "yap", passcode: "yap2026", name: "Dr. Yap" },
-  { username: "stanley", passcode: "stanley2026", name: "Prof. Stanley Chan" },
+// Admin access uses real Firebase Authentication. The UIDs below are the three
+// accounts allowed into the Doctor/Admin Portal. A UID is NOT a secret — it is
+// useless without that account's password — and the Firestore security rules
+// enforce this exact same list server-side, so this list sitting in the public
+// bundle grants nobody anything.
+const ADMIN_UIDS = [
+  "4C4qwZy2fmP7peLj96ozwj5dYKm2", // Prof. Stanley Chan
+  "bg93q49kWNUVSimemitXV1QyEcq2", // Dr. Yap Lee Ming
+  "ddFt4HsrmygRlHxhiyVCaXCGtk02", // Dr. Dharsyanth
 ];
 
 /* ============================================================
-   STORAGE — real Firebase once configured, Claude's own preview
-   storage until then. Everywhere else in this file calls db.get /
-   db.set exactly like window.storage was called before, so this is
-   the ONLY place that needs to change once a real Firebase project
-   exists — fill in FIREBASE_CONFIG below with the values from your
-   Firebase project settings (Project Settings -> your web app),
-   and every save/load in the whole app switches over automatically.
-   Until then, FIREBASE_CONFIG stays a placeholder and the app keeps
-   using Claude's own storage, which is why saving/loading still
-   works while testing inside this chat.
+   STORAGE — Cloud Firestore, ONE DOCUMENT PER RECORD.
+
+   The previous design appended every patient into a SINGLE Firestore
+   document as one long JSON string. That caused two serious faults:
+
+     1. CEILING — at ~20 KB per patient against Firestore's 1 MiB
+        document limit, writes began failing at roughly 50 patients.
+     2. LOST RECORDS — saving meant read-the-whole-blob, append, write
+        it back. Two patients finishing at the same moment meant one
+        silently overwrote the other.
+
+   Writing one document per record removes both. The 1 MiB limit now
+   applies per patient (we use ~2% of it), and because nobody shares a
+   document, concurrent writes cannot collide at all.
+
+   Every read and write is authenticated. Patients are signed in
+   anonymously — they never see a login — purely so the security rules
+   have an identity to check. Rules allow a patient to CREATE their own
+   record but never to READ anyone's.
    ============================================================ */
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyDhVTqeKug2hfv6ZV8Z_mw4LN4IfAfdssc",
@@ -2580,8 +2878,13 @@ const FIREBASE_CONFIG = {
   messagingSenderId: "939033838830",
   appId: "1:939033838830:web:adc0a0b6c8606a9fa6dfff",
 };
-let _firebaseDb = null;
-let _firebaseFailed = false;
+const COLL = {
+  patients: "mvi_patients",
+  submissions: "mvi_submissions",
+  leads: "mvi_leads",
+  progress: "mvi_progress",
+};
+
 function loadScript(src) {
   return new Promise((resolve, reject) => {
     if (document.querySelector(`script[src="${src}"]`)) return resolve();
@@ -2590,44 +2893,69 @@ function loadScript(src) {
     document.head.appendChild(el);
   });
 }
-async function getFirebaseDb() {
-  if (_firebaseDb) return _firebaseDb;
-  if (_firebaseFailed) return null;
-  if (FIREBASE_CONFIG.apiKey === "REPLACE_ME") return null; // not set up yet — use the preview fallback
+
+let _fb = null;
+let _fbFailed = false;
+
+// A patient never sees a login screen. If nobody is signed in we sign them in
+// anonymously. If an admin has already signed in with their email we leave that
+// session alone — we never downgrade a real account back to anonymous.
+function ensureSignedIn(auth) {
+  return new Promise((resolve, reject) => {
+    if (auth.currentUser) return resolve(auth.currentUser);
+    const unsub = auth.onAuthStateChanged((u) => {
+      unsub();
+      if (u) return resolve(u);
+      auth.signInAnonymously().then((c) => resolve(c.user)).catch(reject);
+    });
+  });
+}
+
+async function getFirebase() {
+  if (_fbFailed) return null;
+  if (_fb) { try { await ensureSignedIn(_fb.auth); } catch { return null; } return _fb; }
   try {
-    if (!window.firebase) {
+    if (!window.firebase || !window.firebase.firestore || !window.firebase.auth) {
       const withTimeout = (src) => Promise.race([
         loadScript(src),
-        new Promise((_, reject) => setTimeout(() => reject(new Error("timed out")), 6000)),
+        new Promise((_, reject) => setTimeout(() => reject(new Error("timed out")), 8000)),
       ]);
       await withTimeout("https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js");
       await withTimeout("https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js");
+      await withTimeout("https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js");
     }
     if (!window.firebase.apps.length) window.firebase.initializeApp(FIREBASE_CONFIG);
-    _firebaseDb = window.firebase.firestore();
-    return _firebaseDb;
-  } catch {
-    _firebaseFailed = true; // don't keep retrying a broken config on every save
+    const auth = window.firebase.auth();
+    const db = window.firebase.firestore();
+    await ensureSignedIn(auth);
+    _fb = { db, auth };
+    return _fb;
+  } catch (e) {
+    _fbFailed = true; // don't retry a broken config on every save
     return null;
   }
 }
-const db = {
-  async get(key) {
-    const fdb = await getFirebaseDb();
-    if (fdb) {
-      const doc = await fdb.collection("mvi").doc(key).get();
-      if (!doc.exists) throw new Error("not found");
-      return { key, value: doc.data().value };
-    }
-    return window.storage.get(key, true); // preview fallback, works inside Claude's chat
+
+const store = {
+  async put(coll, id, obj) {
+    const fb = await getFirebase();
+    if (!fb) throw new Error("storage unavailable");
+    await fb.db.collection(coll).doc(String(id)).set(obj);
+    return true;
   },
-  async set(key, value) {
-    const fdb = await getFirebaseDb();
-    if (fdb) {
-      await fdb.collection("mvi").doc(key).set({ value });
-      return { key, value };
-    }
-    return window.storage.set(key, value, true); // preview fallback, works inside Claude's chat
+  async merge(coll, id, obj) {
+    const fb = await getFirebase();
+    if (!fb) throw new Error("storage unavailable");
+    await fb.db.collection(coll).doc(String(id)).set(obj, { merge: true });
+    return true;
+  },
+  // Newest first. Capped so the Doctor Portal stays fast and stays well inside
+  // the free tier's daily read allowance.
+  async list(coll, max = 400) {
+    const fb = await getFirebase();
+    if (!fb) throw new Error("storage unavailable");
+    const snap = await fb.db.collection(coll).orderBy("ts", "desc").limit(max).get();
+    return snap.docs.map((d) => d.data());
   },
 };
 
@@ -2649,34 +2977,56 @@ function AdminPortal({ lang, setLang, onExit }) {
   async function loadRecords() {
     setLoadingRecords(true);
     try {
-      const res = await db.get("mvi-patient-records");
-      const list = res ? JSON.parse(res.value) : [];
-      setRecords(list.slice().reverse());
+      const list = await store.list(COLL.patients);
+      setRecords(list); // store.list already returns newest first
     } catch { setRecords([]); }
     setLoadingRecords(false);
   }
   async function loadAggregate() {
     setLoadingAgg(true);
     try {
-      const res = await db.get("mvi-submissions");
-      setSubmissions(res ? JSON.parse(res.value) : []);
+      setSubmissions(await store.list(COLL.submissions));
     } catch { setSubmissions([]); }
     try {
-      const res2 = await db.get("mvi-progress");
-      setProgress(res2 ? JSON.parse(res2.value) : []);
+      setProgress(await store.list(COLL.progress));
     } catch { setProgress([]); }
     try {
-      const res3 = await db.get("mvi-leads");
-      setLeads(res3 ? JSON.parse(res3.value) : []);
+      setLeads(await store.list(COLL.leads));
     } catch { setLeads([]); }
     setLoadingAgg(false);
   }
   useEffect(() => { if (authed) { loadRecords(); loadAggregate(); } }, [authed]);
 
-  function checkPasscode() {
-    const match = ADMIN_USERS.find((u) => u.username.toLowerCase() === userInput.trim().toLowerCase() && u.passcode === passInput);
-    if (match) { setAuthed(true); setAuthedUser(match); setPassError(false); }
-    else setPassError(true);
+  const [signingIn, setSigningIn] = useState(false);
+  // Real Firebase Authentication. The old version compared against a list of
+  // usernames and passcodes hard-coded into this file — which meant anyone who
+  // opened the browser's developer tools could read them. Those are gone.
+  async function doSignIn() {
+    if (signingIn) return;
+    setSigningIn(true); setPassError("");
+    try {
+      const fb = await getFirebase();
+      if (!fb) throw new Error("Cannot reach the server — check your connection and try again.");
+      const cred = await fb.auth.signInWithEmailAndPassword(userInput.trim(), passInput);
+      if (!ADMIN_UIDS.includes(cred.user.uid)) {
+        await fb.auth.signOut();
+        throw new Error("That account is not authorised for the Doctor Portal.");
+      }
+      setAuthedUser({ name: cred.user.email, uid: cred.user.uid });
+      setAuthed(true);
+    } catch (e) {
+      const code = e && e.code ? e.code : "";
+      setPassError(
+        /wrong-password|user-not-found|invalid-credential|invalid-email/.test(code)
+          ? "Incorrect email or password — try again."
+          : (e && e.message) || "Sign-in failed."
+      );
+    }
+    setSigningIn(false);
+  }
+  async function doSignOut() {
+    try { const fb = await getFirebase(); if (fb) await fb.auth.signOut(); } catch {}
+    setAuthed(false); setAuthedUser(null); setUserInput(""); setPassInput("");
   }
 
   if (!authed) {
@@ -2686,16 +3036,16 @@ function AdminPortal({ lang, setLang, onExit }) {
         <Card>
           <div style={{ fontSize: 15, fontWeight: 800, marginBottom: 4 }}>🔒 Admin / Doctor Access</div>
           <div style={{ fontSize: 12, color: C.mid, marginBottom: 14, lineHeight: 1.5 }}>
-            This area is for clinic staff only. Enter your username and access code to view patient results.
+            This area is for clinic staff only. Sign in with your registered email address to view patient results.
           </div>
-          <input type="text" value={userInput} onChange={(e) => { setUserInput(e.target.value); setPassError(false); }} placeholder="Username"
+          <input type="email" autoComplete="username" value={userInput} onChange={(e) => { setUserInput(e.target.value); setPassError(""); }} placeholder="Email address"
             style={{ width: "100%", padding: "14px", borderRadius: 10, background: "#fff", border: `1.5px solid ${C.border}`, color: C.ink, fontSize: 15, marginBottom: 8 }} />
-          <input type="password" value={passInput} onChange={(e) => { setPassInput(e.target.value); setPassError(false); }}
-            onKeyDown={(e) => { if (e.key === "Enter") checkPasscode(); }} placeholder="Access code"
+          <input type="password" autoComplete="current-password" value={passInput} onChange={(e) => { setPassInput(e.target.value); setPassError(""); }}
+            onKeyDown={(e) => { if (e.key === "Enter") doSignIn(); }} placeholder="Password"
             style={{ width: "100%", padding: "14px", borderRadius: 10, background: "#fff", border: `1.5px solid ${passError ? C.red : C.border}`, color: C.ink, fontSize: 15, marginBottom: 8 }} />
-          {passError && <div style={{ fontSize: 12, color: C.red, marginBottom: 8 }}>Incorrect username or code — try again.</div>}
-          <button onClick={checkPasscode} style={{ width: "100%", padding: "14px", borderRadius: 10, background: `linear-gradient(135deg, ${C.blueDeep}, ${C.blue})`, border: "none", color: "#fff", fontWeight: 800, fontSize: 14, cursor: "pointer" }}>
-            Enter
+          {passError && <div style={{ fontSize: 12, color: C.red, marginBottom: 8, lineHeight: 1.45 }}>{passError}</div>}
+          <button onClick={doSignIn} disabled={signingIn} style={{ width: "100%", padding: "14px", borderRadius: 10, background: `linear-gradient(135deg, ${C.blueDeep}, ${C.blue})`, border: "none", color: "#fff", fontWeight: 800, fontSize: 14, cursor: signingIn ? "default" : "pointer", opacity: signingIn ? 0.65 : 1 }}>
+            {signingIn ? "Signing in…" : "Sign in"}
           </button>
           {onExit && (
             <button onClick={onExit} style={{ width: "100%", marginTop: 8, padding: "10px", borderRadius: 10, background: "none", border: "none", color: C.mid, fontSize: 12.5, cursor: "pointer" }}>
@@ -2723,7 +3073,10 @@ function AdminPortal({ lang, setLang, onExit }) {
     <div style={{ maxWidth: 640, margin: "0 auto", padding: "20px 20px 60px" }}>
       <TopBar lang={lang} setLang={setLang} showLogo={false} />
       <div style={{ textAlign: "center", marginBottom: 14 }}><Logo size={50} /></div>
-      <div style={{ textAlign: "center", fontSize: 11.5, color: C.mid, marginBottom: 10 }}>Logged in as <b>{authedUser.name}</b></div>
+      <div style={{ textAlign: "center", fontSize: 11.5, color: C.mid, marginBottom: 10 }}>
+        Signed in as <b>{authedUser.name}</b>
+        <button onClick={doSignOut} style={{ marginLeft: 10, padding: "4px 10px", borderRadius: 8, background: C.panel2, border: `1px solid ${C.border}`, color: C.blueDeep, fontWeight: 700, fontSize: 11, cursor: "pointer" }}>Sign out</button>
+      </div>
       <div style={{ display: "flex", gap: 4, marginBottom: 20, background: C.panel2, borderRadius: 12, padding: 4 }}>
         {[{ k: "list", label: "Patient Results" }, { k: "clinic", label: "Clinic Dashboard" }].map((tb) => (
           <button key={tb.k} onClick={() => setView(tb.k)}
@@ -2805,6 +3158,7 @@ export default function App() {
   const [flowSteps, setFlowSteps] = useState(BASE_STEPS);
   const [step, setStep] = useState(0);
   const [saveState, setSaveState] = useState("idle");
+  const [leadId, setLeadId] = useState(null);
   const [transitionInfo, setTransitionInfo] = useState(null);
   const [pendingStep, setPendingStep] = useState(null);
   const [celebrating, setCelebrating] = useState(false);
@@ -2839,12 +3193,13 @@ export default function App() {
     if (stage !== "intake") return;
     (async () => {
       try {
-        const existing = await safeGet("mvi-progress");
-        const list = existing ? JSON.parse(existing.value) : [];
-        const idx = list.findIndex((p) => p.sessionId === sessionId);
-        const entry = { sessionId, step, totalSteps: flowSteps.length, ts: Date.now(), mode: isClinicMode ? "clinic" : "online" };
-        if (idx >= 0) list[idx] = entry; else list.push(entry);
-        await db.set("mvi-progress", JSON.stringify(list.slice(-500))); // cap growth
+        // One document per session, keyed by sessionId. This is a plain write
+        // with no read first — it used to read and rewrite the entire progress
+        // list on every single question.
+        await store.put(COLL.progress, sessionId, {
+          sessionId, step, totalSteps: flowSteps.length, ts: Date.now(),
+          mode: isClinicMode ? "clinic" : "online",
+        });
       } catch { /* best-effort — never blocks the patient's flow */ }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -2888,9 +3243,15 @@ export default function App() {
     if (step === lastDomainIndex && steps[lastDomainIndex + 1]?.kind === "risk" && !vitalitySummary) {
       const dr = computeDomainScores(curAnswers.domains);
       const priorities = runPriorityAlgorithm(dr.domains, curAnswers.personal.mainConcern, curAnswers.domains);
-      const { steps: branchSteps, fired } = buildBranchSteps({ energy: dr.domains.find((d) => d.key === "energy")?.score ?? 100, physical: dr.domains.find((d) => d.key === "physical")?.score ?? 100, mental: dr.domains.find((d) => d.key === "mental")?.score ?? 100 }, curAnswers.domains);
-      const triggeredNames = fired.map((k) => INSTRUMENTS[k].name);
-      setVitalitySummary({ overall: dr.overall, priorities, triggeredNames, branchSteps });
+      const { fired } = buildBranchSteps({ energy: dr.domains.find((d) => d.key === "energy")?.score ?? 100, physical: dr.domains.find((d) => d.key === "physical")?.score ?? 100, mental: dr.domains.find((d) => d.key === "mental")?.score ?? 100 }, curAnswers.domains);
+      // Prof. Stanley: let the patient choose whether to go deeper. The single
+      // top-priority area runs automatically (that is the one the result hangs
+      // on); everything else is offered, opted out of by default. This is what
+      // stops a "17 question" check-up quietly turning into 80.
+      const topDomain = priorities[0] ? priorities[0].key : null;
+      const autoKeys = fired.filter((k) => INSTRUMENTS[k].domain === topDomain).slice(0, 1);
+      const optionalKeys = fired.filter((k) => !autoKeys.includes(k));
+      setVitalitySummary({ overall: dr.overall, priorities, autoKeys, optionalKeys });
       return;
     }
 
@@ -2900,8 +3261,12 @@ export default function App() {
       finish(curAnswers, curBranchAnswers);
     }
   }
-  function continueFromVitalitySummary() {
-    const { branchSteps } = vitalitySummary;
+  function continueFromVitalitySummary(chosenOptionalKeys) {
+    const { autoKeys, optionalKeys } = vitalitySummary;
+    const chosen = chosenOptionalKeys || [];
+    // Keep the original trigger order rather than the order they were ticked.
+    const keys = [...autoKeys, ...optionalKeys.filter((k) => chosen.includes(k))];
+    const branchSteps = stepsForInstruments(keys);
     let steps = flowSteps;
     const lastDomainIndex = PERSONAL_STEPS.length + DOMAIN_STEPS.length - 1;
     if (branchSteps.length > 0 && steps[lastDomainIndex + 1]?.kind === "risk") {
@@ -3001,12 +3366,14 @@ export default function App() {
           flagCount: (branchResults || []).length, topPriority: priorities && priorities[0] ? priorities[0].key : null,
           ageGroup: ageGroupBand, mode: isClinicMode ? "clinic" : "online", consent: !!demo.consent,
         };
-        const existing = await safeGet("mvi-submissions");
-        const list = existing ? JSON.parse(existing.value) : [];
-        list.push(record);
-        const res = await db.set("mvi-submissions", JSON.stringify(list));
-        setSaveState(res ? "saved" : "error");
-      } catch { setSaveState("error"); }
+        await store.put(COLL.submissions, record.id, record);
+        setSaveState("saved");
+      } catch (e) {
+        // Never swallow this. A failed save used to be invisible to both the
+        // patient and the clinic; now it surfaces on the results screen.
+        console.error("MVI: submission save failed", e);
+        setSaveState("error");
+      }
     })();
 
     // Lead capture — a business contact record, separate from the research
@@ -3019,11 +3386,9 @@ export default function App() {
           id: `lead_${Date.now()}`, ts: Date.now(), name: demo.name, phone: demo.phone, email: demo.email || "",
           overall: dr ? dr.overall : null, mode: isClinicMode ? "clinic" : "online", purchased: isClinicMode,
         };
-        const existingLeads = await safeGet("mvi-leads");
-        const leadList = existingLeads ? JSON.parse(existingLeads.value) : [];
-        leadList.push(lead);
-        await db.set("mvi-leads", JSON.stringify(leadList));
-      } catch { /* lead capture is best-effort — never blocks the patient's flow */ }
+        setLeadId(lead.id);
+        await store.put(COLL.leads, lead.id, lead);
+      } catch (e) { console.error("MVI: lead save failed", e); }
     })();
 
     // Full patient record — this is what the Admin/Doctor Portal reads. The
@@ -3034,22 +3399,19 @@ export default function App() {
         if (!fullResultsForRecord) return;
         const record = { id: `pat_${Date.now()}`, ts: Date.now(), patientName: demo.name, patientPhone: demo.phone, patientAge: demo.age,
           mode: isClinicMode ? "clinic" : "online", ...fullResultsForRecord };
-        const existingRecords = await safeGet("mvi-patient-records");
-        const recordList = existingRecords ? JSON.parse(existingRecords.value) : [];
-        recordList.push(record);
-        await db.set("mvi-patient-records", JSON.stringify(recordList));
-      } catch { /* best-effort — never blocks the patient's flow */ }
+        await store.put(COLL.patients, record.id, record);
+      } catch (e) {
+        console.error("MVI: patient record save failed", e);
+        setSaveState("error");
+      }
     })();
   }
   function viewReport() { setCelebrating(false); setStage("results"); }
-  async function safeGet(key) { try { return await db.get(key); } catch { return null; } }
   async function markLeadPurchased() {
     try {
-      const existing = await safeGet("mvi-leads");
-      const list = existing ? JSON.parse(existing.value) : [];
-      if (list.length > 0) { list[list.length - 1].purchased = true; }
-      await db.set("mvi-leads", JSON.stringify(list));
-    } catch { /* best-effort — never blocks showing the report */ }
+      if (!leadId) return;
+      await store.merge(COLL.leads, leadId, { purchased: true });
+    } catch (e) { console.error("MVI: lead update failed", e); }
   }
 
   function restart() {

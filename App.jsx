@@ -89,6 +89,33 @@ const LANGUAGES = [
 // (id), Tamil (ta), Arabic (ar), Hindi (hi), Spanish (es).
 
 const MS = {
+  // --- MVI core: section intros and driver labels (added 1 Sept).
+  // These are our own wording, not a licensed instrument, so they are
+  // translated directly rather than sourced.
+  "A few private questions about your sexual wellbeing.": "Beberapa soalan peribadi tentang kesihatan seksual anda.",
+  "Sexual Satisfaction": "Kepuasan Seksual",
+  "Erectile Function": "Fungsi Ereksi",
+  "Sexual Desire": "Keinginan Seksual",
+  "Sexual Confidence": "Keyakinan Seksual",
+  "A few questions about your energy.": "Beberapa soalan tentang tenaga anda.",
+  "Daily Energy": "Tenaga Harian",
+  "Drive & Motivation": "Dorongan & Motivasi",
+  "Recovery": "Pemulihan",
+  "A few questions about your urinary health.": "Beberapa soalan tentang kesihatan saluran kencing anda.",
+  "Night-Time Urination": "Kencing Waktu Malam",
+  "Urinary Comfort": "Keselesaan Kencing",
+  "Urinary Impact": "Kesan Masalah Kencing",
+  "A few questions about your physical fitness.": "Beberapa soalan tentang kecergasan fizikal anda.",
+  "Functional Ability": "Keupayaan Fungsi",
+  "Fitness Level": "Tahap Kecergasan",
+  "Physical Limitation": "Batasan Fizikal",
+  "A few questions about your mental wellbeing.": "Beberapa soalan tentang kesejahteraan mental anda.",
+  "Stress Control": "Kawalan Tekanan",
+  "Emotional Wellbeing": "Kesejahteraan Emosi",
+  "Daily Coping": "Ketahanan Harian",
+  "One last question about your confidence in maintaining healthy habits.": "Satu soalan terakhir tentang keyakinan anda mengekalkan tabiat sihat.",
+  "Healthy Lifestyle Confidence": "Keyakinan Gaya Hidup Sihat",
+
   // --- DASS-21 plain-language hints (added 27 Aug after user feedback)
   "Hard to get started or motivated to do things.": "Sukar untuk bermula atau mendapatkan dorongan untuk melakukan sesuatu.",
   "Feeling low, sad or flat.": "Berasa murung, sedih atau hambar.",
@@ -714,7 +741,13 @@ const TRIGGER_RULES = [
 
 // Roughly how long each follow-up takes, so we can tell the patient honestly
 // before they agree to it rather than after.
-const INSTRUMENT_MINUTES = { iief5: 1, ipss: 2, adam: 2, dass: 4, dasi: 2 };
+// Derived from the real question count at a steady ~15 seconds per question —
+// read it, think, answer. Rounded up, never down: the patient should finish
+// early rather than feel misled.
+function instrumentMinutes(key) {
+  const n = INSTRUMENTS[key] ? INSTRUMENTS[key].items.length : 0;
+  return Math.max(1, Math.ceil((n * 15) / 60));
+}
 function stepsForInstruments(keys) {
   const steps = [];
   keys.forEach((key) => INSTRUMENTS[key].items.forEach((it) => steps.push({ kind: "branch", instrumentKey: key, ...it })));
@@ -1281,9 +1314,28 @@ function HomePage({ lang, setLang, onStart, onAdminClick, onLegalClick }) {
           {tr(lang, "Know exactly what your body is telling you — before you even sit down with the doctor.", "在见医生之前，先真正了解你的身体在告诉你什么。")}
         </div>
         <div style={{ fontSize: 14, lineHeight: 1.6, opacity: 0.92, maxWidth: 440, margin: "0 auto" }}>
-          {tr(lang, "A private, doctor-designed check-up across six key areas of men's health, using the same validated screening tools clinics use, done in a few minutes on your own phone.", "一份私密、由医生设计的健康自测，涵盖男性健康六大关键领域，采用诊所临床所用的验证工具，只需在自己的手机上花几分钟完成。")}
+          {tr3(lang,
+            "A private check-up across six key areas of men's health — the same questions we ask in clinic, done in a few minutes on your own phone.",
+            "一份私密的健康自测，涵盖男性健康六大关键领域——与我们在诊所中所提出的问题相同，只需在自己的手机上花几分钟完成。",
+            "Pemeriksaan peribadi merangkumi enam bidang utama kesihatan lelaki — soalan yang sama seperti yang kami tanya di klinik, selesai dalam beberapa minit di telefon anda sendiri.")}
         </div>
       </div>
+
+      {/* Who built this, stated up front as a reason to trust it — not tucked
+          into a badge row at the bottom of the page. */}
+      <div style={{ display: "flex", alignItems: "center", gap: 12, background: `linear-gradient(135deg, ${C.blueDeep}, ${C.blue})`, borderRadius: 16, padding: "15px 18px", marginBottom: 14 }}>
+        <div style={{ width: 42, height: 42, borderRadius: 21, background: "rgba(255,255,255,0.15)", border: "1.5px solid rgba(255,255,255,0.35)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 19, flexShrink: 0 }}>🩺</div>
+        <div style={{ minWidth: 0 }}>
+          <div style={{ fontSize: 9.5, fontWeight: 800, letterSpacing: "0.16em", color: "#9DC7EA", marginBottom: 3 }}>
+            {tr3(lang, "DESIGNED BY", "设计者", "DIREKA OLEH")}
+          </div>
+          <div className="disp" style={{ fontSize: 16, fontWeight: 900, color: "#fff", lineHeight: 1.2 }}>Dr. Stanley Chan</div>
+          <div style={{ fontSize: 11.5, color: "#CFE4F8", marginTop: 2 }}>
+            MD, MPH · {tr3(lang, "Men's health, R Clinic", "男性健康，R Clinic", "Kesihatan lelaki, R Clinic")}
+          </div>
+        </div>
+      </div>
+
       <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
         {[
           { num: "6", label: tr(lang, "Areas covered", "涵盖领域") },
@@ -1314,7 +1366,6 @@ function HomePage({ lang, setLang, onStart, onAdminClick, onLegalClick }) {
         <div style={{ display: "flex", gap: 14, marginTop: 14, fontSize: 12.5, color: C.mid }}>
           <span>🕐 {tr(lang, "5-8 minutes", "5-8分钟")}</span>
           <span>🔒 {tr(lang, "Private & confidential", "私密保密")}</span>
-          <span>✅ {tr(lang, "Doctor-designed", "医生设计")}</span>
         </div>
       </Card>
       <button onClick={onStart} style={{ width: "100%", marginTop: 6, padding: "19px", borderRadius: 14, background: `linear-gradient(135deg, ${C.blueDeep}, ${C.blue})`, border: "none", color: "#fff", fontWeight: 800, fontSize: 17, cursor: "pointer", boxShadow: `0 12px 26px -8px ${C.blueDeep}88` }}>
@@ -1357,20 +1408,133 @@ function PhoneField({ label, value, onChange }) {
     </div>
   );
 }
+// First thing anyone sees. Each option is written in its own language and its
+// own script — a Malay speaker should not have to read English to find Malay.
+const LANGUAGE_CHOICES = [
+  { code: "en", name: "English",        note: "Continue in English" },
+  { code: "zh", name: "\u4E2D\u6587",          note: "\u7EE7\u7EED\u4F7F\u7528\u4E2D\u6587" },
+  { code: "ms", name: "Bahasa Melayu",  note: "Teruskan dalam Bahasa Melayu" },
+];
+// Asked only after the patient has seen their score. By this point they have a
+// reason to hand over contact details, which is why this moved out of the front
+// page. They choose WhatsApp or email — some people will not give a number.
+function ContactCapturePage({ lang, setLang, demo, setDemo, onNext, onBack }) {
+  const [channel, setChannel] = useState(demo.channel || "whatsapp");
+  const contactFilled = channel === "whatsapp" ? demo.phone.trim().length >= 6 : /\S+@\S+\.\S+/.test(demo.email || "");
+  const ready = demo.name.trim().length >= 2 && contactFilled;
+  const pick = (c) => { setChannel(c); setDemo({ ...demo, channel: c }); };
+  return (
+    <div>
+      <TopBar lang={lang} setLang={setLang} showLogo={false} />
+      <button onClick={onBack} className="no-print" style={{ marginBottom: 16, padding: "10px 16px", borderRadius: 10, background: C.panel2, border: `1px solid ${C.border}`, color: C.blueDeep, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
+        ← {tr3(lang, "Back", "返回", "Kembali")}
+      </button>
+      <div style={{ textAlign: "center", marginBottom: 18 }}><Logo size={52} /></div>
+      <div style={{ marginBottom: 20 }}>
+        <div className="disp" style={{ fontSize: 22, fontWeight: 900, color: C.ink, marginBottom: 6 }}>
+          {tr3(lang, "Where should your full report go?", "你的完整报告要发送到哪里？", "Ke mana laporan penuh anda perlu dihantar?")}
+        </div>
+        <div style={{ fontSize: 13.5, color: C.mid, lineHeight: 1.55 }}>
+          {tr3(lang,
+            "Your full report includes a breakdown of every answer, your personal food and lifestyle plan, and a 90-day tracker.",
+            "完整报告包含每一项回答的详细解析、专属于你的饮食与生活方式方案，以及90天追踪表。",
+            "Laporan penuh anda merangkumi analisis setiap jawapan, pelan pemakanan dan gaya hidup peribadi anda, serta penjejak 90 hari.")}
+        </div>
+      </div>
+
+      <Field label={tr3(lang, "Full Name", "姓名", "Nama Penuh")} required value={demo.name} onChange={(v) => setDemo({ ...demo, name: v })} />
+
+      <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
+        {[{ k: "whatsapp", label: tr3(lang, "WhatsApp", "WhatsApp", "WhatsApp") }, { k: "email", label: tr3(lang, "Email", "电邮", "E-mel") }].map((o) => {
+          const on = channel === o.k;
+          return (
+            <button key={o.k} onClick={() => pick(o.k)} style={{ flex: 1, padding: "13px", borderRadius: 12, cursor: "pointer", fontWeight: 800, fontSize: 13.5, background: on ? `linear-gradient(135deg, ${C.blueDeep}, ${C.blue})` : C.panel, color: on ? "#fff" : C.blueDeep, border: `1.5px solid ${on ? C.blueDeep : C.border}` }}>
+              {o.label}
+            </button>
+          );
+        })}
+      </div>
+
+      {channel === "whatsapp"
+        ? <PhoneField label={tr3(lang, "WhatsApp Number", "WhatsApp 号码", "Nombor WhatsApp")} value={demo.phone} onChange={(v) => setDemo({ ...demo, phone: v })} />
+        : <Field label={tr3(lang, "Email Address", "电邮地址", "Alamat E-mel")} value={demo.email} onChange={(v) => setDemo({ ...demo, email: v })} />}
+
+      <button onClick={onNext} disabled={!ready}
+        style={{ width: "100%", marginTop: 10, padding: "18px", borderRadius: 14, background: ready ? `linear-gradient(135deg, ${C.blueDeep}, ${C.blue})` : C.border, border: "none", color: ready ? "#fff" : C.dim, fontWeight: 800, fontSize: 16, cursor: ready ? "pointer" : "not-allowed" }}>
+        {tr3(lang, "Continue", "继续", "Teruskan")} →
+      </button>
+      <div style={{ fontSize: 10.5, color: C.dim, marginTop: 10, textAlign: "center", lineHeight: 1.5 }}>
+        {tr3(lang,
+          "We use this only to give you your report and to follow up if you ask us to.",
+          "我们仅用这些资料向你提供报告，并在你要求时与你联系。",
+          "Kami menggunakan maklumat ini hanya untuk memberikan laporan anda dan menghubungi anda jika anda memintanya.")}
+      </div>
+    </div>
+  );
+}
+
+function LanguageGate({ onPick }) {
+  return (
+    <div style={{ minHeight: "100dvh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "44px 22px 32px", background: "radial-gradient(circle at 50% 12%, #17324D 0%, #0C1B2E 55%, #070F1A 100%)" }}>
+      <div style={{ width: "100%", maxWidth: 420, textAlign: "center" }}>
+
+        <div style={{ marginBottom: 22 }}><Logo size={104} variant="white" /></div>
+
+        {/* The product name, said properly and said big. */}
+        <div className="disp mvi-glow" style={{ fontSize: 68, fontWeight: 900, letterSpacing: "0.04em", color: "#6EEBFF", lineHeight: 1 }}>MVI</div>
+        <div className="disp" style={{ fontSize: 20, fontWeight: 800, color: "#fff", marginTop: 8, letterSpacing: "0.01em" }}>Men&apos;s Vitality Index</div>
+        <div style={{ width: 46, height: 2, background: "#6EEBFF", opacity: 0.65, margin: "16px auto 0", borderRadius: 2 }} />
+
+        <div style={{ fontSize: 13, color: "#9DB3C9", lineHeight: 1.6, margin: "16px auto 30px", maxWidth: 330 }}>
+          A private men&apos;s health check-up<br />
+          <span style={{ color: "#7E96AE" }}>男性健康私密自测 · Pemeriksaan kesihatan lelaki</span>
+        </div>
+
+        <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.15em", color: "#6E8AA6", marginBottom: 14 }}>
+          CHOOSE YOUR LANGUAGE · 选择语言 · PILIH BAHASA
+        </div>
+
+        {LANGUAGE_CHOICES.map((l) => (
+          <button key={l.code} onClick={() => onPick(l.code)} className="lang-btn"
+            style={{ width: "100%", textAlign: "left", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, padding: "17px 20px", marginBottom: 11, borderRadius: 15, cursor: "pointer", background: "rgba(255,255,255,0.055)", border: "1.5px solid rgba(110,235,255,0.22)", color: "#fff" }}>
+            <span>
+              <span className="disp" style={{ display: "block", fontSize: 19, fontWeight: 900, letterSpacing: "0.01em" }}>{l.name}</span>
+              <span style={{ display: "block", fontSize: 11.5, color: "#8FA8C0", marginTop: 3 }}>{l.note}</span>
+            </span>
+            <span style={{ fontSize: 19, color: "#6EEBFF" }}>→</span>
+          </button>
+        ))}
+
+        {/* Credentials as the closing note — the reason to trust the thing. */}
+        <div style={{ marginTop: 26, paddingTop: 20, borderTop: "1px solid rgba(255,255,255,0.09)" }}>
+          <div style={{ fontSize: 9.5, fontWeight: 800, letterSpacing: "0.18em", color: "#5C7A96", marginBottom: 7 }}>DESIGNED BY</div>
+          <div className="disp" style={{ fontSize: 16.5, fontWeight: 900, color: "#EAF3FD" }}>Dr. Stanley Chan</div>
+          <div style={{ fontSize: 11.5, color: "#8FA8C0", marginTop: 3, letterSpacing: "0.04em" }}>MD, MPH</div>
+          <div style={{ fontSize: 10.5, color: "#5F7B96", marginTop: 9, lineHeight: 1.5 }}>
+            Men&apos;s health · R Clinic
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
 function DemographicsPage({ lang, setLang, demo, setDemo, onNext }) {
-  const ready = demo.name.trim() && demo.phone.trim() && demo.age.trim() && +demo.age >= 18 && +demo.age <= 110 && demo.consent;
+  // Only what the assessment itself needs. Age drives the age-band logic and the
+  // Health Foundation prompt mid-flow, so it has to be here. Name and contact
+  // details are asked for later, once the patient has their score and has a
+  // reason to hand them over.
+  const ready = demo.age.trim() && +demo.age >= 18 && +demo.age <= 110 && demo.consent;
   return (
     <div>
       <TopBar lang={lang} setLang={setLang} showLogo={false} />
       <div style={{ textAlign: "center", marginBottom: 18 }}><Logo size={56} /></div>
       <div style={{ marginBottom: 22 }}>
-        <div style={{ fontSize: 22, fontWeight: 800, color: C.ink, marginBottom: 4 }}>{tr(lang, "Before we start", "开始之前")}</div>
-        <div style={{ fontSize: 14, color: C.mid }}>{tr(lang, "A few quick details.", "几项基本资料。")}</div>
+        <div style={{ fontSize: 22, fontWeight: 800, color: C.ink, marginBottom: 4 }}>{tr3(lang, "Before we start", "开始之前", "Sebelum kita mula")}</div>
+        <div style={{ fontSize: 14, color: C.mid }}>{tr3(lang, "Just your age to begin — we'll ask for your details later, only if you want your report.", "只需先填写年龄——之后如果你想要报告，我们才会询问你的联络资料。", "Cukup umur anda dahulu — kami akan meminta butiran anda kemudian, hanya jika anda mahukan laporan.")}</div>
       </div>
-      <Field label={tr(lang, "Full Name", "姓名")} required value={demo.name} onChange={(v) => setDemo({ ...demo, name: v })} />
-      <Field label={tr(lang, "Age", "年龄")} required numeric value={demo.age} onChange={(v) => setDemo({ ...demo, age: v })} />
-      <PhoneField label={tr(lang, "Phone Number", "电话号码")} value={demo.phone} onChange={(v) => setDemo({ ...demo, phone: v })} />
-      <Field label={tr(lang, "Email (optional)", "电邮（可选）")} value={demo.email} onChange={(v) => setDemo({ ...demo, email: v })} />
+      <Field label={tr3(lang, "Age", "年龄", "Umur")} required numeric value={demo.age} onChange={(v) => setDemo({ ...demo, age: v })} />
       <label style={{ display: "flex", gap: 10, alignItems: "flex-start", padding: "12px 4px", marginBottom: 8, cursor: "pointer" }}>
         <input type="checkbox" checked={demo.consent} onChange={(e) => setDemo({ ...demo, consent: e.target.checked })} aria-label={tr(lang, "Consent to anonymised research use", "同意匿名用于研究用途")}
           style={{ marginTop: 2, width: 17, height: 17, flexShrink: 0, accentColor: C.blueDeep }} />
@@ -1464,10 +1628,12 @@ function VitalitySummaryScreen({ data, lang, onContinue }) {
   if (!data) return null;
   const { overall, priorities, autoKeys = [], optionalKeys = [] } = data;
   const cat = vitalityCategory(overall);
-  const autoInstr = autoKeys[0] ? INSTRUMENTS[autoKeys[0]] : null;
-  const autoMins = autoKeys[0] ? INSTRUMENT_MINUTES[autoKeys[0]] : 0;
+  // There can now be more than one automatic follow-up, so count them together
+  // rather than describing only the first.
+  const autoCount = autoKeys.reduce((a, k) => a + INSTRUMENTS[k].items.length, 0);
+  const autoMins = autoKeys.reduce((a, k) => a + instrumentMinutes(k), 0);
   const toggle = (k) => setChosen((c) => c.includes(k) ? c.filter((x) => x !== k) : [...c, k]);
-  const extraMins = chosen.reduce((a, k) => a + (INSTRUMENT_MINUTES[k] || 2), 0);
+  const extraMins = chosen.reduce((a, k) => a + instrumentMinutes(k), 0);
   return (
     <div style={{ position: "fixed", inset: 0, background: `linear-gradient(155deg, ${C.blueDeep}, ${C.blue})`, zIndex: 55, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#fff", padding: "0 24px", overflowY: "auto" }}>
       <div style={{ textAlign: "center", marginBottom: 10 }}><Logo size={40} variant="white" /></div>
@@ -1484,12 +1650,12 @@ function VitalitySummaryScreen({ data, lang, onContinue }) {
           {tr3(lang, `Your top area to focus on is ${t(priorities[0].label, lang)}.`, `你最需要关注的方面是${t(priorities[0].label, lang)}。`, `Bidang utama untuk fokus ialah ${t(priorities[0].label, lang)}.`)}
         </div>
       )}
-      {autoInstr ? (
+      {autoKeys.length > 0 ? (
         <div style={{ fontSize: 14, opacity: 0.92, textAlign: "center", marginBottom: 14, maxWidth: 400, lineHeight: 1.5 }}>
           {tr3(lang,
-            `We'll ask ${INSTRUMENTS[autoKeys[0]].items.length} short follow-up questions about this area — about ${autoMins} minute${autoMins > 1 ? "s" : ""}.`,
-            `我们将就这一方面提出 ${INSTRUMENTS[autoKeys[0]].items.length} 个简短的后续问题——大约 ${autoMins} 分钟。`,
-            `Kami akan bertanya ${INSTRUMENTS[autoKeys[0]].items.length} soalan susulan ringkas tentang bidang ini — kira-kira ${autoMins} minit.`)}
+            `Next, ${autoCount} short follow-up questions on what your answers pointed to — about ${autoMins} minute${autoMins > 1 ? "s" : ""}.`,
+            `接下来是 ${autoCount} 个简短的后续问题，针对你的回答所指向的方面——大约 ${autoMins} 分钟。`,
+            `Seterusnya, ${autoCount} soalan susulan ringkas berdasarkan jawapan anda — kira-kira ${autoMins} minit.`)}
         </div>
       ) : (
         <div style={{ fontSize: 15, opacity: 0.92, textAlign: "center", marginBottom: 22, maxWidth: 340 }}>
@@ -1507,7 +1673,7 @@ function VitalitySummaryScreen({ data, lang, onContinue }) {
           </div>
           {optionalKeys.map((k) => {
             const on = chosen.includes(k);
-            const mins = INSTRUMENT_MINUTES[k] || 2;
+            const mins = instrumentMinutes(k);
             return (
               <button key={k} onClick={() => toggle(k)} style={{ width: "100%", textAlign: "left", display: "flex", alignItems: "center", gap: 10, padding: "11px 13px", marginBottom: 7, borderRadius: 12, cursor: "pointer", background: on ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.08)", border: `1.5px solid ${on ? "#fff" : "rgba(255,255,255,0.35)"}`, color: "#fff" }}>
                 <span style={{ width: 19, height: 19, borderRadius: 5, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 900, background: on ? "#fff" : "transparent", color: C.blueDeep, border: on ? "none" : "1.5px solid rgba(255,255,255,0.6)" }}>{on ? "✓" : ""}</span>
@@ -1603,6 +1769,22 @@ function QText({ text, lang }) { return <div style={{ fontSize: 17, fontWeight: 
 // told us they did not understand ("touchy", "nervous energy"). The scored item
 // itself is never reworded — doing that would invalidate the instrument's
 // published severity cut-offs — so the hint sits alongside it instead.
+// Interim honesty guard. The five clinical instruments are licensed tools whose
+// wording may only be changed by using an officially validated translation —
+// not by translating them ourselves. Until each language's official version is
+// in place, a patient who picked Malay or Chinese would silently be shown
+// English. Rather than let that happen quietly, we say so.
+// Delete this component once every instrument has a validated translation.
+function UntranslatedNotice({ text, lang }) {
+  if (lang === "en" || !text) return null;
+  const fellBackToEnglish = t(text, lang) === text.en;
+  if (!fellBackToEnglish) return null;
+  return (
+    <div style={{ fontSize: 11.5, color: C.mid, background: C.panel, border: `1px solid ${C.border}`, borderRadius: 8, padding: "7px 10px", marginBottom: 8, lineHeight: 1.45 }}>
+      {tr3(lang, "", "此问卷目前只提供经过验证的英文版本。", "Soal selidik ini kini hanya tersedia dalam versi bahasa Inggeris yang disahkan.")}
+    </div>
+  );
+}
 function QHint({ hint, lang }) {
   if (!hint) return null;
   return (
@@ -1689,6 +1871,7 @@ function IntakeFlow({ steps, step, lang, answers, branchAnswers, risk, foundatio
     const color = DOMAIN_COLORS[INSTRUMENTS[s.instrumentKey].domain];
     return (
       <div>
+        <UntranslatedNotice text={s.text} lang={lang} />
         <QText text={s.text} lang={lang} />
         <QHint hint={s.hint} lang={lang} />
         {isScored
@@ -1769,7 +1952,6 @@ function ResultsScreen({ results, demo, saveState, restart, lang, setLang, onOpe
 function PatientReport({ results, demo, lang, onOpenFullReport }) {
   const { domainResults, priorities, ai, foundation, bmi, risk } = results;
   const cat = vitalityCategory(domainResults.overall);
-  const [savingImg, setSavingImg] = useState(false);
   return (
     <div id="patient-report-capture">
       <Card style={{ textAlign: "center", marginBottom: 18, border: "none", padding: "34px 20px 28px", background: "linear-gradient(155deg, #0C1B2E 0%, #14293F 100%)", boxShadow: "0 20px 44px -14px rgba(11,27,46,0.55)" }}>
@@ -1855,14 +2037,6 @@ function PatientReport({ results, demo, lang, onOpenFullReport }) {
         <Row lang={lang} l1="Activity" l2="运动" v={risk.activity || "—"} />
         <Row lang={lang} l1="Sleep" l2="睡眠" v={risk.sleep || "—"} last />
       </Card>
-
-      <button onClick={() => shareOrDownloadElement("patient-report-capture", `${(demo.name || "vitality-report").replace(/\s+/g, "-")}.png`, setSavingImg)} disabled={savingImg}
-        style={{ width: "100%", marginBottom: 18, padding: "16px", borderRadius: 14, background: `linear-gradient(135deg, ${C.blueDeep}, ${C.blue} 55%, ${C.blueLight})`,
-          border: "none", color: "#fff", fontWeight: 800, fontSize: 14.5, cursor: savingImg ? "not-allowed" : "pointer",
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 9, boxShadow: `0 12px 26px -10px ${C.blueDeep}99`, opacity: savingImg ? 0.75 : 1 }}>
-        <span style={{ fontSize: 19 }}>{savingImg ? "⏳" : "📤"}</span>
-        {savingImg ? tr(lang, "Preparing…", "准备中…") : tr(lang, "Save or Share My Results", "保存或分享我的结果")}
-      </button>
 
       <Card onClick={onOpenFullReport} style={{ background: `linear-gradient(155deg, #0C1B2E 0%, #14293F 100%)`, border: "none", cursor: "pointer", marginBottom: 14 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -2104,36 +2278,20 @@ function SelfCheckTracker({ lang }) {
     </Card>
   );
 }
-// Fill in your own Stripe Payment Link here (Stripe Dashboard -> Payment
-// Links -> create one for a $9.90 one-time product -> copy the URL).
-// This needs zero backend code — Stripe hosts the actual payment page.
-// In the Payment Link's settings, set "After payment" -> redirect customers
-// to your own site's URL with ?paid=1 on the end, e.g.:
-//   https://your-deployed-site.com/?paid=1
-const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/REPLACE_WITH_YOUR_LINK";
-// A second Payment Link for the $6.90 referral-code price — create this the
-// same way, just priced at $6.90, with the same after-payment redirect.
-const STRIPE_PAYMENT_LINK_REFERRAL = "https://buy.stripe.com/REPLACE_WITH_YOUR_REFERRAL_LINK";
-const REFERRAL_CODE = "DOCTOR";
-// toyyibPay settles in Malaysian Ringgit only — it cannot charge USD — so the
-// report is priced in MYR. Converted from the intended USD 9.90 / 6.90 / 19.90
-// at 1 USD = 4.026 MYR (26 Aug 2026) and rounded to natural price points.
-const CURRENCY = "RM";
-const CURRENCY_CODE = "MYR";
-const REGULAR_PRICE = 39.90;
-const REFERRAL_PRICE = 27.90;
-const ORIGINAL_PRICE = 79.90;
-// Payment is not live yet (the Stripe account is still paused). While this is
-// false the checkout screen renders as a clearly-labelled preview: no card
-// details are requested, nothing is charged, and the Full Report opens for
-// free. Flip to true once a real Stripe Payment Link is set above.
+// PayPal. Paste the PayPal payment link here — Business account -> Payment
+// Links & Buttons -> create a $9.90 one-time item -> set the return URL to
+// https://mvi.drstan.com.my/?paid=1 -> copy the link.
+// A payment LINK is all we need. Never put a PayPal API secret in this file:
+// everything here ships to the patient's browser in readable form.
+const PAYPAL_PAYMENT_LINK = "https://www.paypal.com/REPLACE_WITH_YOUR_LINK";
+// One price, in US dollars. No strikethrough, no countdown, no referral code.
+const CURRENCY = "$";
+const CURRENCY_CODE = "USD";
+const REGULAR_PRICE = 9.90;
+// While false, the checkout screen renders as a clearly-labelled preview: no
+// payment details are requested, nothing is charged, and the full report opens
+// free. Flip to true once the PayPal link above is real.
 const PAYMENT_ENABLED = false;
-// A REAL end date for the launch discount, not a fake per-visit countdown —
-// change this to whenever the promotion should genuinely end. Being honest
-// about urgency matters: a countdown that resets every time someone visits
-// is a well-known trust-breaker (and a legal grey area in several places),
-// so this one counts down to one fixed moment in time, same for everyone.
-const PROMO_END = new Date("2026-09-30T23:59:59+08:00");
 
 function LegalPage({ lang, setLang, onBack }) {
   return (
@@ -2161,29 +2319,10 @@ function LegalPage({ lang, setLang, onBack }) {
     </div>
   );
 }
-function useCountdown(endDate) {
-  const [remaining, setRemaining] = useState(() => Math.max(0, endDate.getTime() - Date.now()));
-  useEffect(() => {
-    const id = setInterval(() => setRemaining(Math.max(0, endDate.getTime() - Date.now())), 1000);
-    return () => clearInterval(id);
-  }, [endDate]);
-  const days = Math.floor(remaining / 86400000);
-  const hours = Math.floor((remaining % 86400000) / 3600000);
-  const mins = Math.floor((remaining % 3600000) / 60000);
-  const secs = Math.floor((remaining % 60000) / 1000);
-  return { days, hours, mins, secs, expired: remaining <= 0 };
-}
 function CheckoutPage({ results, demo, lang, setLang, onBack, onUnlock }) {
   const cat = vitalityCategory(results.domainResults.overall);
-  const [code, setCode] = useState("");
-  const [codeApplied, setCodeApplied] = useState(false);
-  const countdown = useCountdown(PROMO_END);
-  const price = codeApplied ? REFERRAL_PRICE : REGULAR_PRICE;
-  const activeLink = codeApplied ? STRIPE_PAYMENT_LINK_REFERRAL : STRIPE_PAYMENT_LINK;
-
-  function applyCode() {
-    if (code.trim().toUpperCase() === REFERRAL_CODE) setCodeApplied(true);
-  }
+  const price = REGULAR_PRICE;
+  const activeLink = PAYPAL_PAYMENT_LINK;
   function goToStripe() {
     try {
       // Stash the completed result so it survives the redirect to Stripe's
@@ -2220,32 +2359,15 @@ function CheckoutPage({ results, demo, lang, setLang, onBack, onUnlock }) {
         {benefits.map((b, i) => (
           <div key={i} style={{ display: "flex", gap: 8, padding: "5px 0", fontSize: 12, color: "#dceafb" }}><span style={{ color: "#6EEBFF" }}>✓</span>{t(b, lang)}</div>
         ))}
-        <div style={{ marginTop: 14, display: "flex", alignItems: "baseline", gap: 10 }}>
-          <span style={{ fontSize: 16, color: "#9DB3C9", textDecoration: "line-through" }}>{CURRENCY}{ORIGINAL_PRICE.toFixed(2)}</span>
-          <span style={{ fontSize: 30, fontWeight: 900, color: "#6EEBFF" }}>{CURRENCY}{price.toFixed(2)}</span>
-          <span style={{ fontSize: 11, color: "#9DB3C9" }}>{CURRENCY_CODE} {tr(lang, "one-time", "一次性")}</span>
+        <div style={{ marginTop: 16, display: "flex", alignItems: "baseline", gap: 8 }}>
+          <span style={{ fontSize: 34, fontWeight: 900, color: "#6EEBFF" }}>{CURRENCY}{price.toFixed(2)}</span>
+          <span style={{ fontSize: 11.5, color: "#9DB3C9" }}>{CURRENCY_CODE} · {tr3(lang, "one-time", "一次性", "sekali sahaja")}</span>
         </div>
         {previewMode && (
-          <div style={{ marginTop: 10, display: "inline-block", background: "rgba(124,245,160,0.14)", border: "1px solid #7CF5A0", borderRadius: 8, padding: "5px 10px", fontSize: 11, fontWeight: 800, color: "#7CF5A0" }}>
-            {tr(lang, "FREE while we finish setting up payment", "付款功能设置期间免费")}
+          <div style={{ marginTop: 12, display: "inline-block", background: "rgba(124,245,160,0.14)", border: "1px solid #7CF5A0", borderRadius: 8, padding: "5px 10px", fontSize: 11, fontWeight: 800, color: "#7CF5A0" }}>
+            {tr3(lang, "FREE while we finish setting up payment", "付款功能设置期间免费", "PERCUMA sementara kami menyiapkan pembayaran")}
           </div>
         )}
-        {codeApplied && <div style={{ fontSize: 11, color: "#7CF5A0", marginTop: 4 }}>✓ {tr(lang, "Referral code applied", "已套用推荐码")}</div>}
-        {!previewMode && !countdown.expired && (
-          <div style={{ marginTop: 12, background: "rgba(255,255,255,0.08)", borderRadius: 10, padding: "8px 12px", fontSize: 11, color: "#EAF3FD" }}>
-            ⏱ {tr(lang, "Launch price ends in", "早鸟价倒计时")} <b>{countdown.days}{tr(lang,"d","天")} {String(countdown.hours).padStart(2,"0")}:{String(countdown.mins).padStart(2,"0")}:{String(countdown.secs).padStart(2,"0")}</b>
-          </div>
-        )}
-      </Card>
-      <Card style={{ marginBottom: 16 }}>
-        <div style={{ fontSize: 12, fontWeight: 700, color: C.ink, marginBottom: 8 }}>{tr(lang, "Have a referral code?", "有推荐码吗？")}</div>
-        <div style={{ display: "flex", gap: 8 }}>
-          <input value={code} onChange={(e) => setCode(e.target.value)} placeholder={tr(lang, "Enter code", "输入代码")}
-            style={{ flex: 1, padding: "12px", borderRadius: 10, background: "#fff", border: `1.5px solid ${C.border}`, color: C.ink, fontSize: 14 }} />
-          <button onClick={applyCode} style={{ padding: "0 18px", borderRadius: 10, background: C.panel2, border: `1.5px solid ${C.border}`, color: C.blueDeep, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
-            {tr(lang, "Apply", "套用")}
-          </button>
-        </div>
       </Card>
       {previewMode && (
         <div style={{ background: "#EAF6EF", border: `1px solid #2E9E5B`, borderRadius: 10, padding: "12px 14px", marginBottom: 14, fontSize: 12, color: "#1D6B3D", lineHeight: 1.55 }}>
@@ -2256,13 +2378,13 @@ function CheckoutPage({ results, demo, lang, setLang, onBack, onUnlock }) {
       <button onClick={previewMode ? onUnlock : goToStripe}
         style={{ width: "100%", padding: "18px", borderRadius: 14, background: `linear-gradient(135deg, ${C.blueDeep}, ${C.blue})`, border: "none", color: "#fff", fontWeight: 800, fontSize: 16, cursor: "pointer" }}>
         {previewMode
-          ? tr(lang, "Continue to My Full Report →", "继续查看完整报告 →")
-          : tr(lang, `Pay ${CURRENCY}${price.toFixed(2)}`, `付款 ${CURRENCY}${price.toFixed(2)}`)}
+          ? tr3(lang, "Continue to My Full Report →", "继续查看完整报告 →", "Teruskan ke Laporan Penuh Saya →")
+          : tr3(lang, `Pay ${CURRENCY}${price.toFixed(2)} and download my report`, `支付 ${CURRENCY}${price.toFixed(2)} 并下载我的报告`, `Bayar ${CURRENCY}${price.toFixed(2)} dan muat turun laporan saya`)}
       </button>
       <div style={{ fontSize: 10.5, color: C.dim, marginTop: 10, textAlign: "center", lineHeight: 1.5 }}>
         {previewMode
-          ? tr(lang, "No payment required — your full report opens straight away.", "无需付款——你的完整报告将立即打开。")
-          : tr(lang, "You'll be taken to Stripe's secure payment page, then brought straight back here with your report unlocked.", "你将被转到Stripe的安全付款页面，付款完成后会直接返回并解锁你的报告。")}
+          ? tr3(lang, "No payment required — your full report opens straight away.", "无需付款——你的完整报告将立即打开。", "Tiada pembayaran diperlukan — laporan penuh anda akan dibuka terus.")
+          : tr3(lang, "You'll be taken to PayPal's secure payment page, then brought straight back here to open and download your full report.", "你将被转到PayPal的安全付款页面，付款完成后会直接返回，打开并下载你的完整报告。", "Anda akan dibawa ke halaman pembayaran selamat PayPal, kemudian dibawa kembali ke sini untuk membuka dan memuat turun laporan penuh anda.")}
       </div>
     </div>
   );
@@ -2297,7 +2419,7 @@ const MVI_PRINT_CSS = `
   h1, h2, h3, .disp { break-after: avoid-page; page-break-after: avoid; }
 }
 `;
-function FullReportPage({ results, demo, lang, setLang, onBack }) {
+function FullReportPage({ results, demo, lang, setLang, onBack, embedded }) {
   const { domainResults, priorities, ai, branchResults, bmi, foundation } = results;
   const cat = vitalityCategory(domainResults.overall);
   const today = new Date().toLocaleDateString(lang === "zh" ? "zh-CN" : "en-GB");
@@ -2306,9 +2428,9 @@ function FullReportPage({ results, demo, lang, setLang, onBack }) {
     return r.severity && !/No ED|Negative|Normal|Good functional/i.test(t(r.severity.label, "en"));
   });
   return (
-    <div id="full-report-print">
-      <style>{MVI_PRINT_CSS}</style>
-      <div className="no-print">
+    <div id={embedded ? undefined : "full-report-print"}>
+      {!embedded && <style>{MVI_PRINT_CSS}</style>}
+      <div className="no-print" style={{ display: embedded ? "none" : "block" }}>
         <TopBar lang={lang} setLang={setLang} showLogo={false} />
         <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
           <button onClick={onBack} style={{ padding: "10px 16px", borderRadius: 10, background: C.panel2, border: `1px solid ${C.border}`, color: C.blueDeep, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
@@ -2821,9 +2943,14 @@ function ClinicDashboard({ submissions, loading, lang, progress, leads }) {
    (anything else) -> Online mode (default): free teaser, Full
                        Report behind a paid unlock, no clinic-only tabs
    ============================================================ */
+// Clinic mode unlocks the full report free — for a patient sitting in the
+// waiting room. Tidier link: mvi.drstan.com.my/?clinic
+// The older ?ref=clinic form still works so anything already printed or
+// bookmarked does not break.
 function detectClinicMode() {
   try {
-    return new URLSearchParams(window.location.search).get("ref") === "clinic";
+    const q = new URLSearchParams(window.location.search);
+    return q.has("clinic") || q.get("ref") === "clinic";
   } catch {
     return false;
   }
@@ -2968,6 +3095,7 @@ function AdminPortal({ lang, setLang, onExit }) {
   const [records, setRecords] = useState([]);
   const [loadingRecords, setLoadingRecords] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [docView, setDocView] = useState("patient");
   const [view, setView] = useState("list"); // "list" | "clinic"
   const [submissions, setSubmissions] = useState([]);
   const [loadingAgg, setLoadingAgg] = useState(false);
@@ -3058,13 +3186,42 @@ function AdminPortal({ lang, setLang, onExit }) {
   }
 
   if (selected) {
+    // Every stored patient record already holds the complete results object, so
+    // the patient's own report can be re-rendered here exactly as they saw it —
+    // and printed for a walk-in without them paying anything.
+    const patientDemo = { name: selected.patientName, age: selected.patientAge, phone: selected.patientPhone };
     return (
-      <div style={{ maxWidth: 640, margin: "0 auto", padding: "20px 20px 60px" }}>
-        <TopBar lang={lang} setLang={setLang} showLogo={false} />
-        <button onClick={() => setSelected(null)} style={{ marginBottom: 16, padding: "10px 16px", borderRadius: 10, background: C.panel2, border: `1px solid ${C.border}`, color: C.blueDeep, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
-          ← Back to patient list
-        </button>
-        <DoctorDashboard results={selected} demo={{ name: selected.patientName, age: selected.patientAge }} lang={lang} />
+      <div id={docView === "patient" ? "full-report-print" : undefined} style={{ maxWidth: 640, margin: "0 auto", padding: "20px 20px 60px" }}>
+        <style>{MVI_PRINT_CSS}</style>
+        <div className="no-print">
+          <TopBar lang={lang} setLang={setLang} showLogo={false} />
+          <div style={{ display: "flex", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
+            <button onClick={() => setSelected(null)} style={{ padding: "10px 16px", borderRadius: 10, background: C.panel2, border: `1px solid ${C.border}`, color: C.blueDeep, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
+              ← Back to patient list
+            </button>
+            <button onClick={() => window.print()} style={{ padding: "10px 16px", borderRadius: 10, background: `linear-gradient(135deg, ${C.blueDeep}, ${C.blue})`, border: "none", color: "#fff", fontWeight: 800, fontSize: 13, cursor: "pointer" }}>
+              ⤓ Print / Save as PDF
+            </button>
+          </div>
+          <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+            {[{ k: "patient", label: "Patient report" }, { k: "doctor", label: "Doctor dashboard" }].map((o) => {
+              const on = docView === o.k;
+              return (
+                <button key={o.k} onClick={() => setDocView(o.k)} style={{ flex: 1, padding: "11px", borderRadius: 11, cursor: "pointer", fontWeight: 800, fontSize: 13, background: on ? `linear-gradient(135deg, ${C.blueDeep}, ${C.blue})` : C.panel, color: on ? "#fff" : C.blueDeep, border: `1.5px solid ${on ? C.blueDeep : C.border}` }}>
+                  {o.label}
+                </button>
+              );
+            })}
+          </div>
+          <div style={{ fontSize: 11, color: C.dim, marginBottom: 14, lineHeight: 1.5 }}>
+            {docView === "patient"
+              ? "This is exactly what the patient sees in their full report. Print it for a clinic patient — no payment involved."
+              : "Clinical view — synthesis, investigations and discussion points. Not shown to the patient."}
+          </div>
+        </div>
+        {docView === "patient"
+          ? <FullReportPage results={selected} demo={patientDemo} lang={lang} setLang={setLang} onBack={() => setSelected(null)} embedded />
+          : <DoctorDashboard results={selected} demo={patientDemo} lang={lang} />}
       </div>
     );
   }
@@ -3108,7 +3265,20 @@ function AdminPortal({ lang, setLang, onExit }) {
 }
 
 export default function App() {
-  const [lang, setLang] = useState("en");
+  // Remembered across visits so a returning patient is not asked twice.
+  const [lang, setLang] = useState(() => {
+    try { const v = localStorage.getItem("mvi_lang"); if (v === "en" || v === "zh" || v === "ms") return v; } catch {}
+    return "en";
+  });
+  // Always shown. This is the first thing anyone sees and it is how they are
+  // told what MVI is and who built it, so it is not skipped for returning
+  // visitors — the remembered language only pre-selects, it never bypasses.
+  const [langChosen, setLangChosen] = useState(false);
+  function chooseLanguage(code) {
+    setLang(code);
+    try { localStorage.setItem("mvi_lang", code); } catch {}
+    setLangChosen(true);
+  }
   const [stage, setStage] = useState("home");
   const [isClinicMode] = useState(detectClinicMode);
   const [isAdminMode] = useState(detectAdminMode);
@@ -3248,9 +3418,13 @@ export default function App() {
       // top-priority area runs automatically (that is the one the result hangs
       // on); everything else is offered, opted out of by default. This is what
       // stops a "17 question" check-up quietly turning into 80.
-      const topDomain = priorities[0] ? priorities[0].key : null;
-      const autoKeys = fired.filter((k) => INSTRUMENTS[k].domain === topDomain).slice(0, 1);
-      const optionalKeys = fired.filter((k) => !autoKeys.includes(k));
+      // IIEF-5, IPSS and ADAM are short and clinically central, so whenever the
+      // answers trigger them they simply run — no asking. DASS-21 and DASI are
+      // the long ones and feed nothing in the MVI score, so those two are the
+      // only ones ever offered as a choice.
+      const ALWAYS_RUN = ["iief5", "ipss", "adam"];
+      const autoKeys = fired.filter((k) => ALWAYS_RUN.includes(k));
+      const optionalKeys = fired.filter((k) => !ALWAYS_RUN.includes(k));
       setVitalitySummary({ overall: dr.overall, priorities, autoKeys, optionalKeys });
       return;
     }
@@ -3407,6 +3581,17 @@ export default function App() {
     })();
   }
   function viewReport() { setCelebrating(false); setStage("results"); }
+  // The lead row is written when the assessment finishes, before we have any
+  // contact details. This fills them in once the patient supplies them.
+  async function saveContactDetails() {
+    try {
+      if (!leadId) return;
+      await store.merge(COLL.leads, leadId, {
+        name: demo.name, phone: demo.phone, email: demo.email || "",
+        channel: demo.channel || "whatsapp", contactedAt: Date.now(),
+      });
+    } catch (e) { console.error("MVI: contact save failed", e); }
+  }
   async function markLeadPurchased() {
     try {
       if (!leadId) return;
@@ -3462,6 +3647,8 @@ export default function App() {
       `}</style>
       {showAdmin ? (
         <AdminPortal lang={lang} setLang={setLang} onExit={isAdminMode ? null : () => setAdminOpenedManually(false)} />
+      ) : !langChosen ? (
+        <LanguageGate onPick={chooseLanguage} />
       ) : (
       <div style={{ maxWidth: 640, margin: "0 auto", padding: stage === "intake" ? "10px 16px 0" : "20px 20px 60px", height: stage === "intake" ? "100dvh" : "auto", display: stage === "intake" ? "flex" : "block", flexDirection: "column", overflow: stage === "intake" ? "hidden" : "visible", boxSizing: "border-box" }}>
         {stage === "home" && resumeAvailable && !resumeDismissed && (
@@ -3472,6 +3659,11 @@ export default function App() {
           </div>
         )}
         {stage === "home" && <HomePage lang={lang} setLang={setLang} onStart={() => setStage("demographics")} onAdminClick={() => setAdminOpenedManually(true)} onLegalClick={() => setStage("legal")} />}
+        {stage === "contact" && finalResults && (
+          <ContactCapturePage lang={lang} setLang={setLang} demo={demo} setDemo={setDemo}
+            onBack={() => setStage("results")}
+            onNext={() => { saveContactDetails(); setStage(fullReportUnlocked ? "fullreport" : "checkout"); }} />
+        )}
         {stage === "legal" && <LegalPage lang={lang} setLang={setLang} onBack={() => setStage("home")} />}
         {stage === "demographics" && <DemographicsPage lang={lang} setLang={setLang} demo={demo} setDemo={setDemo} onNext={() => { setPendingStep(0); setTransitionInfo(categoryInfoForStep(flowSteps, 0)); setStage("intake"); }} />}
         {stage === "intake" && (
@@ -3488,7 +3680,7 @@ export default function App() {
         )}
         {stage === "results" && finalResults && (
           <ResultsScreen results={finalResults} demo={demo} saveState={saveState} restart={restart} lang={lang} setLang={setLang}
-            onOpenFullReport={() => setStage(fullReportUnlocked ? "fullreport" : "checkout")} />
+            onOpenFullReport={() => setStage(fullReportUnlocked ? "fullreport" : "contact")} />
         )}
         {stage === "checkout" && finalResults && (
           <CheckoutPage results={finalResults} demo={demo} lang={lang} setLang={setLang} onBack={() => setStage("results")}

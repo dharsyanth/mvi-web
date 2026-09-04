@@ -2142,6 +2142,36 @@ function NextStepCTA({ lang, compact }) {
   );
 }
 
+// A paid product needs a visible way to get help. Without this, a patient
+// whose report failed to arrive had no route back to us at all.
+const SUPPORT_WHATSAPP = CLINIC_WHATSAPP;
+const SUPPORT_EMAIL = "hello@drstan.com.my";
+function SupportCard({ lang, compact }) {
+  return (
+    <Card style={{ marginBottom: 16, background: C.panel2, padding: compact ? 14 : 18 }}>
+      <div style={{ fontSize: 13, fontWeight: 800, color: C.ink, marginBottom: 5 }}>
+        {tr3(lang, "Need help with your report?", "报告有问题需要协助？", "Perlukan bantuan dengan laporan anda?")}
+      </div>
+      <div style={{ fontSize: 12, color: C.mid, lineHeight: 1.55, marginBottom: 11 }}>
+        {tr3(lang,
+          "If your report does not open, does not arrive, or something looks wrong, message us and we will sort it out or refund you in full.",
+          "如果你的报告无法打开、未能收到，或内容有误，请联系我们，我们会为你处理或全额退款。",
+          "Jika laporan anda tidak dibuka, tidak sampai, atau ada yang tidak kena, hubungi kami dan kami akan selesaikannya atau memulangkan wang anda sepenuhnya.")}
+      </div>
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <a href={SUPPORT_WHATSAPP} target="_blank" rel="noopener noreferrer"
+          style={{ flex: "1 1 140px", textAlign: "center", padding: "11px 14px", borderRadius: 10, background: "#25D366", color: "#fff", fontWeight: 800, fontSize: 12.5, textDecoration: "none" }}>
+          {tr3(lang, "Message us on WhatsApp", "WhatsApp 联系我们", "WhatsApp kami")}
+        </a>
+        <a href={`mailto:${SUPPORT_EMAIL}`}
+          style={{ flex: "1 1 140px", textAlign: "center", padding: "11px 14px", borderRadius: 10, background: "#fff", border: `1.5px solid ${C.border}`, color: C.blueDeep, fontWeight: 800, fontSize: 12.5, textDecoration: "none" }}>
+          {tr3(lang, "Email us", "电邮联系我们", "E-mel kami")}
+        </a>
+      </div>
+    </Card>
+  );
+}
+
 // Testers asked "is 50 good or bad for someone my age?". We have no population
 // norms for MVI, and inventing a benchmark in a clinical tool is not an option,
 // so we explain the bands honestly instead of comparing against a made-up average.
@@ -2304,15 +2334,17 @@ function LegalPage({ lang, setLang, onBack }) {
       <SectionLabel lang={lang} en="Privacy Policy" zh="隐私政策" />
       <Card style={{ marginBottom: 16 }}>
         <Body lang={lang} small
-          en="We collect your name, age, phone number, and optionally your email, along with your answers to this assessment. This information is used to generate your personal report, to allow your doctor to review your results if you were referred by a clinic, and — only if you separately opt in — in an anonymised form for research to improve this tool. Your name and contact details are never included in anything used for research. We do not sell your information to third parties. If you purchase the Full Report, payment is processed securely by Stripe; we do not see or store your card details."
-          zh="我们会收集你的姓名、年龄、电话号码，以及可选的电邮地址，连同你在本评估中的回答。这些资料用于生成你的个人报告，若你是由诊所转介，也让你的医生能查看结果，并且——仅在你另行同意的情况下——以匿名形式用于研究以改善此工具。你的姓名与联络方式绝不会被用于研究用途。我们不会将你的资料出售给第三方。若你购买完整报告，付款将由Stripe安全处理，我们不会看到或存储你的卡片信息。" />
+          en="We collect your name, age, phone number, and optionally your email, along with your answers to this assessment. This information is used to generate your personal report, to allow your doctor to review your results if you were referred by a clinic, and — only if you separately opt in — in an anonymised form for research to improve this tool. Your name and contact details are never included in anything used for research. We do not sell your information to third parties. If you purchase the Full Report, payment is processed securely by PayPal; we do not see or store your card details. We keep your assessment record so that your doctor can refer to it at future visits and so you can compare a later reassessment against this one."
+          zh="我们会收集你的姓名、年龄、电话号码，以及可选的电邮地址，连同你在本评估中的回答。这些资料用于生成你的个人报告，若你是由诊所转介，也让你的医生能查看结果，并且——仅在你另行同意的情况下——以匿名形式用于研究以改善此工具。你的姓名与联络方式绝不会被用于研究用途。我们不会将你的资料出售给第三方。若你购买完整报告，付款将由PayPal安全处理，我们不会看到或存储你的卡片信息。我们会保留你的评估记录，以便医生在日后就诊时参考，也方便你将来的复评与本次结果作比较。" />
       </Card>
       <SectionLabel lang={lang} en="Terms of Service" zh="服务条款" color={C.blue} />
       <Card style={{ marginBottom: 16 }}>
         <Body lang={lang} small
-          en="The Men's Vitality Index is a self-assessment and educational tool. It is not a diagnostic tool, does not diagnose any condition, and does not replace professional medical consultation. Always seek the advice of a qualified doctor with any questions about a medical condition. Purchases of the Full Report are one-time, non-refundable digital purchases, except where required by law. By using this tool, you confirm the information you provide is accurate to the best of your knowledge."
-          zh="男性活力指数是一项自我评估与教育工具。它并非诊断工具，不会诊断任何疾病，也不能取代专业医疗咨询。如有任何关于医疗状况的问题，请务必咨询合格医生。购买完整报告为一次性数字商品购买，除法律另有规定外，概不退款。使用本工具即表示你确认所提供的信息在你所知范围内是准确的。" />
+          en="The Men's Vitality Index is a self-assessment and educational tool. It is not a diagnostic tool, does not diagnose any condition, and does not replace professional medical consultation. Always seek the advice of a qualified doctor with any questions about a medical condition. The Full Report is a one-time digital purchase, delivered immediately. Because it is delivered instantly, we do not offer refunds for change of mind. We will refund you in full if the report fails to open, fails to reach you, or is faulty — contact us and we will either fix it or refund you. Any other refund request is considered at the clinic's discretion. By using this tool, you confirm the information you provide is accurate to the best of your knowledge."
+          zh="男性活力指数是一项自我评估与教育工具。它并非诊断工具，不会诊断任何疾病，也不能取代专业医疗咨询。如有任何关于医疗状况的问题，请务必咨询合格医生。完整报告为一次性数字商品，付款后即时交付。由于属即时交付，我们不接受因改变主意而提出的退款。若报告无法打开、未能送达或内容有误，我们将全额退款——请联系我们，我们会为你修正或退款。其他退款申请由诊所酌情处理。使用本工具即表示你确认所提供的信息在你所知范围内是准确的。" />
       </Card>
+      <SectionLabel lang={lang} en="Refunds & Support" zh="退款与支援" color={C.blue} />
+      <SupportCard lang={lang} />
       <Card style={{ background: C.panel2 }}>
         <Body lang={lang} small en="Questions about your data or these terms? Contact R Clinic (Genkimed Sdn. Bhd.) directly." zh="对你的资料或本条款有任何疑问？请直接联系R Clinic（Genkimed Sdn. Bhd.）。" />
       </Card>
@@ -2386,6 +2418,7 @@ function CheckoutPage({ results, demo, lang, setLang, onBack, onUnlock }) {
           ? tr3(lang, "No payment required — your full report opens straight away.", "无需付款——你的完整报告将立即打开。", "Tiada pembayaran diperlukan — laporan penuh anda akan dibuka terus.")
           : tr3(lang, "You'll be taken to PayPal's secure payment page, then brought straight back here to open and download your full report.", "你将被转到PayPal的安全付款页面，付款完成后会直接返回，打开并下载你的完整报告。", "Anda akan dibawa ke halaman pembayaran selamat PayPal, kemudian dibawa kembali ke sini untuk membuka dan memuat turun laporan penuh anda.")}
       </div>
+      <div style={{ marginTop: 20 }}><SupportCard lang={lang} compact /></div>
     </div>
   );
 }
@@ -2546,6 +2579,7 @@ function FullReportPage({ results, demo, lang, setLang, onBack, embedded }) {
       <SelfCheckTracker lang={lang} />
 
       <NextStepCTA lang={lang} />
+      <div className="no-print"><SupportCard lang={lang} compact /></div>
 
       <Card style={{ background: C.panel2 }}>
         <Body lang={lang} small en="This report is not a diagnosis. It summarises your self-reported answers and is intended to support a conversation with your doctor." zh="本报告并非诊断。它总结了你的自我评估答案，旨在支持你与医生的进一步讨论。" />
@@ -2803,29 +2837,85 @@ function downloadCSV(filename, rows) {
     return false;
   }
 }
-function exportResearchData(submissions) {
-  const consented = submissions.filter((s) => s.consent);
+/* ------------------------------------------------------------------
+   DATE RANGES for CSV export.
+   Everything is computed from local midnight so "This month" means the
+   month the person at the clinic is actually living in, not UTC.
+   ------------------------------------------------------------------ */
+const DATE_RANGES = [
+  { key: "all", label: "All time" },
+  { key: "30d", label: "Last 30 days" },
+  { key: "thismonth", label: "This month" },
+  { key: "lastmonth", label: "Last month" },
+  { key: "custom", label: "Custom range" },
+];
+function rangeBounds(key, customFrom, customTo) {
+  const now = new Date();
+  const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+  const endOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59, 999).getTime();
+  if (key === "30d") return { from: startOfDay(new Date(now.getTime() - 29 * 864e5)), to: endOfDay(now) };
+  if (key === "thismonth") return { from: new Date(now.getFullYear(), now.getMonth(), 1).getTime(), to: endOfDay(now) };
+  if (key === "lastmonth") {
+    const f = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    // Day 0 of this month is the last day of last month.
+    const l = new Date(now.getFullYear(), now.getMonth(), 0);
+    return { from: f.getTime(), to: endOfDay(l) };
+  }
+  if (key === "custom") {
+    // An empty box means "no bound on that side" rather than "no results".
+    const f = customFrom ? new Date(customFrom + "T00:00:00").getTime() : 0;
+    const t = customTo ? new Date(customTo + "T23:59:59.999").getTime() : Date.now();
+    return { from: f, to: t };
+  }
+  return { from: 0, to: Date.now() };
+}
+function inRange(ts, b) { return typeof ts === "number" && ts >= b.from && ts <= b.to; }
+function rangeSuffix(key, b) {
+  if (key === "all") return "all-time";
+  const d = (ms) => new Date(ms).toISOString().slice(0, 10);
+  return `${d(b.from)}_to_${d(b.to)}`;
+}
+function exportResearchData(submissions, bounds, suffix) {
+  const b = bounds || { from: 0, to: Date.now() };
+  const consented = submissions.filter((s) => s.consent && inRange(s.ts, b));
   const header = ["date", "age_group", "mode", "overall_score", ...DOMAINS.map((d) => d.key + "_score"), "flag_count", "top_priority"];
   const rows = consented.map((s) => [
     new Date(s.ts).toISOString().slice(0, 10), s.ageGroup || "", s.mode || "",
     s.overall, ...DOMAINS.map((d) => { const dm = (s.domains || []).find((x) => x.key === d.key); return dm ? dm.score : ""; }),
     s.flagCount, s.topPriority || "",
   ]);
-  downloadCSV(`mvi-research-data-${Date.now()}.csv`, [header, ...rows]);
+  downloadCSV(`mvi-research-data-${suffix || "all-time"}.csv`, [header, ...rows]);
+  return rows.length;
 }
-async function exportLeads(setBusy) {
+async function exportLeads(setBusy, bounds, suffix, setNote) {
   setBusy(true);
   try {
-    const list = await store.list(COLL.leads);
-    const leads = res ? JSON.parse(res.value) : [];
-    const header = ["date", "name", "phone", "email", "overall_score", "mode", "purchased_full_report"];
-    const rows = leads.map((l) => [new Date(l.ts).toISOString().slice(0, 10), l.name, l.phone, l.email, l.overall, l.mode, l.purchased ? "yes" : "no"]);
-    downloadCSV(`mvi-leads-${Date.now()}.csv`, [header, ...rows]);
-  } catch { /* no leads saved yet, or storage unavailable in this environment */ }
+    // This used to read an undefined variable, so the file downloaded empty
+    // every time. It now reads the same store the portal reads.
+    const list = await store.list(COLL.leads, 5000);
+    const b = bounds || { from: 0, to: Date.now() };
+    const leads = list.filter((l) => inRange(l.ts, b));
+    const header = ["date", "name", "phone", "email", "overall_score", "mode", "purchased_full_report", "consent_research", "preferred_channel"];
+    const rows = leads.map((l) => [
+      new Date(l.ts).toISOString().slice(0, 10), l.name || "", l.phone || "", l.email || "",
+      l.overall ?? "", l.mode || "", l.purchased ? "yes" : "no",
+      l.consent ? "yes" : "no", l.channel || "",
+    ]);
+    downloadCSV(`mvi-leads-${suffix || "all-time"}.csv`, [header, ...rows]);
+    if (setNote) setNote(`${rows.length} contact${rows.length === 1 ? "" : "s"} exported.`);
+  } catch (e) {
+    if (setNote) setNote("Export failed — check your connection and try again.");
+  }
   setBusy(false);
 }
 function ClinicDashboard({ submissions, loading, lang, progress, leads }) {
   const [exportBusy, setExportBusy] = useState(false);
+  const [range, setRange] = useState("all");
+  const [customFrom, setCustomFrom] = useState("");
+  const [customTo, setCustomTo] = useState("");
+  const [exportNote, setExportNote] = useState("");
+  const exportBounds = rangeBounds(range, customFrom, customTo);
+  const exportCount = (submissions || []).filter((x) => inRange(x.ts, exportBounds)).length;
   if (loading) return <div style={{ color: C.dim, fontSize: 14 }}>{tr(lang, "Loading…", "载入中…")}</div>;
   if (!submissions.length) return <div style={{ color: C.dim, fontSize: 14, textAlign: "center", padding: "40px 0" }}>{tr(lang, "No submissions yet.", "暂无数据。")}</div>;
   const n = submissions.length;
@@ -2872,24 +2962,50 @@ function ClinicDashboard({ submissions, loading, lang, progress, leads }) {
         const started = progress.length;
         const completedCount = submissions.length;
         const rate = started ? Math.round((completedCount / started) * 100) : 0;
-        const buckets = { "0-25%": 0, "25-50%": 0, "50-75%": 0, "75-99%": 0 };
-        progress.forEach((p) => {
-          const pct = p.totalSteps ? (p.step / p.totalSteps) * 100 : 0;
-          if (pct < 25) buckets["0-25%"]++; else if (pct < 50) buckets["25-50%"]++; else if (pct < 75) buckets["50-75%"]++; else buckets["75-99%"]++;
+        // Group unfinished sessions by the section they were last seen in.
+        const unfinished = progress.filter((p) => !p.totalSteps || p.step < p.totalSteps - 1);
+        const bySection = {};
+        unfinished.forEach((p) => {
+          const key = p.section || "Unknown";
+          bySection[key] = (bySection[key] || 0) + 1;
         });
+        const rows = Object.entries(bySection).sort((a, b) => b[1] - a[1]);
+        const worst = rows[0];
         return (
           <>
             <SectionLabel lang={lang} en="Where People Drop Off" zh="用户流失分析" color={C.orange} />
             <Card style={{ marginBottom: 18 }}>
-              <div style={{ fontSize: 12.5, marginBottom: 10 }}>{tr(lang, "Sessions started:", "开始的评估：")} <b>{started}</b> &nbsp;·&nbsp; {tr(lang, "Completed:", "已完成：")} <b>{completedCount}</b> ({rate}%)</div>
-              {Object.entries(buckets).map(([label, count]) => (
-                <div key={label} style={{ display: "flex", alignItems: "center", gap: 10, padding: "5px 0" }}>
-                  <div style={{ width: 70, fontSize: 12, color: C.mid }}>{label}</div>
-                  <div style={{ flex: 1, height: 8, background: C.panel2, borderRadius: 4, overflow: "hidden" }}><div style={{ width: `${started ? (count / started) * 100 : 0}%`, height: "100%", background: C.orange }} /></div>
-                  <div style={{ width: 24, fontSize: 12, textAlign: "right", color: C.mid }}>{count}</div>
+              <div style={{ display: "flex", gap: 10, marginBottom: 14 }}>
+                {[
+                  { n: started, l: tr(lang, "Started", "开始") },
+                  { n: completedCount, l: tr(lang, "Finished", "完成") },
+                  { n: rate + "%", l: tr(lang, "Completion", "完成率") },
+                ].map((x, i) => (
+                  <div key={i} style={{ flex: 1, background: C.panel2, borderRadius: 10, padding: "10px 6px", textAlign: "center" }}>
+                    <div style={{ fontSize: 19, fontWeight: 900, color: C.blueDeep }}>{x.n}</div>
+                    <div style={{ fontSize: 10, color: C.mid, marginTop: 2 }}>{x.l}</div>
+                  </div>
+                ))}
+              </div>
+              {worst && (
+                <div style={{ background: `${C.orange}14`, border: `1px solid ${C.orange}`, borderRadius: 10, padding: "10px 12px", marginBottom: 12, fontSize: 12.5, color: C.ink, lineHeight: 1.5 }}>
+                  {tr(lang, "Most people who quit stop during", "最多人放弃的环节是")} <b>{worst[0]}</b> — {worst[1]} {tr(lang, "sessions.", "次。")}
                 </div>
-              ))}
-              <div style={{ fontSize: 10.5, color: C.dim, marginTop: 8 }}>{tr(lang, "Shows how far through the questionnaire each session got — a cluster near the start of a range is where the most people are quitting.", "显示每个会话在问卷中的进度——若集中在某个范围的前段，代表最多人在该处放弃。")}</div>
+              )}
+              {rows.length === 0 && <div style={{ fontSize: 12.5, color: C.mid }}>{tr(lang, "Nobody has abandoned an assessment yet.", "目前没有人中途放弃评估。")}</div>}
+              {rows.map(([label, count]) => {
+                const pct = unfinished.length ? Math.round((count / unfinished.length) * 100) : 0;
+                return (
+                  <div key={label} style={{ display: "flex", alignItems: "center", gap: 10, padding: "5px 0" }}>
+                    <div style={{ width: 132, fontSize: 11.5, color: C.mid, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{label}</div>
+                    <div style={{ flex: 1, height: 8, background: C.panel2, borderRadius: 4, overflow: "hidden" }}><div style={{ width: `${pct}%`, height: "100%", background: C.orange }} /></div>
+                    <div style={{ width: 46, fontSize: 11.5, textAlign: "right", color: C.mid, fontWeight: 700 }}>{count} ({pct}%)</div>
+                  </div>
+                );
+              })}
+              <div style={{ fontSize: 10.5, color: C.dim, marginTop: 10, lineHeight: 1.5 }}>
+                {tr(lang, "Counts only sessions that never reached the end. The section with the biggest bar is the one costing you the most patients.", "仅统计未完成的评估。柱状最长的环节，就是流失最多病患的地方。")}
+              </div>
             </Card>
           </>
         );
@@ -2918,14 +3034,38 @@ function ClinicDashboard({ submissions, loading, lang, progress, leads }) {
         <div style={{ fontSize: 11.5, color: C.mid, marginBottom: 12, lineHeight: 1.5 }}>
           {tr(lang, "Research export includes only patients who gave explicit consent, and never includes names or contact details. Leads export contains contact info for business follow-up and requires clinic access only.", "研究数据导出仅包含明确同意的病患，且绝不包含姓名或联络方式。名单导出则包含联络资料，供业务跟进使用，仅限诊所人员使用。")}
         </div>
-        <button onClick={() => exportResearchData(submissions)}
+        {/* Date range. Without this every export was the whole database,
+            which makes a monthly report or a research cut-off impossible. */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 10 }}>
+          {DATE_RANGES.map((r) => (
+            <button key={r.key} onClick={() => { setRange(r.key); setExportNote(""); }}
+              style={{ padding: "7px 11px", borderRadius: 999, fontSize: 11.5, fontWeight: 700, cursor: "pointer", fontFamily: "inherit",
+                background: range === r.key ? C.blueDeep : "#fff", color: range === r.key ? "#fff" : C.mid,
+                border: `1px solid ${range === r.key ? C.blueDeep : C.border}` }}>
+              {r.label}
+            </button>
+          ))}
+        </div>
+        {range === "custom" && (
+          <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+            <input type="date" value={customFrom} onChange={(e) => setCustomFrom(e.target.value)}
+              style={{ flex: 1, padding: "9px 10px", borderRadius: 9, border: `1px solid ${C.border}`, fontSize: 12.5, fontFamily: "inherit", color: C.ink }} />
+            <input type="date" value={customTo} onChange={(e) => setCustomTo(e.target.value)}
+              style={{ flex: 1, padding: "9px 10px", borderRadius: 9, border: `1px solid ${C.border}`, fontSize: 12.5, fontFamily: "inherit", color: C.ink }} />
+          </div>
+        )}
+        <div style={{ fontSize: 11, color: C.dim, marginBottom: 10 }}>
+          {exportCount} {tr(lang, "assessments in this range.", "份评估在此范围内。")}
+        </div>
+        <button onClick={() => { const b = exportBounds; const n = exportResearchData(submissions, b, rangeSuffix(range, b)); setExportNote(`${n} anonymised record${n === 1 ? "" : "s"} exported.`); }}
           style={{ width: "100%", marginBottom: 8, padding: "13px", borderRadius: 10, background: C.panel2, border: `1.5px solid ${C.border}`, color: C.blueDeep, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
           📊 {tr(lang, "Export Research Data (CSV, anonymised)", "导出研究数据（CSV，匿名）")}
         </button>
-        <button onClick={() => exportLeads(setExportBusy)} disabled={exportBusy}
+        <button onClick={() => { const b = exportBounds; exportLeads(setExportBusy, b, rangeSuffix(range, b), setExportNote); }} disabled={exportBusy}
           style={{ width: "100%", padding: "13px", borderRadius: 10, background: C.panel2, border: `1.5px solid ${C.border}`, color: C.blueDeep, fontWeight: 700, fontSize: 13, cursor: exportBusy ? "not-allowed" : "pointer", opacity: exportBusy ? 0.6 : 1 }}>
           📇 {exportBusy ? tr(lang, "Exporting…", "导出中…") : tr(lang, "Export Leads (CSV, contains contact info)", "导出名单（CSV，含联络资料）")}
         </button>
+        {exportNote && <div style={{ marginTop: 9, fontSize: 11.5, color: C.blueDeep, fontWeight: 700 }}>{exportNote}</div>}
       </Card>
     </div>
   );
@@ -3101,11 +3241,18 @@ function AdminPortal({ lang, setLang, onExit }) {
   const [loadingAgg, setLoadingAgg] = useState(false);
   const [progress, setProgress] = useState([]);
   const [leads, setLeads] = useState([]);
+  // Finding one patient in a list of hundreds by scrolling is not workable
+  // once the clinic is running properly, so the list is searchable.
+  const [q, setQ] = useState("");
+  const [modeFilter, setModeFilter] = useState("all"); // all | clinic | online
+  const [dateFilter, setDateFilter] = useState("all");
+  const [dFrom, setDFrom] = useState("");
+  const [dTo, setDTo] = useState("");
 
   async function loadRecords() {
     setLoadingRecords(true);
     try {
-      const list = await store.list(COLL.patients);
+      const list = await store.list(COLL.patients, 3000);
       setRecords(list); // store.list already returns newest first
     } catch { setRecords([]); }
     setLoadingRecords(false);
@@ -3113,13 +3260,13 @@ function AdminPortal({ lang, setLang, onExit }) {
   async function loadAggregate() {
     setLoadingAgg(true);
     try {
-      setSubmissions(await store.list(COLL.submissions));
+      setSubmissions(await store.list(COLL.submissions, 3000));
     } catch { setSubmissions([]); }
     try {
-      setProgress(await store.list(COLL.progress));
+      setProgress(await store.list(COLL.progress, 3000));
     } catch { setProgress([]); }
     try {
-      setLeads(await store.list(COLL.leads));
+      setLeads(await store.list(COLL.leads, 3000));
     } catch { setLeads([]); }
     setLoadingAgg(false);
   }
@@ -3246,18 +3393,71 @@ function AdminPortal({ lang, setLang, onExit }) {
       {view === "list" && (
         loadingRecords ? <div style={{ color: C.dim, fontSize: 14 }}>Loading…</div> :
         records.length === 0 ? <div style={{ color: C.dim, fontSize: 14, textAlign: "center", padding: "40px 0" }}>No patient results yet.</div> :
-        records.map((r) => {
-          const cat = r.domainResults ? vitalityCategory(r.domainResults.overall) : null;
-          return (
-            <Card key={r.id} onClick={() => setSelected(r)} style={{ marginBottom: 10, cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div>
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search name, phone or email"
+            style={{ width: "100%", padding: "12px 14px", borderRadius: 10, background: "#fff", border: `1.5px solid ${C.border}`, color: C.ink, fontSize: 14, fontFamily: "inherit", marginBottom: 8 }} />
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 8 }}>
+            {[{ k: "all", l: "All" }, { k: "clinic", l: "Clinic" }, { k: "online", l: "Online" }].map((m) => (
+              <button key={m.k} onClick={() => setModeFilter(m.k)}
+                style={{ padding: "7px 12px", borderRadius: 999, fontSize: 11.5, fontWeight: 700, cursor: "pointer", fontFamily: "inherit",
+                  background: modeFilter === m.k ? C.blueDeep : "#fff", color: modeFilter === m.k ? "#fff" : C.mid,
+                  border: `1px solid ${modeFilter === m.k ? C.blueDeep : C.border}` }}>{m.l}</button>
+            ))}
+            <span style={{ width: 1, background: C.border, margin: "0 2px" }} />
+            {DATE_RANGES.map((r) => (
+              <button key={r.key} onClick={() => setDateFilter(r.key)}
+                style={{ padding: "7px 12px", borderRadius: 999, fontSize: 11.5, fontWeight: 700, cursor: "pointer", fontFamily: "inherit",
+                  background: dateFilter === r.key ? C.blue : "#fff", color: dateFilter === r.key ? "#fff" : C.mid,
+                  border: `1px solid ${dateFilter === r.key ? C.blue : C.border}` }}>{r.label}</button>
+            ))}
+          </div>
+          {dateFilter === "custom" && (
+            <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+              <input type="date" value={dFrom} onChange={(e) => setDFrom(e.target.value)}
+                style={{ flex: 1, padding: "9px 10px", borderRadius: 9, border: `1px solid ${C.border}`, fontSize: 12.5, fontFamily: "inherit", color: C.ink }} />
+              <input type="date" value={dTo} onChange={(e) => setDTo(e.target.value)}
+                style={{ flex: 1, padding: "9px 10px", borderRadius: 9, border: `1px solid ${C.border}`, fontSize: 12.5, fontFamily: "inherit", color: C.ink }} />
+            </div>
+          )}
+          {(() => {
+            const bounds = rangeBounds(dateFilter, dFrom, dTo);
+            const needle = q.trim().toLowerCase();
+            const filtered = records.filter((r) => {
+              if (modeFilter !== "all" && (r.mode || "") !== modeFilter) return false;
+              if (dateFilter !== "all" && !inRange(r.ts, bounds)) return false;
+              if (!needle) return true;
+              // Digits-only compare for phone so "011-108" still matches "0111086…".
+              const digits = String(r.patientPhone || "").replace(/\D/g, "");
+              const nDigits = needle.replace(/\D/g, "");
+              return (
+                String(r.patientName || "").toLowerCase().includes(needle) ||
+                String(r.patientEmail || "").toLowerCase().includes(needle) ||
+                (nDigits.length >= 3 && digits.includes(nDigits))
+              );
+            });
+            return (
               <div>
-                <div style={{ fontSize: 14, fontWeight: 700 }}>{r.patientName || "—"}</div>
-                <div style={{ fontSize: 11.5, color: C.mid }}>{r.patientPhone} · {new Date(r.ts).toLocaleDateString()} · {r.mode}</div>
+                <div style={{ fontSize: 11.5, color: C.dim, marginBottom: 10 }}>
+                  Showing {filtered.length} of {records.length}
+                </div>
+                {filtered.length === 0
+                  ? <div style={{ color: C.dim, fontSize: 13.5, textAlign: "center", padding: "30px 0" }}>No patients match that search.</div>
+                  : filtered.map((r) => {
+                      const cat = r.domainResults ? vitalityCategory(r.domainResults.overall) : null;
+                      return (
+                        <Card key={r.id} onClick={() => setSelected(r)} style={{ marginBottom: 10, cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                          <div>
+                            <div style={{ fontSize: 14, fontWeight: 700 }}>{r.patientName || "—"}</div>
+                            <div style={{ fontSize: 11.5, color: C.mid }}>{r.patientPhone} · {new Date(r.ts).toLocaleDateString()} · {r.mode}</div>
+                          </div>
+                          {cat && <div style={{ fontSize: 18, fontWeight: 900, color: cat.color }}>{r.domainResults.overall}</div>}
+                        </Card>
+                      );
+                    })}
               </div>
-              {cat && <div style={{ fontSize: 18, fontWeight: 900, color: cat.color }}>{r.domainResults.overall}</div>}
-            </Card>
-          );
-        })
+            );
+          })()}
+        </div>
       )}
       {view === "clinic" && <ClinicDashboard submissions={submissions} loading={loadingAgg} lang={lang} progress={progress} leads={leads} />}
     </div>
@@ -3329,6 +3529,10 @@ export default function App() {
   const [step, setStep] = useState(0);
   const [saveState, setSaveState] = useState("idle");
   const [leadId, setLeadId] = useState(null);
+  // The patient record is written at scoring time, but contact details are
+  // now collected AFTER the score. Without this id the doctor portal showed
+  // every online patient as "—" with a blank phone number.
+  const [patientRecId, setPatientRecId] = useState(null);
   const [transitionInfo, setTransitionInfo] = useState(null);
   const [pendingStep, setPendingStep] = useState(null);
   const [celebrating, setCelebrating] = useState(false);
@@ -3366,8 +3570,12 @@ export default function App() {
         // One document per session, keyed by sessionId. This is a plain write
         // with no read first — it used to read and rewrite the entire progress
         // list on every single question.
+        // Record the section name, not just a step number. "12 people quit
+        // during DASS-21" is actionable; "12 people quit at step 47" is not.
+        const secInfo = categoryInfoForStep(flowSteps, step);
         await store.put(COLL.progress, sessionId, {
           sessionId, step, totalSteps: flowSteps.length, ts: Date.now(),
+          section: secInfo ? t(secInfo.label, "en") : "",
           mode: isClinicMode ? "clinic" : "online",
         });
       } catch { /* best-effort — never blocks the patient's flow */ }
@@ -3571,8 +3779,10 @@ export default function App() {
     (async () => {
       try {
         if (!fullResultsForRecord) return;
-        const record = { id: `pat_${Date.now()}`, ts: Date.now(), patientName: demo.name, patientPhone: demo.phone, patientAge: demo.age,
+        const record = { id: `pat_${Date.now()}`, ts: Date.now(), patientName: demo.name || "", patientPhone: demo.phone || "",
+          patientEmail: demo.email || "", patientAge: demo.age,
           mode: isClinicMode ? "clinic" : "online", ...fullResultsForRecord };
+        setPatientRecId(record.id);
         await store.put(COLL.patients, record.id, record);
       } catch (e) {
         console.error("MVI: patient record save failed", e);
@@ -3585,11 +3795,20 @@ export default function App() {
   // contact details. This fills them in once the patient supplies them.
   async function saveContactDetails() {
     try {
-      if (!leadId) return;
-      await store.merge(COLL.leads, leadId, {
-        name: demo.name, phone: demo.phone, email: demo.email || "",
-        channel: demo.channel || "whatsapp", contactedAt: Date.now(),
-      });
+      if (leadId) {
+        await store.merge(COLL.leads, leadId, {
+          name: demo.name, phone: demo.phone, email: demo.email || "",
+          channel: demo.channel || "whatsapp", contactedAt: Date.now(),
+          consent: !!demo.consent,
+        });
+      }
+      // Backfill the same details onto the patient record so the doctor
+      // portal can identify and search for this person.
+      if (patientRecId) {
+        await store.merge(COLL.patients, patientRecId, {
+          patientName: demo.name || "", patientPhone: demo.phone || "", patientEmail: demo.email || "",
+        });
+      }
     } catch (e) { console.error("MVI: contact save failed", e); }
   }
   async function markLeadPurchased() {

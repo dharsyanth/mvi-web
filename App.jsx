@@ -773,12 +773,33 @@ function computeDomainScores(answers) {
     const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
     return { ...d, score: avg, answeredAll };
   });
+  // A domain scores null when every one of its drivers was answered "Not
+  // applicable" — most often all four Sexual Health questions, which is a
+  // perfectly ordinary answer for a man who is not currently sexually active.
+  //
+  // This used to make the ENTIRE overall score null. The patient then saw an
+  // empty score ring, the sentence "a vitality profile scoring null overall",
+  // and — because vitalityCategory treated null as zero — a red "Priority"
+  // badge. In other words, declining the sexual questions told a man his
+  // health was in the worst possible band. That was wrong on every level.
+  //
+  // Correct handling for a missing subscale is to drop it and renormalise the
+  // remaining weights, so the overall is a true weighted average of what the
+  // patient actually answered rather than a penalty for what he skipped.
+  const scoredDomains = results.filter((r) => r.score !== null);
+  const weightSum = scoredDomains.reduce((sum, r) => sum + r.weight, 0);
+  const overall = weightSum > 0
+    ? Math.round(scoredDomains.reduce((sum, r) => sum + r.score * r.weight, 0) / weightSum)
+    : null;
   const complete = results.every((r) => r.score !== null);
-  const overall = complete ? Math.round(results.reduce((sum, r) => sum + r.score * r.weight, 0)) : null;
-  return { domains: results, overall, complete };
+  // Which areas were left out of the overall, so the report can say so plainly
+  // instead of quietly presenting a partial score as a whole one.
+  const unscored = results.filter((r) => r.score === null).map((r) => r.key);
+  return { domains: results, overall, complete, unscored, coverage: weightSum };
 }
 // Five-tier clinical severity scale (red -> green), matching the convention used across
 // international health dashboards, separate from each domain's own identity color.
+const SEVERITY_TIERS_UNKNOWN = { min: null, label: bi("Not scored", "未评分"), color: "#5C7A96", unknown: true };
 const SEVERITY_TIERS = [
   { min: 90, label: bi("Excellent", "优秀"), color: "#0E8F5C" },
   { min: 75, label: bi("Good", "良好"), color: "#5CB85C" },
@@ -787,8 +808,11 @@ const SEVERITY_TIERS = [
   { min: 0, label: bi("Priority", "优先关注"), color: "#C23B32" },
 ];
 function vitalityCategory(score) {
-  const s = score ?? 0;
-  return SEVERITY_TIERS.find((t) => s >= t.min) || SEVERITY_TIERS[SEVERITY_TIERS.length - 1];
+  // Never invent a band for a score we do not have. `score ?? 0` used to map a
+  // missing score onto "Priority" — the worst tier — so an unscored assessment
+  // was displayed to the patient as their result.
+  if (typeof score !== "number" || !isFinite(score)) return SEVERITY_TIERS_UNKNOWN;
+  return SEVERITY_TIERS.find((t) => score >= t.min) || SEVERITY_TIERS[SEVERITY_TIERS.length - 1];
 }
 
 /* ============================================================
@@ -992,9 +1016,16 @@ function exploreVariant(i, lang, instrumentNames) {
 
 function generateOfflineReport({ domainResults, priorities, rawAnswers, branchResults, risk, ageGroup, lang }) {
   const sorted = [...domainResults.domains].filter((d) => d.score !== null).sort((a, b) => b.score - a.score);
-  const strongest = sorted[0];
-  const secondStrongest = sorted[1];
   const topPriority = priorities[0];
+  // When every domain scores the same — a patient who picked the same option
+  // throughout, which happens more often than you would think — the highest
+  // scoring domain and the top priority can be the SAME domain. The summary
+  // then read "Sexual Health stands out as your clearest strength, and Sexual
+  // Health is the one most worth your attention", which is nonsense. Name the
+  // best area that is not already being flagged as the priority.
+  const strongPool = topPriority ? sorted.filter((d) => d.key !== topPriority.key) : sorted;
+  const strongest = strongPool[0] || sorted[0];
+  const secondStrongest = strongPool[1];
   const topLabel = topPriority ? t(topPriority.label, lang) : "";
   const strongLabel = strongest ? t(strongest.label, lang) : "";
 
@@ -1949,6 +1980,26 @@ function ResultsScreen({ results, demo, saveState, restart, lang, setLang, onOpe
   );
 }
 
+// Shown whenever one or more areas were answered entirely "Not applicable".
+// The score is still valid, it is just based on fewer areas, and saying so is
+// the difference between an honest partial result and a misleading one.
+function UnscoredNotice({ domainResults, lang, compact }) {
+  const un = domainResults && domainResults.unscored ? domainResults.unscored : [];
+  if (!un.length) return null;
+  const names = un.map((k) => {
+    const d = DOMAINS.find((x) => x.key === k);
+    return d ? t(d.label, lang) : k;
+  }).join(", ");
+  return (
+    <div style={{ background: "#EEF4FA", border: `1px solid ${C.border}`, borderRadius: 10, padding: compact ? "10px 12px" : "12px 14px", marginBottom: 16, fontSize: 12, color: C.mid, lineHeight: 1.55 }}>
+      {tr3(lang,
+        `You answered "Not applicable" to every question in ${names}, so that area is not part of your score. Your score is based on the areas you did answer, and it is not reduced by leaving this one out.`,
+        `你在「${names}」的所有问题中都选择了「不适用」，因此该方面未纳入你的分数。你的分数是根据你实际回答的方面计算的，不会因为略过这一项而被扣分。`,
+        `Anda menjawab "Tidak berkaitan" untuk setiap soalan dalam ${names}, jadi bidang itu tidak termasuk dalam skor anda. Skor anda dikira berdasarkan bidang yang anda jawab, dan tidak dikurangkan kerana bidang ini ditinggalkan.`)}
+    </div>
+  );
+}
+
 function PatientReport({ results, demo, lang, onOpenFullReport }) {
   const { domainResults, priorities, ai, foundation, bmi, risk } = results;
   const cat = vitalityCategory(domainResults.overall);
@@ -1959,7 +2010,7 @@ function PatientReport({ results, demo, lang, onOpenFullReport }) {
         <div style={{ position: "relative", display: "inline-block", filter: `drop-shadow(0 0 22px ${cat.color}99)` }}>
           <ArcGauge pct={domainResults.overall} color={cat.color} size={168} stroke={14} />
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-            <div style={{ fontSize: 50, fontWeight: 900, color: "#fff", lineHeight: 1 }}>{domainResults.overall}</div>
+            <div style={{ fontSize: 50, fontWeight: 900, color: "#fff", lineHeight: 1 }}>{typeof domainResults.overall === "number" ? domainResults.overall : "—"}</div>
             <div style={{ fontSize: 11, color: "#9DB3C9", marginTop: 2 }}>/ 100</div>
           </div>
         </div>
@@ -1967,6 +2018,8 @@ function PatientReport({ results, demo, lang, onOpenFullReport }) {
           <span style={{ padding: "7px 18px", borderRadius: 20, background: `${cat.color}26`, border: `1.5px solid ${cat.color}`, color: cat.color, fontSize: 13.5, fontWeight: 800 }}>{t(cat.label, lang)}</span>
         </div>
       </Card>
+
+      <UnscoredNotice domainResults={domainResults} lang={lang} />
 
       {ai && <Card style={{ marginBottom: 18 }}><Body lang={lang} en={ai.summary} zh={ai.summary} /></Card>}
 
@@ -2183,14 +2236,18 @@ function ScoreMeaning({ overall, lang }) {
     { min: 40, label: bi("Needs Attention", "需要关注"), note: bi("Several areas are pulling your score down.", "有多个方面拉低了你的分数。") },
     { min: 0,  label: bi("Priority", "优先处理"), note: bi("Worth discussing with a doctor soon.", "建议尽快与医生讨论。") },
   ];
-  const mine = rows.find((r) => overall >= r.min) || rows[rows.length - 1];
+  // `null >= 0` evaluates to true in JavaScript, so a missing score used to
+  // highlight the "Priority" row. Only match when we actually have a number.
+  const mine = typeof overall === "number" && isFinite(overall)
+    ? (rows.find((r) => overall >= r.min) || rows[rows.length - 1])
+    : null;
   return (
     <Card style={{ marginBottom: 18 }}>
       <div style={{ fontSize: 12, fontWeight: 800, color: C.ink, marginBottom: 8 }}>
         {tr3(lang, "What this score means", "这个分数代表什么", "Apa maksud skor ini")}
       </div>
       {rows.map((r, i) => {
-        const isMine = r.label.en === mine.label.en;
+        const isMine = !!mine && r.label.en === mine.label.en;
         return (
           <div key={i} style={{ display: "flex", gap: 10, alignItems: "baseline", padding: "6px 8px", borderRadius: 8, background: isMine ? `${C.blueDeep}12` : "transparent", border: isMine ? `1px solid ${C.blueDeep}55` : "1px solid transparent", marginBottom: 3 }}>
             <span style={{ fontSize: 11, fontWeight: 800, color: C.mid, width: 52, flexShrink: 0 }}>{r.min === 0 ? "0-39" : `${r.min}+`}</span>
@@ -2529,18 +2586,35 @@ function FullReportPage({ results, demo, lang, setLang, onBack, embedded }) {
       )}
 
       <ChapterBanner color={C.blue} icon="🔬" label={bi("The Science Behind Your Score", "你的分数背后的科学依据")} lang={lang} />
+      {/* This used to name all five instruments unconditionally. Since the
+          deeper questionnaires became opt-in, most patients never see DASS-21
+          or DASI, so the old text told them their report drew on tools that
+          never ran. It now lists only what was actually administered. */}
       <Card style={{ marginBottom: 20 }}>
-        <Body lang={lang} small
-          en="Your Vitality Score isn't a guess — it's built from the same validated screening tools used in real clinical practice worldwide. Wherever your answers pointed to something worth a closer look, this report drew on internationally recognised instruments including IIEF-5 (erectile function), IPSS (urinary symptoms), DASS-21 (mood, anxiety and stress), ADAM (hormonal screening), and DASI (functional capacity) — the same tools a doctor would use in an in-person assessment."
-          zh="你的活力指数并非凭空猜测——它建立在全球临床实践中实际使用的验证筛查工具之上。凡是你的回答显示值得进一步关注之处，本报告都采用了国际认可的评估工具，包括IIEF-5（勃起功能）、IPSS（泌尿症状）、DASS-21（情绪、焦虑与压力）、ADAM（荷尔蒙筛查）以及DASI（功能能力）——这些正是医生在面对面评估时会使用的工具。" />
+        {(() => {
+          const used = (branchResults || []).map((r) => t(r.name, lang));
+          if (!used.length) {
+            return (
+              <Body lang={lang} small
+                en="Your Vitality Score is built from 17 questions covering six areas of men's health, each weighted by how strongly it contributes to overall vitality. Your answers did not indicate a need for any of the deeper clinical questionnaires, so none were added. If that changes at a future assessment, the relevant one will be offered to you."
+                zh="你的活力指数由涵盖六大男性健康领域的17个问题构成，每一项都依其对整体活力的影响程度加权计算。你的回答并未显示需要进一步的临床问卷，因此未加入任何附加评估。若日后再次评估时情况有变，系统会向你提供相关问卷。" />
+            );
+          }
+          return (
+            <Body lang={lang} small
+              en={`Your Vitality Score is built from 17 weighted questions across six areas of men's health. Where your answers pointed to something worth a closer look, this report also drew on the following validated clinical questionnaire${used.length > 1 ? "s" : ""}, the same ones a doctor would use in an in-person assessment: ${used.join(", ")}.`}
+              zh={`你的活力指数由涵盖六大男性健康领域的17道加权问题构成。凡是你的回答显示值得进一步关注之处，本报告还采用了以下经过验证的临床问卷，这些正是医生在面对面评估时会使用的工具：${used.join("、")}。`} />
+          );
+        })()}
       </Card>
 
       <ChapterBanner color={C.blueDeep} icon="🎯" label={bi("Key Overview", "重点概览")} lang={lang} />
       <Card style={{ textAlign: "center", marginBottom: 16 }}>
         <ArcGauge pct={domainResults.overall} color={cat.color} size={120} stroke={11} />
-        <div style={{ fontSize: 36, fontWeight: 900, color: cat.color, marginTop: -78 }}>{domainResults.overall}</div>
+        <div style={{ fontSize: 36, fontWeight: 900, color: cat.color, marginTop: -78 }}>{typeof domainResults.overall === "number" ? domainResults.overall : "—"}</div>
         <div style={{ fontSize: 12, fontWeight: 700, color: cat.color, marginTop: 46 }}>{t(cat.label, lang)}</div>
       </Card>
+      <UnscoredNotice domainResults={domainResults} lang={lang} compact />
       {ai && <Card style={{ marginBottom: 20 }}><Body lang={lang} en={ai.summary} zh={ai.summary} /></Card>}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
         {domainResults.domains.map((d) => (

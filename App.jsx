@@ -89,6 +89,174 @@ const LANGUAGES = [
 // (id), Tamil (ta), Arabic (ar), Hindi (hi), Spanish (es).
 
 const MS = {
+  "your smoking": "tabiat merokok anda",
+  "your alcohol intake": "pengambilan alkohol anda",
+  "your current activity level": "tahap aktiviti semasa anda",
+  "your sleep duration": "tempoh tidur anda",
+  "your diet pattern": "corak pemakanan anda",
+  // --- Full Report, legal pages and educational content (added 23 Sept).
+  // Added after an automated audit found 156 patient-facing strings that were
+  // silently falling back to English whenever the patient chose Malay.
+  // MVI-authored content only; no licensed instrument item is translated here.
+  "5-8 minutes": "5-8 minit",
+  "A 90-day self-check tracker to see your progress over time": "Jadual semakan kendiri 90 hari untuk memantau kemajuan anda dari semasa ke semasa",
+  "A breakdown of every one of your 17 answers, explained in plain language": "Huraian bagi setiap satu daripada 17 jawapan anda, diterangkan dalam bahasa mudah",
+  "A consistent sleep schedule, 7-8 hours a night": "Jadual tidur yang konsisten, 7-8 jam setiap malam",
+  "A full chapter for every one of the 6 areas — what it means, why it matters, and what actually helps": "Satu bab penuh bagi setiap satu daripada 6 bidang: maksudnya, kepentingannya, dan apa yang benar-benar membantu",
+  "A stocked list of quick, healthy go-to meals": "Senarai hidangan sihat yang pantas dan mudah disediakan",
+  "About This Area": "Mengenai Bidang Ini",
+  "Activity": "Aktiviti",
+  "Addressing underlying hormonal or thyroid issues with your doctor": "Membincangkan masalah hormon atau tiroid yang mendasari bersama doktor anda",
+  "Adequate protein intake to support muscle repair": "Pengambilan protein yang mencukupi bagi menyokong pembaikan otot",
+  "Anxiety": "Keresahan",
+  "Area": "Bidang",
+  "Areas covered": "Bidang yang dinilai",
+  "Balanced protein intake throughout the day": "Pengambilan protein yang seimbang sepanjang hari",
+  "Begin My Vitality Check": "Mulakan Semakan Vitaliti Saya",
+  "Berries — flavonoids linked to better erectile function in studies": "Beri: flavonoid yang dikaitkan dengan fungsi ereksi yang lebih baik dalam kajian",
+  "Black sesame and walnuts — rich in healthy fats and minerals, and a food traditionally favoured in Chinese wellness practices for men's vitality": "Bijan hitam dan walnut: kaya dengan lemak sihat dan mineral, dan merupakan makanan yang lazim digunakan dalam amalan kesihatan tradisional Cina untuk vitaliti lelaki",
+  "Building habits around your existing routine, not against it": "Membina tabiat mengikut rutin sedia ada anda, bukan melawannya",
+  "Chronic stress and low mood are linked to hormonal changes (including lower testosterone), poorer sleep, and reduced motivation to maintain healthy habits — a cycle that can worsen physical health over time.": "Tekanan berpanjangan dan mood yang rendah dikaitkan dengan perubahan hormon (termasuk testosteron yang lebih rendah), kualiti tidur yang lebih buruk, dan motivasi yang berkurangan untuk mengekalkan tabiat sihat. Ini satu kitaran yang boleh memburukkan kesihatan fizikal dari masa ke masa.",
+  "Chrysanthemum or chamomile tea in place of a late coffee — a calming, widely available local swap": "Teh bunga kekwa atau chamomile sebagai ganti kopi lewat malam: pilihan tempatan yang menenangkan dan mudah didapati",
+  "Clinic Staff Login": "Log Masuk Kakitangan Klinik",
+  "Colorful vegetables for antioxidants and recovery": "Sayur-sayuran berwarna untuk antioksidan dan pemulihan",
+  "Combining resistance training with cardio exercise": "Menggabungkan latihan rintangan dengan senaman kardio",
+  "Complex carbohydrates for sustained energy": "Karbohidrat kompleks untuk tenaga yang berpanjangan",
+  "Complex carbohydrates, which support serotonin production": "Karbohidrat kompleks, yang menyokong penghasilan serotonin",
+  "Confidence in maintaining habits is one of the strongest predictors of whether a health change actually sticks. Low confidence here often means the plan needs to be simpler, not that you need more willpower.": "Keyakinan untuk mengekalkan tabiat ialah salah satu petunjuk terkuat sama ada sesuatu perubahan kesihatan benar-benar kekal. Keyakinan yang rendah di sini selalunya bermakna rancangan itu perlu dipermudahkan, bukan bermakna anda perlukan lebih kekuatan diri.",
+  "Consent to anonymised research use": "Persetujuan penggunaan tanpa nama untuk penyelidikan",
+  "Controlling blood pressure, cholesterol and blood sugar": "Mengawal tekanan darah, kolesterol dan gula dalam darah",
+  "Core questions": "Soalan teras",
+  "Declining physical performance can be an early marker of cardiovascular or hormonal issues, since the same blood flow and hormone levels that affect your muscles also affect your heart.": "Prestasi fizikal yang merosot boleh menjadi petanda awal masalah kardiovaskular atau hormon, kerana aliran darah dan paras hormon yang mempengaruhi otot anda turut mempengaruhi jantung anda.",
+  "Depression": "Kemurungan",
+  "Discussing persistent symptoms with your doctor rather than assuming it's normal ageing": "Membincangkan gejala berterusan dengan doktor anda, dan bukannya menganggap ia sekadar penuaan biasa",
+  "Discussing underlying vascular or hormonal causes with your doctor": "Membincangkan punca vaskular atau hormon yang mendasari bersama doktor anda",
+  "Energy level": "Tahap tenaga",
+  "Energy reflects how well your body converts food, oxygen and hormones into usable fuel for daily life — shaped by sleep quality, thyroid function and hormonal balance.": "Tenaga mencerminkan sejauh mana badan anda menukarkan makanan, oksigen dan hormon menjadi bahan bakar untuk kehidupan harian. Ia dipengaruhi oleh kualiti tidur, fungsi tiroid dan keseimbangan hormon.",
+  "Erectile Function Assessment (IIEF-5)": "Penilaian Fungsi Ereksi (IIEF-5)",
+  "Erectile difficulty is often the first visible sign of an underlying vascular problem. The same blood vessels affected in erectile dysfunction are frequently the same ones affected in the heart, sometimes years before a cardiac event — which is why doctors take it seriously as a general health signal, not just a sexual one.": "Masalah ereksi selalunya merupakan tanda pertama yang kelihatan bagi masalah vaskular yang mendasari. Saluran darah yang terjejas dalam disfungsi ereksi selalunya saluran yang sama yang terjejas pada jantung, kadangkala bertahun-tahun sebelum berlakunya masalah jantung. Itulah sebabnya doktor memandangnya serius sebagai petunjuk kesihatan keseluruhan, bukan sekadar isu seksual.",
+  "Executive Summary": "Ringkasan Eksekutif",
+  "Extremely Severe": "Sangat Teruk",
+  "FOOD SOURCES TO EXPLORE": "SUMBER MAKANAN UNTUK DICUBA",
+  "Fair": "Sederhana",
+  "Fatty fish — omega-3s support vascular health": "Ikan berlemak: omega-3 menyokong kesihatan vaskular",
+  "Functional Capacity (DASI)": "Keupayaan Fungsi (DASI)",
+  "Generally well, with room to fine-tune.": "Secara umumnya baik, masih ada ruang untuk diperhalusi.",
+  "Green tea": "Teh hijau",
+  "Health Foundation": "Asas Kesihatan",
+  "Health Habits": "Tabiat Kesihatan",
+  "Healthy fats (olive oil, avocado, nuts)": "Lemak sihat (minyak zaitun, avokado, kacang)",
+  "Hormonal Screening (ADAM)": "Saringan Hormon (ADAM)",
+  "I consent to my anonymised responses being used to help improve this tool and for research purposes. My name and contact details are never included in this.": "Saya bersetuju jawapan saya digunakan tanpa nama bagi membantu menambah baik alat ini dan untuk tujuan penyelidikan. Nama dan maklumat perhubungan saya tidak sekali-kali disertakan.",
+  "Iron-rich foods (spinach, red meat) if you're fatigue-prone": "Makanan kaya zat besi (bayam, daging merah) jika anda mudah keletihan",
+  "Key Overview": "Gambaran Utama",
+  "Know exactly what your body is telling you — before you even sit down with the doctor.": "Ketahui dengan tepat apa yang cuba disampaikan oleh badan anda, sebelum anda duduk berjumpa doktor.",
+  "Leafy greens and beetroot — natural nitrates support blood flow": "Sayur berdaun hijau dan bit: nitrat semula jadi menyokong aliran darah",
+  "Lean protein (chicken, fish, legumes)": "Protein tanpa lemak (ayam, ikan, kekacang)",
+  "Lean protein at every meal": "Protein tanpa lemak pada setiap hidangan",
+  "Lifestyle confidence reflects how sustainable you feel your current habits are — not just what you're doing, but whether you believe you can keep doing it.": "Keyakinan gaya hidup mencerminkan sejauh mana anda rasa tabiat semasa anda boleh dikekalkan. Bukan sekadar apa yang anda lakukan, tetapi sama ada anda percaya anda mampu meneruskannya.",
+  "Limiting caffeine and alcohol in the evening": "Mengehadkan kafein dan alkohol pada waktu petang",
+  "Limiting caffeine and alcohol, which can worsen anxiety": "Mengehadkan kafein dan alkohol, yang boleh memburukkan keresahan",
+  "Managing stress and getting adequate sleep, which support healthy testosterone levels": "Menguruskan tekanan dan mendapatkan tidur yang cukup, yang menyokong paras testosteron yang sihat",
+  "Managing weight within a healthy range": "Mengekalkan berat badan dalam julat yang sihat",
+  "Meal-prep staples that make the healthy choice the easy choice": "Bahan asas untuk penyediaan makanan supaya pilihan sihat menjadi pilihan mudah",
+  "Mental wellbeing covers your ability to manage stress, your motivation, and your overall mood — closely interacting with physical health.": "Kesejahteraan mental merangkumi keupayaan anda menguruskan tekanan, motivasi anda, dan mood keseluruhan anda. Ia berkait rapat dengan kesihatan fizikal.",
+  "Minutes": "Minit",
+  "Mood": "Mood",
+  "Mood, Anxiety & Stress Scale (DASS-21)": "Skala Mood, Keresahan & Tekanan (DASS-21)",
+  "Most men only think about this once something's already wrong. This flips that around — a few honest answers now give your doctor a clear, specific picture from the very first minute of your visit, instead of starting from scratch.": "Kebanyakan lelaki hanya memikirkan hal ini apabila sesuatu sudah tidak kena. Ini mengubah keadaan itu. Beberapa jawapan jujur sekarang memberi doktor anda gambaran yang jelas dan khusus dari minit pertama lawatan anda, bukannya bermula dari kosong.",
+  "Needs Attention": "Perlu Perhatian",
+  "No screening flags were raised for this assessment.": "Tiada tanda saringan dikesan dalam penilaian ini.",
+  "Nuts and seeds — zinc supports hormone production": "Kacang dan biji benih: zink menyokong penghasilan hormon",
+  "Obese": "Obes",
+  "Omega-3 rich foods, linked to mood regulation": "Makanan kaya omega-3, yang dikaitkan dengan pengawalan mood",
+  "On a phone: tap Save as PDF, then choose “Save as PDF” or “Save to Files” in the print screen.": "Pada telefon: ketik Simpan sebagai PDF, kemudian pilih “Save as PDF” atau “Save to Files” pada skrin cetakan.",
+  "Overall Score": "Skor Keseluruhan",
+  "PRIORITY 1": "KEUTAMAAN 1",
+  "PRIORITY 2": "KEUTAMAAN 2",
+  "PRIORITY 3": "KEUTAMAAN 3",
+  "Payment isn't active yet.": "Pembayaran belum diaktifkan.",
+  "Pelvic floor exercises to improve bladder control": "Senaman otot dasar pelvis untuk memperbaiki kawalan pundi kencing",
+  "Persistent low energy is rarely 'just tiredness' — it's often an early signal of hormonal decline, poor sleep quality, or an undiagnosed metabolic issue.": "Tenaga rendah yang berterusan jarang sekali sekadar keletihan biasa. Ia selalunya petanda awal kemerosotan hormon, kualiti tidur yang buruk, atau masalah metabolik yang belum dikesan.",
+  "Physical fitness covers your strength, stamina and how your body has changed over the past year — closely tied to muscle mass, cardiovascular fitness and hormonal health.": "Kecergasan fizikal merangkumi kekuatan, stamina dan perubahan badan anda sepanjang tahun lalu. Ia berkait rapat dengan jisim otot, kecergasan kardiovaskular dan kesihatan hormon.",
+  "Physical stamina": "Stamina fizikal",
+  "Practical steps for this area": "Langkah praktikal bagi bidang ini",
+  "Practising stress management techniques (breathing, mindfulness, exercise)": "Mengamalkan teknik pengurusan tekanan (pernafasan, kesedaran minda, senaman)",
+  "Prioritising adequate sleep": "Mengutamakan tidur yang mencukupi",
+  "Priority": "Keutamaan",
+  "Priority Areas": "Bidang Keutamaan",
+  "Privacy Policy": "Dasar Privasi",
+  "Privacy Policy & Terms of Service": "Dasar Privasi & Terma Perkhidmatan",
+  "Pumpkin seeds — traditionally linked to prostate health": "Biji labu: secara tradisinya dikaitkan dengan kesihatan prostat",
+  "Questions about your data or these terms? Contact R Clinic (Genkimed Sdn. Bhd.) directly.": "Ada pertanyaan tentang data anda atau terma ini? Hubungi R Clinic (Genkimed Sdn. Bhd.) secara terus.",
+  "Rate each area 1 (poor) to 10 (excellent) at each check-in.": "Nilai setiap bidang dari 1 (lemah) hingga 10 (cemerlang) pada setiap semakan.",
+  "Read more about this area": "Baca lanjut tentang bidang ini",
+  "Real, specific next steps, not generic advice": "Langkah seterusnya yang khusus dan praktikal, bukan nasihat umum",
+  "Red dates and goji berries — commonly used in Chinese double-boiled soups, a good source of iron and antioxidants": "Kurma merah dan beri goji: lazim digunakan dalam sup tim Cina, sumber zat besi dan antioksidan yang baik",
+  "Reduced functional capacity": "Keupayaan fungsi yang berkurangan",
+  "Reducing (not eliminating) trigger foods you tend to overeat": "Mengurangkan (bukan menghapuskan) makanan pencetus yang cenderung anda makan berlebihan",
+  "Reducing alcohol and quitting smoking, both measurably improve erectile function over time": "Mengurangkan alkohol dan berhenti merokok, kedua-duanya terbukti memperbaiki fungsi ereksi dari masa ke masa",
+  "Reducing spicy and acidic foods if they irritate your bladder — worth noting for a chilli- and sambal-heavy Malaysian diet": "Mengurangkan makanan pedas dan berasid jika ia merengsakan pundi kencing anda. Ini perlu diberi perhatian memandangkan diet Malaysia banyak menggunakan cili dan sambal",
+  "Refunds & Support": "Pemulangan Wang & Sokongan",
+  "Regular cardiovascular exercise to support healthy blood flow": "Senaman kardiovaskular yang kerap bagi menyokong aliran darah yang sihat",
+  "Regular exercise, even brisk walking": "Senaman yang kerap, walaupun sekadar berjalan pantas",
+  "Revisiting and adjusting your goals every few weeks": "Menyemak dan melaraskan matlamat anda setiap beberapa minggu",
+  "Risk & Safety Findings": "Penemuan Risiko & Keselamatan",
+  "Save as PDF": "Simpan sebagai PDF",
+  "Seeking professional support when needed — a sign of strength, not weakness": "Mendapatkan bantuan profesional apabila perlu: tanda kekuatan, bukan kelemahan",
+  "Several areas are pulling your score down.": "Beberapa bidang sedang menurunkan skor anda.",
+  "Severe ED": "Disfungsi ereksi teruk",
+  "Severe LUTS": "Gejala saluran kencing bawah yang teruk",
+  "Sexual confidence": "Keyakinan seksual",
+  "Sexual health reflects desire, erectile function and confidence — all shaped by blood flow, hormone levels, nerve function and psychological factors working together.": "Kesihatan seksual mencerminkan keinginan, fungsi ereksi dan keyakinan. Kesemuanya dipengaruhi oleh aliran darah, paras hormon, fungsi saraf dan faktor psikologi yang bertindak bersama.",
+  "Sleep": "Tidur",
+  "Sleep quality": "Kualiti tidur",
+  "Some areas worth looking at.": "Ada beberapa bidang yang wajar diberi perhatian.",
+  "Something you can bring to your next doctor's visit and go straight into a real conversation": "Sesuatu yang boleh anda bawa ke lawatan doktor seterusnya dan terus memulakan perbincangan yang bermakna",
+  "Starting with one small, specific change rather than an overhaul": "Bermula dengan satu perubahan kecil yang khusus, bukan rombakan menyeluruh",
+  "Staying hydrated — even mild dehydration affects mood and concentration": "Kekal terhidrat: dehidrasi ringan pun menjejaskan mood dan tumpuan",
+  "Staying socially connected": "Mengekalkan hubungan sosial",
+  "Staying well hydrated during the day, tapering fluids before bed": "Kekal terhidrat pada waktu siang, dan mengurangkan cecair sebelum tidur",
+  "Stress": "Tekanan",
+  "Strong Areas": "Bidang Kekuatan",
+  "Table of Contents": "Kandungan",
+  "Terms of Service": "Terma Perkhidmatan",
+  "The Men's Vitality Index is a self-assessment and educational tool. It is not a diagnostic tool, does not diagnose any condition, and does not replace professional medical consultation. Always seek the advice of a qualified doctor with any questions about a medical condition. The Full Report is a one-time digital purchase, delivered immediately. Because it is delivered instantly, we do not offer refunds for change of mind. We will refund you in full if the report fails to open, fails to reach you, or is faulty — contact us and we will either fix it or refund you. Any other refund request is considered at the clinic's discretion. By using this tool, you confirm the information you provide is accurate to the best of your knowledge.": "Indeks Vitaliti Lelaki ialah alat penilaian kendiri dan pendidikan. Ia bukan alat diagnostik, tidak mendiagnosis sebarang penyakit, dan tidak menggantikan konsultasi perubatan profesional. Sentiasa dapatkan nasihat doktor bertauliah bagi sebarang persoalan mengenai keadaan kesihatan anda. Laporan Penuh ialah pembelian digital sekali sahaja yang dihantar serta-merta. Oleh kerana ia dihantar serta-merta, kami tidak menawarkan pemulangan wang atas sebab berubah fikiran. Kami akan memulangkan wang anda sepenuhnya jika laporan gagal dibuka, gagal sampai kepada anda, atau rosak. Hubungi kami dan kami akan membaikinya atau memulangkan wang anda. Sebarang permohonan pemulangan wang yang lain adalah mengikut budi bicara klinik. Dengan menggunakan alat ini, anda mengesahkan bahawa maklumat yang anda berikan adalah tepat setakat pengetahuan anda.",
+  "The Science Behind Your Score": "Asas Saintifik Skor Anda",
+  "This report is not a diagnosis. It summarises your self-reported answers and is intended to support a conversation with your doctor.": "Laporan ini bukan diagnosis. Ia merumuskan jawapan yang anda berikan sendiri dan bertujuan menyokong perbincangan anda dengan doktor.",
+  "Tofu, tempeh and soy milk — widely available locally and a solid plant-based protein option": "Tauhu, tempe dan susu soya: mudah didapati di sini dan merupakan pilihan protein berasaskan tumbuhan yang baik",
+  "Tomatoes — a source of lycopene": "Tomato: sumber likopena",
+  "Tracking progress somewhere visible": "Merekod kemajuan di tempat yang mudah dilihat",
+  "Unlock Your Full Vitality Report": "Buka Laporan Vitaliti Penuh Anda",
+  "Urinary Symptom Score (IPSS)": "Skor Gejala Saluran Kencing (IPSS)",
+  "Urinary comfort": "Keselesaan membuang air kecil",
+  "Urinary health covers bladder control, comfort when urinating, and how much urinary symptoms affect daily life — often linked to prostate health as men age.": "Kesihatan saluran kencing merangkumi kawalan pundi kencing, keselesaan ketika membuang air kecil, dan sejauh mana gejala kencing menjejaskan kehidupan harian. Ia sering dikaitkan dengan kesihatan prostat apabila lelaki meningkat usia.",
+  "Urinary symptoms are common and very treatable, but they can also be an early marker of prostate changes worth monitoring, especially with increasing age.": "Gejala saluran kencing adalah perkara biasa dan sangat boleh dirawat, tetapi ia juga boleh menjadi petanda awal perubahan prostat yang wajar dipantau, terutamanya apabila usia meningkat.",
+  "Very few areas need attention.": "Hanya sedikit bidang yang memerlukan perhatian.",
+  "Water — even mild dehydration measurably reduces energy": "Air: dehidrasi ringan pun terbukti mengurangkan tenaga",
+  "We collect your name, age, phone number, and optionally your email, along with your answers to this assessment. This information is used to generate your personal report, to allow your doctor to review your results if you were referred by a clinic, and — only if you separately opt in — in an anonymised form for research to improve this tool. Your name and contact details are never included in anything used for research. We do not sell your information to third parties. If you purchase the Full Report, payment is processed securely by PayPal; we do not see or store your card details. We keep your assessment record so that your doctor can refer to it at future visits and so you can compare a later reassessment against this one.": "Kami mengumpul nama, umur, nombor telefon, dan e-mel anda (jika diberikan), berserta jawapan anda dalam penilaian ini. Maklumat ini digunakan untuk menjana laporan peribadi anda, untuk membolehkan doktor anda menyemak keputusan anda sekiranya anda dirujuk oleh klinik, dan, hanya jika anda bersetuju secara berasingan, dalam bentuk tanpa nama untuk penyelidikan bagi menambah baik alat ini. Nama dan maklumat perhubungan anda tidak sekali-kali disertakan dalam apa-apa yang digunakan untuk penyelidikan. Kami tidak menjual maklumat anda kepada pihak ketiga. Jika anda membeli Laporan Penuh, pembayaran diproses dengan selamat oleh PayPal; kami tidak melihat atau menyimpan maklumat kad anda. Kami menyimpan rekod penilaian anda supaya doktor anda boleh merujuknya pada lawatan akan datang dan supaya anda boleh membandingkan penilaian semula kelak dengan yang ini.",
+  "What You'll Discover": "Apa Yang Anda Akan Temui",
+  "What we found": "Apa yang kami dapati",
+  "What you can do": "Apa yang anda boleh lakukan",
+  "Where to focus first:": "Di mana perlu difokuskan dahulu:",
+  "Where you're already doing well — worth knowing too, not just the problems": "Bidang yang anda sudah lakukan dengan baik: ini juga penting diketahui, bukan hanya masalah",
+  "Whole grains — steady blood sugar supports steady energy": "Bijirin penuh: gula darah yang stabil menyokong tenaga yang stabil",
+  "Why It Matters": "Mengapa Ia Penting",
+  "Why It's Worth Doing": "Mengapa Ia Berbaloi Dilakukan",
+  "Winter melon and barley water — commonly used locally as gentle, cooling diuretics": "Air kundur dan air barli: lazim digunakan di sini sebagai diuretik lembut yang menyejukkan",
+  "Worth discussing with a doctor soon.": "Wajar dibincangkan dengan doktor tidak lama lagi.",
+  "YOUR 6-AREA SNAPSHOT": "GAMBARAN 6 BIDANG ANDA",
+  "YOUR SCORE": "SKOR ANDA",
+  "Your 90-Day Self-Check": "Semakan Kendiri 90 Hari Anda",
+  "Your Full Report is complimentary for now — you won't be asked for card details and nothing will be charged.": "Laporan Penuh anda adalah percuma buat masa ini. Anda tidak akan diminta memberikan maklumat kad dan tiada sebarang caj akan dikenakan.",
+  "Your Overall Score": "Skor Keseluruhan Anda",
+  "Your Priority Opportunities": "Peluang Keutamaan Anda",
+  "Your Strength Areas": "Bidang Kekuatan Anda",
+  "Your Vitality Snapshot": "Gambaran Vitaliti Anda",
+  "Your answers in this area": "Jawapan anda dalam bidang ini",
+  "Your full Risk & Safety findings, in one place": "Semua penemuan Risiko & Keselamatan anda, dalam satu tempat",
+  "Your personal Vitality Score, and exactly which areas need attention first": "Skor Vitaliti peribadi anda, dan bidang mana yang perlu diberi perhatian terlebih dahulu",
+  "Your personal food & lifestyle plan, built around your own weakest areas, not a generic list": "Pelan pemakanan dan gaya hidup peribadi anda, dibina berdasarkan bidang paling lemah anda sendiri, bukan senarai umum",
   // --- MVI core: section intros and driver labels (added 1 Sept).
   // These are our own wording, not a licensed instrument, so they are
   // translated directly rather than sourced.
@@ -240,22 +408,52 @@ const MS = {
 };
 
 const DICTIONARIES = { ms: MS };
+/* ------------------------------------------------------------------
+   MIXED-LANGUAGE GUARD
+
+   Every translation helper below falls back to English when a string has
+   no translation. That fallback is deliberate — a missing word must never
+   crash or blank the page — but it used to be completely SILENT, which is
+   how 156 English strings ended up inside the Malay report without anyone
+   noticing until a patient saw it.
+
+   Every fallback is now recorded. The Doctor Portal shows the count and
+   the offending strings, so a missing translation is visible to us
+   immediately instead of being discovered by a patient.
+   ------------------------------------------------------------------ */
+const I18N_MISSES = new Map();
+function noteMiss(lang, en) {
+  if (!en) return;
+  const key = lang + "|" + en;
+  if (!I18N_MISSES.has(key)) I18N_MISSES.set(key, { lang, en });
+}
+function i18nMissList() { return Array.from(I18N_MISSES.values()); }
+
 function tr(lang, en, zh) {
-  if (lang === "zh") return zh;
+  if (lang === "zh") { if (!zh) { noteMiss("zh", en); return en; } return zh; }
   if (lang === "en") return en;
-  return (DICTIONARIES[lang] && DICTIONARIES[lang][en]) || en;
+  const hit = DICTIONARIES[lang] && DICTIONARIES[lang][en];
+  if (!hit) noteMiss(lang, en);
+  return hit || en;
 }
 function t(obj, lang) {
   if (!obj) return "";
   if (lang === "en") return obj.en;
-  if (lang === "zh") return obj.zh;
-  return (DICTIONARIES[lang] && DICTIONARIES[lang][obj.en]) || obj.en;
+  // A missing zh used to return undefined, which React renders as nothing —
+  // a blank space in the middle of a sentence. Fall back to English and
+  // record it instead.
+  if (lang === "zh") { if (!obj.zh) { noteMiss("zh", obj.en); return obj.en; } return obj.zh; }
+  const hit = DICTIONARIES[lang] && DICTIONARIES[lang][obj.en];
+  if (!hit) noteMiss(lang, obj.en);
+  return hit || obj.en;
 }
 function tr3(lang, en, zh, ms) {
-  if (lang === "zh") return zh;
+  if (lang === "zh") { if (!zh) { noteMiss("zh", en); return en; } return zh; }
   if (lang === "en") return en;
-  if (lang === "ms") return ms || MS[en] || en;
-  return (DICTIONARIES[lang] && DICTIONARIES[lang][en]) || en;
+  if (lang === "ms") { const h = ms || MS[en]; if (!h) noteMiss("ms", en); return h || en; }
+  const hit = DICTIONARIES[lang] && DICTIONARIES[lang][en];
+  if (!hit) noteMiss(lang, en);
+  return hit || en;
 }
 
 /* ============================================================
@@ -1290,19 +1488,25 @@ function TopBar({ lang, setLang, showLogo = true }) {
     </div>
   );
 }
-function Card({ children, style, onClick }) {
-  return <div onClick={onClick} style={{ background: C.panel, border: `1px solid ${C.border}`, borderRadius: 18, padding: 20, boxShadow: "0 4px 16px rgba(11,92,171,0.07)", ...style }}>{children}</div>;
+function Card({ children, style, onClick, className }) {
+  // mvi-card is what the print stylesheet uses to keep a card from being
+  // split across a page boundary.
+  return <div onClick={onClick} className={`mvi-card${className ? " " + className : ""}`} style={{ background: C.panel, border: `1px solid ${C.border}`, borderRadius: 18, padding: 20, boxShadow: "0 4px 16px rgba(11,92,171,0.07)", ...style }}>{children}</div>;
 }
 function SectionLabel({ lang, en, zh, color }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 8, margin: "6px 0 12px" }}>
+    <div className="mvi-heading" style={{ display: "flex", alignItems: "center", gap: 8, margin: "6px 0 12px" }}>
       <div style={{ width: 4, height: 16, borderRadius: 2, background: `linear-gradient(180deg, ${color || C.blueDeep}, ${color || C.blueLight})` }} />
       <div style={{ fontSize: 14, fontWeight: 800, color: C.ink, letterSpacing: "0.01em" }}>{tr(lang, en, zh)}</div>
     </div>
   );
 }
-function Body({ lang, en, zh, small }) {
-  return <div style={{ fontSize: small ? 13.5 : 15, lineHeight: 1.65, color: C.ink }}>{tr(lang, en, zh)}</div>;
+function Body({ lang, en, zh, ms, small }) {
+  // Accepts an explicit `ms` for text built with a template literal, which
+  // cannot be a key in the MS dictionary. Text that is ALREADY in the target
+  // language (the generated summary) must pass the same string for all three,
+  // otherwise it is looked up, missed, and falsely reported as untranslated.
+  return <div style={{ fontSize: small ? 13.5 : 15, lineHeight: 1.65, color: C.ink }}>{tr3(lang, en, zh, ms)}</div>;
 }
 function GaugeBar({ pct, color }) {
   return (
@@ -2021,7 +2225,7 @@ function PatientReport({ results, demo, lang, onOpenFullReport }) {
 
       <UnscoredNotice domainResults={domainResults} lang={lang} />
 
-      {ai && <Card style={{ marginBottom: 18 }}><Body lang={lang} en={ai.summary} zh={ai.summary} /></Card>}
+      {ai && <Card style={{ marginBottom: 18 }}><Body lang={lang} en={ai.summary} zh={ai.summary} ms={ai.summary} /></Card>}
 
       <ScoreMeaning overall={domainResults.overall} lang={lang} />
 
@@ -2268,7 +2472,7 @@ function ScoreMeaning({ overall, lang }) {
 
 function ChapterBanner({ color, icon, label, lang }) {
   return (
-    <div id={chapterId(label)} style={{ background: `linear-gradient(155deg, ${color}, ${color}CC)`, borderRadius: 20, padding: "34px 24px", textAlign: "center", color: "#fff", marginBottom: 18, marginTop: 26, boxShadow: `0 14px 30px -10px ${color}88`, scrollMarginTop: 12 }}>
+    <div id={chapterId(label)} className="mvi-chapter mvi-keep" style={{ background: `linear-gradient(155deg, ${color}, ${color}CC)`, borderRadius: 20, padding: "34px 24px", textAlign: "center", color: "#fff", marginBottom: 18, marginTop: 26, boxShadow: `0 14px 30px -10px ${color}88`, scrollMarginTop: 12 }}>
       <div style={{ fontSize: 40, marginBottom: 8 }}>{icon}</div>
       <div className="disp" style={{ fontSize: 24, fontWeight: 900 }}>{t(label, lang)}</div>
     </div>
@@ -2279,7 +2483,7 @@ function ChapterBanner({ color, icon, label, lang }) {
 // undifferentiated wall and they could not tell a finding from a suggestion.
 function GroupHeader({ label, sub, color, lang }) {
   return (
-    <div style={{ marginTop: 18, marginBottom: 8 }}>
+    <div className="mvi-group" style={{ marginTop: 18, marginBottom: 8 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <span style={{ width: 4, height: 18, borderRadius: 2, background: color, flexShrink: 0 }} />
         <span style={{ fontSize: 12.5, fontWeight: 900, letterSpacing: "0.05em", color }}>{t(label, lang).toUpperCase()}</span>
@@ -2294,9 +2498,23 @@ function ReadMore({ label, lang, children }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="mvi-readmore" style={{ marginBottom: 14 }}>
-      <button onClick={() => setOpen(!open)} className="no-print" style={{ width: "100%", textAlign: "left", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, padding: "11px 14px", borderRadius: 12, background: C.panel, border: `1px solid ${C.border}`, color: C.blueDeep, fontWeight: 700, fontSize: 12.5, cursor: "pointer" }}>
-        <span>{t(label, lang)}</span>
-        <span style={{ fontSize: 11, opacity: 0.7 }}>{open ? "▲" : "▼"}</span>
+      {/* This read as a passive grey box, so nobody realised it opened.
+          It now looks like a control: tinted, brand-coloured, with a filled
+          chevron badge and an explicit "Tap to open" hint. */}
+      <button onClick={() => setOpen(!open)} className="no-print" aria-expanded={open}
+        style={{ width: "100%", textAlign: "left", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: "13px 14px", borderRadius: 12,
+          background: open ? C.blueDeep : "#EAF3FD", border: `1.5px solid ${open ? C.blueDeep : C.blue}`,
+          color: open ? "#fff" : C.blueDeep, fontWeight: 800, fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}>
+        <span style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
+          <span>{t(label, lang)}</span>
+          <span style={{ fontSize: 10.5, fontWeight: 600, opacity: open ? 0.85 : 0.75 }}>
+            {open ? tr3(lang, "Tap to close", "点击收起", "Ketik untuk tutup") : tr3(lang, "Tap to open", "点击展开", "Ketik untuk buka")}
+          </span>
+        </span>
+        <span style={{ flexShrink: 0, width: 26, height: 26, borderRadius: 999, display: "inline-flex", alignItems: "center", justifyContent: "center",
+          background: open ? "rgba(255,255,255,0.22)" : C.blueDeep, color: "#fff", fontSize: 12, fontWeight: 900 }}>
+          {open ? "−" : "+"}
+        </span>
       </button>
       <div className={open ? "" : "mvi-collapsed"} style={{ display: open ? "block" : "none", marginTop: 10 }}>{children}</div>
     </div>
@@ -2366,7 +2584,7 @@ function SelfCheckTracker({ lang }) {
   );
 }
 // PayPal. Paste the PayPal payment link here — Business account -> Payment
-// Links & Buttons -> create a $9.90 one-time item -> set the return URL to
+// Links & Buttons -> create a $49.00 one-time item -> set the return URL to
 // https://mvi.drstan.com.my/?paid=1 -> copy the link.
 // A payment LINK is all we need. Never put a PayPal API secret in this file:
 // everything here ships to the patient's browser in readable form.
@@ -2374,7 +2592,9 @@ const PAYPAL_PAYMENT_LINK = "https://www.paypal.com/REPLACE_WITH_YOUR_LINK";
 // One price, in US dollars. No strikethrough, no countdown, no referral code.
 const CURRENCY = "$";
 const CURRENCY_CODE = "USD";
-const REGULAR_PRICE = 9.90;
+// Online / self-referred patients only. Clinic-referred patients reach the
+// report through ?clinic and never see a price at all.
+const REGULAR_PRICE = 49.00;
 // While false, the checkout screen renders as a clearly-labelled preview: no
 // payment details are requested, nothing is charged, and the full report opens
 // free. Flip to true once the PayPal link above is real.
@@ -2487,28 +2707,157 @@ function CheckoutPage({ results, demo, lang, setLang, onBack, onUnlock }) {
    searchable text, at a fraction of the file size — and it works on
    iPhone (Share -> Print -> Save to Files) and Android.
    ============================================================ */
+/* ------------------------------------------------------------------
+   PRINT / PDF
+
+   The previous version isolated the report with
+     body * { visibility: hidden }  +  #full-report-print { position: absolute }
+   which is the classic "print just this div" snippet found online. It is
+   also the reason the PDF was breaking apart: an absolutely positioned
+   element is taken out of normal flow, and browsers cannot paginate
+   out-of-flow content reliably. The result is clipped pages, content
+   overlapping a page boundary, and text that looks sliced in half.
+
+   It was never needed here. Only one stage renders at a time, every
+   overlay returns null when inactive, and the report's own chrome is
+   already marked .no-print. So the report simply stays in normal flow
+   and the page is prepared around it.
+   ------------------------------------------------------------------ */
 const MVI_PRINT_CSS = `
 @media print {
-  @page { size: A4; margin: 14mm 12mm; }
-  html, body { background: #fff !important; }
-  /* Isolate the report: hide everything, then reveal only the report. */
-  body * { visibility: hidden !important; }
-  #full-report-print, #full-report-print * { visibility: visible !important; }
-  #full-report-print {
-    position: absolute !important; left: 0 !important; top: 0 !important;
-    width: 100% !important; max-width: none !important;
+  @page { size: A4; margin: 16mm 14mm; }
+
+  html, body {
+    background: #fff !important;
+    width: auto !important; height: auto !important;
+    min-height: 0 !important;
     margin: 0 !important; padding: 0 !important;
+    overflow: visible !important;
   }
-  .no-print, .no-print * { display: none !important; visibility: hidden !important; }
-  /* A section the reader collapsed on screen must still be in the PDF —
-     the printed report has to be complete. */
+
+  /* Screen-only chrome is removed outright, so it leaves no blank gap. */
+  .no-print, .no-print * { display: none !important; }
+
+  /* The app shell constrains the page to 640px on screen. Let it go full
+     width for print, and stop it clipping or scrolling. */
+  .mvi-shell {
+    max-width: none !important; width: auto !important;
+    height: auto !important; min-height: 0 !important;
+    margin: 0 !important; padding: 0 !important;
+    display: block !important; overflow: visible !important;
+  }
+
+  #full-report-print {
+    position: static !important;
+    width: auto !important; max-width: none !important;
+    margin: 0 !important; padding: 0 !important;
+    overflow: visible !important;
+  }
+  /* Nothing inside the report may clip or scroll, or its tail is lost. */
+  #full-report-print * { overflow: visible !important; }
+
+  /* Keep a card whole. A card split across a page boundary is what makes
+     the PDF look broken, because its background and border split with it. */
+  .mvi-card, .mvi-keep, table, thead, tr, img, svg {
+    break-inside: avoid !important; page-break-inside: avoid !important;
+  }
+
+  /* A chapter banner is never left stranded at the foot of a page, and never
+     separated from the card that follows it. Forcing every chapter onto a
+     fresh page was tried and rejected: short chapters then left most of a
+     page blank, which looked worse than the problem it solved. */
+  .mvi-chapter { break-inside: avoid !important; page-break-inside: avoid !important; }
+
+  /* Never leave a heading stranded at the foot of a page, separated from the
+     content it introduces. .mvi-heading covers the section labels, which are
+     plain divs and were being orphaned. */
+  h1, h2, h3, h4, .disp, .mvi-chapter, .mvi-heading, .mvi-group {
+    break-after: avoid-page !important; page-break-after: avoid !important;
+    break-inside: avoid !important; page-break-inside: avoid !important;
+  }
+
+  /* Never strand one or two lines of a paragraph on their own. This is the
+     other half of the "text looks split" complaint. */
+  p, div, li, td { orphans: 3 !important; widows: 3 !important; }
+
+  /* Wrap long words at a boundary instead of slicing through them. */
+  * {
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
+  }
+
+  /* Chinese and Malay both break differently from English; keep the browser
+     from breaking inside a CJK word group. */
+  :lang(zh), .mvi-zh { line-break: strict !important; word-break: normal !important; }
+
+  /* A section the reader collapsed on screen must still be in the PDF. */
   .mvi-collapsed { display: block !important; }
+
   /* Keep the brand colours instead of printing everything white. */
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-  /* Don't strand a heading at the bottom of a page. */
-  h1, h2, h3, .disp { break-after: avoid-page; page-break-after: avoid; }
+
+  /* Shadows print as grey smears on most drivers. */
+  * { box-shadow: none !important; text-shadow: none !important; filter: none !important; }
+
+  /* Negative offsets are used on screen to overlay the score on its gauge.
+     In print they drag text across whatever sits above. */
+  .mvi-gauge-value { margin-top: 0 !important; }
+  .mvi-gauge-wrap { display: block !important; }
+
+  /* Animations hold elements at opacity 0 if print fires mid-animation. */
+  * { animation: none !important; transition: none !important; opacity: 1 !important; }
 }
 `;
+/* The report is downloaded and kept, so it must carry the patient's own
+   details. A faceless report is worth less to the patient and is useless
+   to a doctor reading it later. Only fields the patient actually supplied
+   are shown — an empty row is left out rather than printed as a dash. */
+function PatientDetails({ demo, results, lang, today }) {
+  const { domainResults, foundation, bmi, branchResults } = results;
+  const f = foundation || {};
+  const L = (en, zh, ms) => tr3(lang, en, zh, ms);
+  const rows = [];
+  const push = (label, value) => { if (value !== undefined && value !== null && String(value).trim() !== "") rows.push([label, String(value)]); };
+
+  push(L("Name", "姓名", "Nama"), demo.name);
+  push(L("Age", "年龄", "Umur"), demo.age ? `${demo.age} ${L("years", "岁", "tahun")}` : "");
+  push(L("Phone", "电话", "Telefon"), demo.phone);
+  push(L("Email", "电邮", "E-mel"), demo.email);
+  push(L("Assessment date", "评估日期", "Tarikh penilaian"), today);
+  push(L("Height", "身高", "Tinggi"), f.height ? `${f.height} cm` : "");
+  push(L("Weight", "体重", "Berat"), f.weight ? `${f.weight} kg` : "");
+  push(L("Waist", "腰围", "Lilitan pinggang"), f.waist ? `${f.waist} cm` : "");
+  push("BMI", bmi ? String(bmi) : "");
+  push(L("Blood pressure", "血压", "Tekanan darah"), f.bpSys && f.bpDia ? `${f.bpSys}/${f.bpDia} mmHg` : "");
+  push("HbA1c", f.hba1c ? `${f.hba1c}%` : "");
+  push(L("Testosterone", "睾酮", "Testosteron"), f.testosterone ? `${f.testosterone} nmol/L` : "");
+  push(L("Questionnaires completed", "已完成问卷", "Soal selidik yang dilengkapkan"),
+       (branchResults || []).length ? branchResults.map((r) => t(r.name, lang)).join(", ") : L("Core assessment only", "仅核心评估", "Penilaian teras sahaja"));
+
+  return (
+    <Card className="mvi-keep" style={{ marginBottom: 20, padding: 18 }}>
+      <div style={{ fontSize: 11, fontWeight: 800, color: C.mid, letterSpacing: "0.07em", marginBottom: 12 }}>
+        {L("PATIENT DETAILS", "病患资料", "MAKLUMAT PESAKIT")}
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "9px 18px" }}>
+        {rows.map(([k, v], i) => (
+          <div key={i} style={{ display: "flex", flexDirection: "column", gap: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 10, color: C.dim, fontWeight: 600 }}>{k}</div>
+            <div style={{ fontSize: 13, color: C.ink, fontWeight: 700, overflowWrap: "break-word" }}>{v}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${C.border}`, fontSize: 10.5, color: C.dim, lineHeight: 1.5 }}>
+        {L("This report is personal to the named patient and reflects answers given on the assessment date above.",
+           "本报告属于上述病患个人所有，反映其在上述评估日期所提供的回答。",
+           "Laporan ini adalah peribadi kepada pesakit yang dinamakan di atas dan mencerminkan jawapan yang diberikan pada tarikh penilaian tersebut.")}
+      </div>
+    </Card>
+  );
+}
+
 function FullReportPage({ results, demo, lang, setLang, onBack, embedded }) {
   const { domainResults, priorities, ai, branchResults, bmi, foundation } = results;
   const cat = vitalityCategory(domainResults.overall);
@@ -2542,6 +2891,8 @@ function FullReportPage({ results, demo, lang, setLang, onBack, embedded }) {
         <div className="disp" style={{ fontSize: 23, fontWeight: 900, color: "#fff", marginBottom: 8 }}>{tr(lang, "Your Full Vitality Report", "你的完整活力报告")}</div>
         <div style={{ fontSize: 13, color: "#dceafb" }}>{demo.name || "—"} · {today}</div>
       </Card>
+
+      <PatientDetails demo={demo} results={results} lang={lang} today={today} />
 
       <SectionLabel lang={lang} en="Table of Contents" zh="目录" />
       <Card style={{ marginBottom: 20 }}>
@@ -2597,25 +2948,27 @@ function FullReportPage({ results, demo, lang, setLang, onBack, embedded }) {
             return (
               <Body lang={lang} small
                 en="Your Vitality Score is built from 17 questions covering six areas of men's health, each weighted by how strongly it contributes to overall vitality. Your answers did not indicate a need for any of the deeper clinical questionnaires, so none were added. If that changes at a future assessment, the relevant one will be offered to you."
-                zh="你的活力指数由涵盖六大男性健康领域的17个问题构成，每一项都依其对整体活力的影响程度加权计算。你的回答并未显示需要进一步的临床问卷，因此未加入任何附加评估。若日后再次评估时情况有变，系统会向你提供相关问卷。" />
+                zh="你的活力指数由涵盖六大男性健康领域的17个问题构成，每一项都依其对整体活力的影响程度加权计算。你的回答并未显示需要进一步的临床问卷，因此未加入任何附加评估。若日后再次评估时情况有变，系统会向你提供相关问卷。"
+                ms="Skor Vitaliti anda dibina daripada 17 soalan yang merangkumi enam bidang kesihatan lelaki, setiap satunya diberi pemberat mengikut sejauh mana ia menyumbang kepada vitaliti keseluruhan. Jawapan anda tidak menunjukkan keperluan untuk sebarang soal selidik klinikal yang lebih mendalam, jadi tiada yang ditambah. Sekiranya keadaan berubah pada penilaian akan datang, soal selidik yang berkaitan akan ditawarkan kepada anda." />
             );
           }
           return (
             <Body lang={lang} small
               en={`Your Vitality Score is built from 17 weighted questions across six areas of men's health. Where your answers pointed to something worth a closer look, this report also drew on the following validated clinical questionnaire${used.length > 1 ? "s" : ""}, the same ones a doctor would use in an in-person assessment: ${used.join(", ")}.`}
-              zh={`你的活力指数由涵盖六大男性健康领域的17道加权问题构成。凡是你的回答显示值得进一步关注之处，本报告还采用了以下经过验证的临床问卷，这些正是医生在面对面评估时会使用的工具：${used.join("、")}。`} />
+              zh={`你的活力指数由涵盖六大男性健康领域的17道加权问题构成。凡是你的回答显示值得进一步关注之处，本报告还采用了以下经过验证的临床问卷，这些正是医生在面对面评估时会使用的工具：${used.join("、")}。`}
+              ms={`Skor Vitaliti anda dibina daripada 17 soalan berpemberat merangkumi enam bidang kesihatan lelaki. Apabila jawapan anda menunjukkan sesuatu yang wajar diteliti dengan lebih mendalam, laporan ini turut menggunakan soal selidik klinikal yang telah disahkan berikut, iaitu yang sama digunakan oleh doktor dalam penilaian bersemuka: ${used.join(", ")}.`} />
           );
         })()}
       </Card>
 
       <ChapterBanner color={C.blueDeep} icon="🎯" label={bi("Key Overview", "重点概览")} lang={lang} />
       <Card style={{ textAlign: "center", marginBottom: 16 }}>
-        <ArcGauge pct={domainResults.overall} color={cat.color} size={120} stroke={11} />
-        <div style={{ fontSize: 36, fontWeight: 900, color: cat.color, marginTop: -78 }}>{typeof domainResults.overall === "number" ? domainResults.overall : "—"}</div>
+        <div className="mvi-gauge-wrap"><ArcGauge pct={domainResults.overall} color={cat.color} size={120} stroke={11} /></div>
+        <div className="mvi-gauge-value" style={{ fontSize: 36, fontWeight: 900, color: cat.color, marginTop: -78 }}>{typeof domainResults.overall === "number" ? domainResults.overall : "—"}</div>
         <div style={{ fontSize: 12, fontWeight: 700, color: cat.color, marginTop: 46 }}>{t(cat.label, lang)}</div>
       </Card>
       <UnscoredNotice domainResults={domainResults} lang={lang} compact />
-      {ai && <Card style={{ marginBottom: 20 }}><Body lang={lang} en={ai.summary} zh={ai.summary} /></Card>}
+      {ai && <Card style={{ marginBottom: 20 }}><Body lang={lang} en={ai.summary} zh={ai.summary} ms={ai.summary} /></Card>}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
         {domainResults.domains.map((d) => (
           <Card key={d.key} style={{ padding: 12 }}>
@@ -3141,7 +3494,65 @@ function ClinicDashboard({ submissions, loading, lang, progress, leads }) {
         </button>
         {exportNote && <div style={{ marginTop: 9, fontSize: 11.5, color: C.blueDeep, fontWeight: 700 }}>{exportNote}</div>}
       </Card>
+
+      <LanguageHealth lang={lang} />
     </div>
+  );
+}
+
+/* Mixed-language early warning.
+
+   156 English strings once shipped inside the Malay report and nobody knew
+   until a patient saw it, because a missing translation falls back to
+   English silently. Every fallback is now recorded, and this panel surfaces
+   them here so we find out, rather than a patient finding out.
+
+   It counts only what has actually been rendered in this browser session,
+   so to check a language properly, view a full report in it first. */
+function LanguageHealth({ lang }) {
+  const [shown, setShown] = useState(false);
+  const misses = i18nMissList();
+  if (!misses.length) {
+    return (
+      <Card style={{ marginTop: 14, background: "#EAF6EF", border: "1px solid #2E9E5B" }}>
+        <div style={{ fontSize: 12, fontWeight: 800, color: "#1D6B3D" }}>
+          ✓ {tr(lang, "Language check clean", "语言检查正常")}
+        </div>
+        <div style={{ fontSize: 11, color: "#1D6B3D", marginTop: 4, lineHeight: 1.5 }}>
+          {tr(lang,
+            "No untranslated text has appeared on any screen opened in this session.",
+            "本次使用中打开的所有页面均未出现未翻译的文字。")}
+        </div>
+      </Card>
+    );
+  }
+  const byLang = {};
+  misses.forEach((m) => { (byLang[m.lang] = byLang[m.lang] || []).push(m.en); });
+  return (
+    <Card style={{ marginTop: 14, background: "#FDF1E7", border: "1px solid #E0752E" }}>
+      <div style={{ fontSize: 12, fontWeight: 800, color: "#8A4212" }}>
+        ⚠ {tr(lang, "Untranslated text found", "发现未翻译文字")} ({misses.length})
+      </div>
+      <div style={{ fontSize: 11, color: "#8A4212", marginTop: 4, lineHeight: 1.5 }}>
+        {Object.keys(byLang).map((k) => `${k.toUpperCase()}: ${byLang[k].length}`).join(" · ")}
+        {" — "}
+        {tr(lang, "these showed in English instead. Send this list to Dharsyanth.",
+                  "这些内容以英文显示。请将此清单发送给 Dharsyanth。")}
+      </div>
+      <button onClick={() => setShown(!shown)}
+        style={{ marginTop: 9, padding: "7px 12px", borderRadius: 8, background: "#fff", border: "1px solid #E0752E", color: "#8A4212", fontWeight: 700, fontSize: 11.5, cursor: "pointer", fontFamily: "inherit" }}>
+        {shown ? tr(lang, "Hide list", "隐藏清单") : tr(lang, "Show list", "显示清单")}
+      </button>
+      {shown && (
+        <div style={{ marginTop: 10, maxHeight: 240, overflowY: "auto", fontSize: 11, color: "#5A2E0C", lineHeight: 1.55 }}>
+          {misses.map((m, i) => (
+            <div key={i} style={{ padding: "4px 0", borderBottom: "1px solid #F0DCC9" }}>
+              <b>[{m.lang}]</b> {m.en.slice(0, 160)}
+            </div>
+          ))}
+        </div>
+      )}
+    </Card>
   );
 }
 
@@ -3373,6 +3784,28 @@ function AdminPortal({ lang, setLang, onExit }) {
     }
     setSigningIn(false);
   }
+  const [resetNote, setResetNote] = useState("");
+  const [resetting, setResetting] = useState(false);
+  async function doResetPassword() {
+    const email = userInput.trim();
+    if (!email) { setResetNote("Type your email address above first, then tap this again."); return; }
+    if (resetting) return;
+    setResetting(true); setResetNote("");
+    try {
+      const fb = await getFirebase();
+      if (!fb) throw new Error("Cannot reach the server — check your connection.");
+      await fb.auth.sendPasswordResetEmail(email);
+      // Deliberately worded so it does not reveal whether the address is
+      // registered. That would let anyone test which emails have accounts.
+      setResetNote("If that address has an account, a reset link is on its way. Check spam too.");
+    } catch (e) {
+      const code = e && e.code ? e.code : "";
+      setResetNote(/invalid-email/.test(code)
+        ? "That does not look like a valid email address."
+        : "If that address has an account, a reset link is on its way. Check spam too.");
+    }
+    setResetting(false);
+  }
   async function doSignOut() {
     try { const fb = await getFirebase(); if (fb) await fb.auth.signOut(); } catch {}
     setAuthed(false); setAuthedUser(null); setUserInput(""); setPassInput("");
@@ -3396,6 +3829,11 @@ function AdminPortal({ lang, setLang, onExit }) {
           <button onClick={doSignIn} disabled={signingIn} style={{ width: "100%", padding: "14px", borderRadius: 10, background: `linear-gradient(135deg, ${C.blueDeep}, ${C.blue})`, border: "none", color: "#fff", fontWeight: 800, fontSize: 14, cursor: signingIn ? "default" : "pointer", opacity: signingIn ? 0.65 : 1 }}>
             {signingIn ? "Signing in…" : "Sign in"}
           </button>
+          <button onClick={doResetPassword} disabled={resetting}
+            style={{ width: "100%", marginTop: 10, padding: "10px", borderRadius: 10, background: "none", border: "none", color: C.blueDeep, fontSize: 12.5, fontWeight: 700, cursor: resetting ? "default" : "pointer", textDecoration: "underline", fontFamily: "inherit" }}>
+            {resetting ? "Sending…" : "Forgot your password? Email me a reset link"}
+          </button>
+          {resetNote && <div style={{ fontSize: 11.5, color: C.blueDeep, marginTop: 6, lineHeight: 1.5, textAlign: "center" }}>{resetNote}</div>}
           {onExit && (
             <button onClick={onExit} style={{ width: "100%", marginTop: 8, padding: "10px", borderRadius: 10, background: "none", border: "none", color: C.mid, fontSize: 12.5, cursor: "pointer" }}>
               ← Back to patient assessment
@@ -3943,7 +4381,7 @@ export default function App() {
       ) : !langChosen ? (
         <LanguageGate onPick={chooseLanguage} />
       ) : (
-      <div style={{ maxWidth: 640, margin: "0 auto", padding: stage === "intake" ? "10px 16px 0" : "20px 20px 60px", height: stage === "intake" ? "100dvh" : "auto", display: stage === "intake" ? "flex" : "block", flexDirection: "column", overflow: stage === "intake" ? "hidden" : "visible", boxSizing: "border-box" }}>
+      <div className="mvi-shell" style={{ maxWidth: 640, margin: "0 auto", padding: stage === "intake" ? "10px 16px 0" : "20px 20px 60px", height: stage === "intake" ? "100dvh" : "auto", display: stage === "intake" ? "flex" : "block", flexDirection: "column", overflow: stage === "intake" ? "hidden" : "visible", boxSizing: "border-box" }}>
         {stage === "home" && resumeAvailable && !resumeDismissed && (
           <div style={{ maxWidth: 640, margin: "16px auto 0", background: C.panel2, border: `1.5px solid ${C.blueDeep}`, borderRadius: 14, padding: "14px 16px", display: "flex", alignItems: "center", gap: 12 }}>
             <div style={{ flex: 1, fontSize: 12.5, color: C.ink }}>{tr(lang, "You have an assessment in progress on this device.", "此设备上有一份尚未完成的评估。")}</div>
